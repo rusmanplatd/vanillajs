@@ -5,6 +5,7 @@ A fully-featured HTTP client for vanilla JavaScript with Angular HttpClient feat
 ## Features
 
 ### Core Features
+
 - ✅ **Observable-based** - RxJS Observables for reactive programming
 - ✅ **Request/Response Interceptors** - Modify requests and responses
 - ✅ **HttpParams** - Immutable query string builder
@@ -20,6 +21,7 @@ A fully-featured HTTP client for vanilla JavaScript with Angular HttpClient feat
 - ✅ **TypeScript-ready** - Full JSDoc annotations
 
 ### RxJS Operators
+
 - `retry()` - Automatic retry logic
 - `timeout()` - Request timeouts
 - `catchError()` - Error handling
@@ -41,21 +43,20 @@ import { HttpClient } from './src/http-client.js';
 
 const client = new HttpClient({
   baseUrl: 'https://api.example.com',
-  defaultHeaders: { 'X-App-Version': '1.0.0' }
+  defaultHeaders: { 'X-App-Version': '1.0.0' },
 });
 
 // Simple GET request
 client.get('/users/1').subscribe({
   next: (user) => console.log(user),
   error: (error) => console.error(error),
-  complete: () => console.log('Done')
+  complete: () => console.log('Done'),
 });
 
 // POST with body
-client.post('/users', { name: 'John', email: 'john@example.com' })
-  .subscribe({
-    next: (response) => console.log('Created:', response)
-  });
+client.post('/users', { name: 'John', email: 'john@example.com' }).subscribe({
+  next: (response) => console.log('Created:', response),
+});
 ```
 
 ### HttpParams - Query Strings
@@ -69,7 +70,7 @@ const params = new HttpParams()
   .append('sort', 'name')
   .append('sort', 'date');
 
-client.get('/users', { params }).subscribe(users => {
+client.get('/users', { params }).subscribe((users) => {
   console.log(users);
 });
 
@@ -87,7 +88,7 @@ const headers = new HttpHeaders()
   .append('X-Custom', 'value1')
   .append('X-Custom', 'value2');
 
-client.get('/protected', { headers }).subscribe(data => {
+client.get('/protected', { headers }).subscribe((data) => {
   console.log(data);
 });
 ```
@@ -101,11 +102,9 @@ import { HttpContext, HttpContextToken } from './src/http-context.js';
 const CACHE_ENABLED = new HttpContextToken(false);
 const RETRY_COUNT = new HttpContextToken(3);
 
-const context = new HttpContext()
-  .set(CACHE_ENABLED, true)
-  .set(RETRY_COUNT, 5);
+const context = new HttpContext().set(CACHE_ENABLED, true).set(RETRY_COUNT, 5);
 
-client.get('/data', { context }).subscribe(data => {
+client.get('/data', { context }).subscribe((data) => {
   // Interceptors can read context values
   console.log(data);
 });
@@ -116,18 +115,20 @@ client.get('/data', { context }).subscribe(data => {
 ```javascript
 import { HttpEventType } from './src/http-event.js';
 
-client.post('/upload', formData, {
-  reportProgress: true,
-  observe: 'events'
-}).subscribe({
-  next: (event) => {
-    if (event.type === HttpEventType.UploadProgress) {
-      console.log(`Upload: ${event.progress}%`);
-    } else if (event.type === HttpEventType.Response) {
-      console.log('Complete:', event.body);
-    }
-  }
-});
+client
+  .post('/upload', formData, {
+    reportProgress: true,
+    observe: 'events',
+  })
+  .subscribe({
+    next: (event) => {
+      if (event.type === HttpEventType.UploadProgress) {
+        console.log(`Upload: ${event.progress}%`);
+      } else if (event.type === HttpEventType.Response) {
+        console.log('Complete:', event.body);
+      }
+    },
+  });
 ```
 
 ### Interceptors
@@ -152,21 +153,23 @@ client.addResponseInterceptor((response, context) => {
 
 ```javascript
 // Get full response object
-client.get('/data', { observe: 'response' }).subscribe(response => {
+client.get('/data', { observe: 'response' }).subscribe((response) => {
   console.log(response.status);
   console.log(response.headers);
   console.log(response.body);
 });
 
 // Get events stream
-client.get('/data', { observe: 'events' }).subscribe(event => {
+client.get('/data', { observe: 'events' }).subscribe((event) => {
   console.log(event.type);
 });
 
 // Different response types
-client.get('/text', { responseType: 'text' }).subscribe(text => {});
-client.get('/image', { responseType: 'blob' }).subscribe(blob => {});
-client.get('/binary', { responseType: 'arraybuffer' }).subscribe(buffer => {});
+client.get('/text', { responseType: 'text' }).subscribe((text) => {});
+client.get('/image', { responseType: 'blob' }).subscribe((blob) => {});
+client
+  .get('/binary', { responseType: 'arraybuffer' })
+  .subscribe((buffer) => {});
 ```
 
 ### Error Handling with RxJS
@@ -175,16 +178,17 @@ client.get('/binary', { responseType: 'arraybuffer' }).subscribe(buffer => {});
 import { retry, timeout, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-client.get('/data')
+client
+  .get('/data')
   .pipe(
-    timeout(5000),           // 5 second timeout
-    retry(3),                // Retry 3 times
-    catchError(error => {
+    timeout(5000), // 5 second timeout
+    retry(3), // Retry 3 times
+    catchError((error) => {
       console.error('Failed:', error);
       return of({ default: 'fallback' });
     })
   )
-  .subscribe(data => console.log(data));
+  .subscribe((data) => console.log(data));
 ```
 
 ### Transform Responses
@@ -192,12 +196,13 @@ client.get('/data')
 ```javascript
 import { map } from 'rxjs/operators';
 
-client.get('/users')
+client
+  .get('/users')
   .pipe(
-    map(users => users.filter(u => u.active)),
-    map(users => users.map(u => u.name))
+    map((users) => users.filter((u) => u.active)),
+    map((users) => users.map((u) => u.name))
   )
-  .subscribe(names => console.log(names));
+  .subscribe((names) => console.log(names));
 ```
 
 ## API Reference
@@ -205,6 +210,7 @@ client.get('/users')
 ### HttpClient
 
 #### Constructor
+
 ```javascript
 new HttpClient(config?: {
   baseUrl?: string,
@@ -213,6 +219,7 @@ new HttpClient(config?: {
 ```
 
 #### Methods
+
 - `get(url, options?)` - GET request
 - `post(url, body, options?)` - POST request
 - `put(url, body, options?)` - PUT request
@@ -224,6 +231,7 @@ new HttpClient(config?: {
 - `request(method, url, options?)` - Generic request
 
 #### Options
+
 ```typescript
 {
   headers?: HttpHeaders | object,
@@ -243,14 +251,14 @@ Immutable query parameter builder.
 
 ```javascript
 const params = new HttpParams()
-  .set(key, value)      // Set parameter
-  .append(key, value)   // Append parameter
-  .delete(key)          // Delete parameter
-  .has(key)             // Check if exists
-  .get(key)             // Get first value
-  .getAll(key)          // Get all values
-  .keys()               // Get all keys
-  .toString()           // Convert to string
+  .set(key, value) // Set parameter
+  .append(key, value) // Append parameter
+  .delete(key) // Delete parameter
+  .has(key) // Check if exists
+  .get(key) // Get first value
+  .getAll(key) // Get all values
+  .keys() // Get all keys
+  .toString(); // Convert to string
 ```
 
 ### HttpHeaders
@@ -259,13 +267,13 @@ Immutable header builder.
 
 ```javascript
 const headers = new HttpHeaders()
-  .set(name, value)     // Set header
-  .append(name, value)  // Append header
-  .delete(name)         // Delete header
-  .has(name)            // Check if exists
-  .get(name)            // Get first value
-  .getAll(name)         // Get all values
-  .keys()               // Get all keys
+  .set(name, value) // Set header
+  .append(name, value) // Append header
+  .delete(name) // Delete header
+  .has(name) // Check if exists
+  .get(name) // Get first value
+  .getAll(name) // Get all values
+  .keys(); // Get all keys
 ```
 
 ### HttpContext
@@ -275,22 +283,25 @@ Request metadata storage.
 ```javascript
 const token = new HttpContextToken(defaultValue);
 const context = new HttpContext()
-  .set(token, value)    // Store value
-  .get(token)           // Retrieve value
-  .has(token)           // Check if exists
-  .delete(token)        // Delete value
+  .set(token, value) // Store value
+  .get(token) // Retrieve value
+  .has(token) // Check if exists
+  .delete(token); // Delete value
 ```
 
 ## Examples
 
 ### Run Basic Examples
+
 ```bash
 npm start
 # Opens index.html with basic examples
 ```
 
 ### Run Advanced Examples
+
 Open `index-advanced.html` in your browser to see:
+
 - HttpParams and HttpHeaders usage
 - Progress tracking
 - Context tokens

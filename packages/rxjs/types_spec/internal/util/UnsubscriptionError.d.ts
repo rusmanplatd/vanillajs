@@ -1,12 +1,12 @@
 export interface UnsubscriptionError extends Error {
-    readonly errors: any[];
+  readonly errors: any[];
 }
 export interface UnsubscriptionErrorCtor {
-    /**
-     * @deprecated Internal implementation detail. Do not construct error instances.
-     * Cannot be tagged as internal: https://github.com/ReactiveX/rxjs/issues/6269
-     */
-    new (errors: any[]): UnsubscriptionError;
+  /**
+   * @deprecated Internal implementation detail. Do not construct error instances.
+   * Cannot be tagged as internal: https://github.com/ReactiveX/rxjs/issues/6269
+   */
+  new (errors: any[]): UnsubscriptionError;
 }
 /**
  * An error thrown when one or more errors have occurred during the

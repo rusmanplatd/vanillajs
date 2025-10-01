@@ -38,13 +38,15 @@ import { SchedulerLike, OperatorFunction } from '../types';
  * @return A function that returns an Observable that emits information about
  * value and interval.
  */
-export declare function timeInterval<T>(scheduler?: SchedulerLike): OperatorFunction<T, TimeInterval<T>>;
+export declare function timeInterval<T>(
+  scheduler?: SchedulerLike
+): OperatorFunction<T, TimeInterval<T>>;
 export declare class TimeInterval<T> {
-    value: T;
-    interval: number;
-    /**
-     * @deprecated Internal implementation detail, do not construct directly. Will be made an interface in v8.
-     */
-    constructor(value: T, interval: number);
+  value: T;
+  interval: number;
+  /**
+   * @deprecated Internal implementation detail, do not construct directly. Will be made an interface in v8.
+   */
+  constructor(value: T, interval: number);
 }
 //# sourceMappingURL=timeInterval.d.ts.map

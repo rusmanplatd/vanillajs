@@ -43,5 +43,7 @@ import { OperatorFunction, ObservableInput, ObservedValueOf } from '../types';
  * Observables and propagates the first Observable exclusively until it
  * completes before subscribing to the next.
  */
-export declare function exhaustAll<O extends ObservableInput<any>>(): OperatorFunction<O, ObservedValueOf<O>>;
+export declare function exhaustAll<
+  O extends ObservableInput<any>,
+>(): OperatorFunction<O, ObservedValueOf<O>>;
 //# sourceMappingURL=exhaustAll.d.ts.map

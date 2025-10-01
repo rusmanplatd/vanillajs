@@ -77,7 +77,10 @@ import { SchedulerLike } from '../types';
  * If a `Date`, the exact time at which to emit.
  * @param scheduler The scheduler to use to schedule the delay. Defaults to {@link asyncScheduler}.
  */
-export declare function timer(due: number | Date, scheduler?: SchedulerLike): Observable<0>;
+export declare function timer(
+  due: number | Date,
+  scheduler?: SchedulerLike
+): Observable<0>;
 /**
  * Creates an observable that starts an interval after a specified delay, emitting incrementing numbers -- starting at `0` --
  * on each interval after words.
@@ -118,9 +121,17 @@ export declare function timer(due: number | Date, scheduler?: SchedulerLike): Ob
  * no `intervalDuration` was passed at all.
  * @param scheduler The scheduler to use to schedule the delay. Defaults to {@link asyncScheduler}.
  */
-export declare function timer(startDue: number | Date, intervalDuration: number, scheduler?: SchedulerLike): Observable<number>;
+export declare function timer(
+  startDue: number | Date,
+  intervalDuration: number,
+  scheduler?: SchedulerLike
+): Observable<number>;
 /**
  * @deprecated The signature allowing `undefined` to be passed for `intervalDuration` will be removed in v8. Use the `timer(dueTime, scheduler?)` signature instead.
  */
-export declare function timer(dueTime: number | Date, unused: undefined, scheduler?: SchedulerLike): Observable<0>;
+export declare function timer(
+  dueTime: number | Date,
+  unused: undefined,
+  scheduler?: SchedulerLike
+): Observable<0>;
 //# sourceMappingURL=timer.d.ts.map

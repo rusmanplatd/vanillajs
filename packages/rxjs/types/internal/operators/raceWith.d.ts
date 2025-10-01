@@ -25,5 +25,7 @@ import { OperatorFunction, ObservableInputTuple } from '../types';
  * @return A function that returns an Observable that mirrors the output of the
  * first Observable to emit an item.
  */
-export declare function raceWith<T, A extends readonly unknown[]>(...otherSources: [...ObservableInputTuple<A>]): OperatorFunction<T, T | A[number]>;
+export declare function raceWith<T, A extends readonly unknown[]>(
+  ...otherSources: [...ObservableInputTuple<A>]
+): OperatorFunction<T, T | A[number]>;
 //# sourceMappingURL=raceWith.d.ts.map

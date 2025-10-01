@@ -64,5 +64,9 @@ import { ObservableInput, OperatorFunction } from '../types';
  * concurrently.
  * @return A function that returns an Observable of the accumulated values.
  */
-export declare function mergeScan<T, R>(accumulator: (acc: R, value: T, index: number) => ObservableInput<R>, seed: R, concurrent?: number): OperatorFunction<T, R>;
+export declare function mergeScan<T, R>(
+  accumulator: (acc: R, value: T, index: number) => ObservableInput<R>,
+  seed: R,
+  concurrent?: number
+): OperatorFunction<T, R>;
 //# sourceMappingURL=mergeScan.d.ts.map

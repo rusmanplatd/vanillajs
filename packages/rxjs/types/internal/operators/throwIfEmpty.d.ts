@@ -35,5 +35,7 @@ import { MonoTypeOperatorFunction } from '../types';
  * @return A function that returns an Observable that throws an error if the
  * source Observable completed without emitting.
  */
-export declare function throwIfEmpty<T>(errorFactory?: () => any): MonoTypeOperatorFunction<T>;
+export declare function throwIfEmpty<T>(
+  errorFactory?: () => any
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=throwIfEmpty.d.ts.map

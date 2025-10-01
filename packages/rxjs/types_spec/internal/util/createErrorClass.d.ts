@@ -7,5 +7,7 @@
  * @param createImpl A factory function to create the actual constructor implementation. The returned
  * function should be a named function that calls `_super` internally.
  */
-export declare function createErrorClass<T>(createImpl: (_super: any) => any): T;
+export declare function createErrorClass<T>(
+  createImpl: (_super: any) => any
+): T;
 //# sourceMappingURL=createErrorClass.d.ts.map

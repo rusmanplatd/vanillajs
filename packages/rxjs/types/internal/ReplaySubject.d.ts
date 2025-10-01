@@ -31,19 +31,23 @@ import { TimestampProvider } from './types';
  * @see {@link shareReplay}
  */
 export declare class ReplaySubject<T> extends Subject<T> {
-    private _bufferSize;
-    private _windowTime;
-    private _timestampProvider;
-    private _buffer;
-    private _infiniteTimeWindow;
-    /**
-     * @param _bufferSize The size of the buffer to replay on subscription
-     * @param _windowTime The amount of time the buffered items will stay buffered
-     * @param _timestampProvider An object with a `now()` method that provides the current timestamp. This is used to
-     * calculate the amount of time something has been buffered.
-     */
-    constructor(_bufferSize?: number, _windowTime?: number, _timestampProvider?: TimestampProvider);
-    next(value: T): void;
-    private _trimBuffer;
+  private _bufferSize;
+  private _windowTime;
+  private _timestampProvider;
+  private _buffer;
+  private _infiniteTimeWindow;
+  /**
+   * @param _bufferSize The size of the buffer to replay on subscription
+   * @param _windowTime The amount of time the buffered items will stay buffered
+   * @param _timestampProvider An object with a `now()` method that provides the current timestamp. This is used to
+   * calculate the amount of time something has been buffered.
+   */
+  constructor(
+    _bufferSize?: number,
+    _windowTime?: number,
+    _timestampProvider?: TimestampProvider
+  );
+  next(value: T): void;
+  private _trimBuffer;
 }
 //# sourceMappingURL=ReplaySubject.d.ts.map

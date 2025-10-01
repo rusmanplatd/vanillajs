@@ -40,5 +40,7 @@ import { ObservableInputTuple, OperatorFunction } from '../types';
  * @return A function that returns an Observable that merges the values from
  * all given Observables.
  */
-export declare function mergeWith<T, A extends readonly unknown[]>(...otherSources: [...ObservableInputTuple<A>]): OperatorFunction<T, T | A[number]>;
+export declare function mergeWith<T, A extends readonly unknown[]>(
+  ...otherSources: [...ObservableInputTuple<A>]
+): OperatorFunction<T, T | A[number]>;
 //# sourceMappingURL=mergeWith.d.ts.map

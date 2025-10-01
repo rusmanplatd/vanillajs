@@ -52,5 +52,8 @@ import { MonoTypeOperatorFunction, SchedulerLike } from '../types';
  * @return A function that returns an Observable that emits the same
  * notifications as the source Observable, but with provided scheduler.
  */
-export declare function observeOn<T>(scheduler: SchedulerLike, delay?: number): MonoTypeOperatorFunction<T>;
+export declare function observeOn<T>(
+  scheduler: SchedulerLike,
+  delay?: number
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=observeOn.d.ts.map

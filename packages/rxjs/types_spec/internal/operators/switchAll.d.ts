@@ -57,5 +57,7 @@ import { OperatorFunction, ObservableInput, ObservedValueOf } from '../types';
  * Observable into a first-order Observable producing values only from the most
  * recent Observable sequence.
  */
-export declare function switchAll<O extends ObservableInput<any>>(): OperatorFunction<O, ObservedValueOf<O>>;
+export declare function switchAll<
+  O extends ObservableInput<any>,
+>(): OperatorFunction<O, ObservedValueOf<O>>;
 //# sourceMappingURL=switchAll.d.ts.map

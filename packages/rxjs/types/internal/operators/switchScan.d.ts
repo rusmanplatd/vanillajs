@@ -16,5 +16,8 @@ import { ObservableInput, ObservedValueOf, OperatorFunction } from '../types';
  * @param seed The initial accumulation value.
  * @return A function that returns an observable of the accumulated values.
  */
-export declare function switchScan<T, R, O extends ObservableInput<any>>(accumulator: (acc: R, value: T, index: number) => O, seed: R): OperatorFunction<T, ObservedValueOf<O>>;
+export declare function switchScan<T, R, O extends ObservableInput<any>>(
+  accumulator: (acc: R, value: T, index: number) => O,
+  seed: R
+): OperatorFunction<T, ObservedValueOf<O>>;
 //# sourceMappingURL=switchScan.d.ts.map

@@ -1,16 +1,16 @@
 import { MonoTypeOperatorFunction, ObservableInput } from '../types';
 export interface RepeatConfig {
-    /**
-     * The number of times to repeat the source. Defaults to `Infinity`.
-     */
-    count?: number;
-    /**
-     * If a `number`, will delay the repeat of the source by that number of milliseconds.
-     * If a function, it will provide the number of times the source has been subscribed to,
-     * and the return value should be a valid observable input that will notify when the source
-     * should be repeated. If the notifier observable is empty, the result will complete.
-     */
-    delay?: number | ((count: number) => ObservableInput<any>);
+  /**
+   * The number of times to repeat the source. Defaults to `Infinity`.
+   */
+  count?: number;
+  /**
+   * If a `number`, will delay the repeat of the source by that number of milliseconds.
+   * If a function, it will provide the number of times the source has been subscribed to,
+   * and the return value should be a valid observable input that will notify when the source
+   * should be repeated. If the notifier observable is empty, the result will complete.
+   */
+  delay?: number | ((count: number) => ObservableInput<any>);
 }
 /**
  * Returns an Observable that will resubscribe to the source stream when the source stream completes.
@@ -104,5 +104,7 @@ export interface RepeatConfig {
  * @param countOrConfig Either the number of times the source Observable items are repeated
  * (a count of 0 will yield an empty Observable) or a {@link RepeatConfig} object.
  */
-export declare function repeat<T>(countOrConfig?: number | RepeatConfig): MonoTypeOperatorFunction<T>;
+export declare function repeat<T>(
+  countOrConfig?: number | RepeatConfig
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=repeat.d.ts.map

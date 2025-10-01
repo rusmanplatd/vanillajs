@@ -47,5 +47,7 @@ import { ObservedValueOf, ObservableInput } from '../types';
  * @return An Observable whose Observers' subscriptions trigger an invocation of the
  * given Observable factory function.
  */
-export declare function defer<R extends ObservableInput<any>>(observableFactory: () => R): Observable<ObservedValueOf<R>>;
+export declare function defer<R extends ObservableInput<any>>(
+  observableFactory: () => R
+): Observable<ObservedValueOf<R>>;
 //# sourceMappingURL=defer.d.ts.map

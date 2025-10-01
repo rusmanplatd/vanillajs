@@ -111,5 +111,8 @@ export declare function throwError(error: any): Observable<never>;
  * Use `throwError` in combination with {@link observeOn}: `throwError(() => new Error('test')).pipe(observeOn(scheduler));`.
  * Details: https://rxjs.dev/deprecations/scheduler-argument
  */
-export declare function throwError(errorOrErrorFactory: any, scheduler: SchedulerLike): Observable<never>;
+export declare function throwError(
+  errorOrErrorFactory: any,
+  scheduler: SchedulerLike
+): Observable<never>;
 //# sourceMappingURL=throwError.d.ts.map

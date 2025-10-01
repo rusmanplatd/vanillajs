@@ -22,5 +22,7 @@ import { ObservableInputTuple, OperatorFunction, Cons } from '../types';
  * combined from the source Observable and provided Observables, in form of an
  * array.
  */
-export declare function zipWith<T, A extends readonly unknown[]>(...otherInputs: [...ObservableInputTuple<A>]): OperatorFunction<T, Cons<T, A>>;
+export declare function zipWith<T, A extends readonly unknown[]>(
+  ...otherInputs: [...ObservableInputTuple<A>]
+): OperatorFunction<T, Cons<T, A>>;
 //# sourceMappingURL=zipWith.d.ts.map

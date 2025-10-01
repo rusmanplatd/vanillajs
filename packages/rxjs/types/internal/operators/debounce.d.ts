@@ -57,5 +57,7 @@ import { MonoTypeOperatorFunction, ObservableInput } from '../types';
  * the source Observable by the specified duration Observable returned by
  * `durationSelector`, and may drop some values if they occur too frequently.
  */
-export declare function debounce<T>(durationSelector: (value: T) => ObservableInput<any>): MonoTypeOperatorFunction<T>;
+export declare function debounce<T>(
+  durationSelector: (value: T) => ObservableInput<any>
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=debounce.d.ts.map

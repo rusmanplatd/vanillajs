@@ -39,5 +39,7 @@ import { ObservableInputTuple, OperatorFunction, Cons } from '../types';
  * @return A function that returns an Observable that emits the latest
  * emissions from both source and provided Observables.
  */
-export declare function combineLatestWith<T, A extends readonly unknown[]>(...otherSources: [...ObservableInputTuple<A>]): OperatorFunction<T, Cons<T, A>>;
+export declare function combineLatestWith<T, A extends readonly unknown[]>(
+  ...otherSources: [...ObservableInputTuple<A>]
+): OperatorFunction<T, Cons<T, A>>;
 //# sourceMappingURL=combineLatestWith.d.ts.map

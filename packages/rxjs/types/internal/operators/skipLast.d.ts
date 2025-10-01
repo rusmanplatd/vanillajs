@@ -41,5 +41,7 @@ import { MonoTypeOperatorFunction } from '../types';
  * @return A function that returns an Observable that skips the last `count`
  * values emitted by the source Observable.
  */
-export declare function skipLast<T>(skipCount: number): MonoTypeOperatorFunction<T>;
+export declare function skipLast<T>(
+  skipCount: number
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=skipLast.d.ts.map

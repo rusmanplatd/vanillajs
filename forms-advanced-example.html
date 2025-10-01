@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advanced Reactive Forms Features</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 900px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+
+      .form-section {
+        margin-bottom: 40px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background: #f9f9f9;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      input:disabled {
+        background-color: #e9ecef;
+        cursor: not-allowed;
+      }
+
+      input.invalid {
+        border-color: #dc3545;
+      }
+
+      input.valid {
+        border-color: #28a745;
+      }
+
+      .error {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 5px;
+      }
+
+      .info-box {
+        padding: 15px;
+        background-color: #e7f3ff;
+        border-left: 4px solid #2196f3;
+        margin: 15px 0;
+        border-radius: 4px;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+
+      button:hover:not(:disabled) {
+        background-color: #0056b3;
+      }
+
+      button:disabled {
+        background-color: #6c757d;
+        cursor: not-allowed;
+      }
+
+      button.danger {
+        background-color: #dc3545;
+      }
+
+      button.danger:hover:not(:disabled) {
+        background-color: #c82333;
+      }
+
+      button.success {
+        background-color: #28a745;
+      }
+
+      button.success:hover:not(:disabled) {
+        background-color: #218838;
+      }
+
+      pre {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-size: 12px;
+      }
+
+      .feature-title {
+        color: #007bff;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 3px 8px;
+        font-size: 11px;
+        font-weight: bold;
+        border-radius: 3px;
+        margin-left: 10px;
+      }
+
+      .badge-new {
+        background-color: #28a745;
+        color: white;
+      }
+
+      .checkbox-group {
+        margin: 10px 0;
+      }
+
+      .checkbox-group label {
+        display: inline-block;
+        font-weight: normal;
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Advanced Reactive Forms Features</h1>
+    <p>
+      This demonstrates the new Angular-compatible features added to the
+      reactive forms library.
+    </p>
+
+    <!-- Enable/Disable Feature -->
+    <div class="form-section">
+      <h2 class="feature-title">
+        Enable/Disable Controls <span class="badge badge-new">NEW</span>
+      </h2>
+      <div class="info-box">
+        <strong>Features:</strong> disable(), enable(), disabled property,
+        enabled property, getRawValue()
+      </div>
+
+      <form id="profile-form">
+        <div class="form-group">
+          <label for="profile-name">Name:</label>
+          <input type="text" id="profile-name" />
+          <div id="profile-name-error" class="error"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="profile-email">Email:</label>
+          <input type="email" id="profile-email" />
+          <div id="profile-email-error" class="error"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="profile-role">Role (disabled by default):</label>
+          <input type="text" id="profile-role" disabled />
+        </div>
+
+        <button type="button" id="toggle-email">Toggle Email</button>
+        <button type="button" id="toggle-role" class="success">
+          Enable Role
+        </button>
+        <button type="button" id="disable-all" class="danger">
+          Disable All
+        </button>
+        <button type="button" id="enable-all" class="success">
+          Enable All
+        </button>
+
+        <div class="info-box">
+          <strong>Value:</strong>
+          <pre id="profile-value"></pre>
+          <strong>Raw Value (includes disabled):</strong>
+          <pre id="profile-raw-value"></pre>
+          <strong>Status:</strong> <span id="profile-status"></span>
+        </div>
+      </form>
+    </div>
+
+    <!-- setErrors and hasError Feature -->
+    <div class="form-section">
+      <h2 class="feature-title">
+        Manual Error Control <span class="badge badge-new">NEW</span>
+      </h2>
+      <div class="info-box">
+        <strong>Features:</strong> setErrors(), hasError(), getError()
+      </div>
+
+      <form id="custom-error-form">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" />
+          <div id="username-error" class="error"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" />
+          <div id="password-error" class="error"></div>
+        </div>
+
+        <button type="button" id="simulate-server-error">
+          Simulate Server Error
+        </button>
+        <button type="button" id="clear-server-error">Clear Errors</button>
+        <button type="button" id="check-errors">Check Specific Errors</button>
+
+        <div class="info-box">
+          <strong>Form Errors:</strong>
+          <pre id="custom-errors-display"></pre>
+        </div>
+      </form>
+    </div>
+
+    <!-- Parent Tracking Feature -->
+    <div class="form-section">
+      <h2 class="feature-title">
+        Parent Tracking <span class="badge badge-new">NEW</span>
+      </h2>
+      <div class="info-box">
+        <strong>Features:</strong> Parent references, updateValueAndValidity(),
+        onlySelf option
+      </div>
+
+      <form id="nested-form">
+        <div class="form-group">
+          <label for="city">City:</label>
+          <input type="text" id="city" />
+          <div id="city-error" class="error"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="zipcode">Zip Code:</label>
+          <input type="text" id="zipcode" />
+          <div id="zipcode-error" class="error"></div>
+        </div>
+
+        <button type="button" id="validate-city">
+          Validate City (onlySelf: false)
+        </button>
+        <button type="button" id="validate-city-only">
+          Validate City (onlySelf: true)
+        </button>
+
+        <div class="info-box">
+          <strong>Address Group Status:</strong>
+          <span id="address-status"></span><br />
+          <strong>Full Form Status:</strong>
+          <span id="nested-form-status"></span>
+        </div>
+      </form>
+    </div>
+
+    <!-- contains() method -->
+    <div class="form-section">
+      <h2 class="feature-title">
+        Dynamic Control Management <span class="badge badge-new">NEW</span>
+      </h2>
+      <div class="info-box">
+        <strong>Features:</strong> contains(), addControl(), removeControl()
+      </div>
+
+      <form id="dynamic-form">
+        <div class="form-group">
+          <label for="base-field">Base Field (always present):</label>
+          <input type="text" id="base-field" />
+        </div>
+
+        <div id="optional-field-container" style="display: none">
+          <div class="form-group">
+            <label for="optional-field">Optional Field:</label>
+            <input type="text" id="optional-field" />
+          </div>
+        </div>
+
+        <button type="button" id="toggle-optional">Add Optional Field</button>
+        <button type="button" id="check-contains">Check Contains</button>
+
+        <div class="info-box">
+          <strong>Form Controls:</strong>
+          <pre id="dynamic-controls"></pre>
+          <strong>Contains 'optionalField':</strong>
+          <span id="contains-result"></span>
+        </div>
+      </form>
+    </div>
+
+    <!-- Status Updates -->
+    <div class="form-section">
+      <h2 class="feature-title">
+        Status Management <span class="badge badge-new">NEW</span>
+      </h2>
+      <div class="info-box">
+        <strong>Features:</strong> status property (VALID, INVALID, DISABLED,
+        PENDING), statusChanges observable
+      </div>
+
+      <form id="status-form">
+        <div class="form-group">
+          <label for="status-input">Enter text (required, min 5 chars):</label>
+          <input type="text" id="status-input" />
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="disable-checkbox" />
+          <label for="disable-checkbox">Disable this control</label>
+        </div>
+
+        <div class="info-box">
+          <strong>Control Status:</strong> <span id="status-display"></span
+          ><br />
+          <strong>Is Valid:</strong> <span id="is-valid"></span><br />
+          <strong>Is Invalid:</strong> <span id="is-invalid"></span><br />
+          <strong>Is Disabled:</strong> <span id="is-disabled"></span><br />
+          <strong>Is Enabled:</strong> <span id="is-enabled"></span>
+        </div>
+
+        <div class="info-box">
+          <strong>Status Change Log:</strong>
+          <pre id="status-log"></pre>
+        </div>
+      </form>
+    </div>
+
+    <script type="module">
+      import {
+        FormControl,
+        FormGroup,
+        FormArray,
+        Validators,
+      } from './src/forms.js';
+
+      // ========== ENABLE/DISABLE FEATURE ==========
+      const profileForm = new FormGroup({
+        name: new FormControl('John Doe', [Validators.required]),
+        email: new FormControl('john@example.com', [
+          Validators.required,
+          Validators.email,
+        ]),
+        role: new FormControl({ value: 'Admin', disabled: true }),
+      });
+
+      // Note: We need to disable the role control after creation since constructor doesn't support options yet
+      profileForm.get('role').disable();
+
+      // Bind inputs
+      document.getElementById('profile-name').value =
+        profileForm.get('name').value;
+      document.getElementById('profile-email').value =
+        profileForm.get('email').value;
+      document.getElementById('profile-role').value =
+        profileForm.get('role').value;
+
+      document.getElementById('profile-name').addEventListener('input', (e) => {
+        profileForm.get('name').setValue(e.target.value);
+      });
+
+      document.getElementById('profile-email').addEventListener('input', (e) => {
+        profileForm.get('email').setValue(e.target.value);
+      });
+
+      document.getElementById('profile-role').addEventListener('input', (e) => {
+        profileForm.get('role').setValue(e.target.value);
+      });
+
+      // Display values
+      profileForm.valueChanges.subscribe((value) => {
+        document.getElementById('profile-value').textContent = JSON.stringify(
+          value,
+          null,
+          2
+        );
+        document.getElementById('profile-raw-value').textContent =
+          JSON.stringify(profileForm.getRawValue(), null, 2);
+      });
+
+      profileForm.statusChanges.subscribe(() => {
+        document.getElementById(
+          'profile-status'
+        ).textContent = `Valid: ${profileForm.valid}, Disabled controls: ${!profileForm.get('role').enabled}`;
+      });
+
+      // Toggle buttons
+      document.getElementById('toggle-email').addEventListener('click', () => {
+        const emailControl = profileForm.get('email');
+        if (emailControl.enabled) {
+          emailControl.disable();
+          document.getElementById('profile-email').disabled = true;
+        } else {
+          emailControl.enable();
+          document.getElementById('profile-email').disabled = false;
+        }
+      });
+
+      document.getElementById('toggle-role').addEventListener('click', () => {
+        const roleControl = profileForm.get('role');
+        if (roleControl.enabled) {
+          roleControl.disable();
+          document.getElementById('profile-role').disabled = true;
+          document.getElementById('toggle-role').textContent = 'Enable Role';
+          document.getElementById('toggle-role').classList.add('success');
+        } else {
+          roleControl.enable();
+          document.getElementById('profile-role').disabled = false;
+          document.getElementById('toggle-role').textContent = 'Disable Role';
+          document.getElementById('toggle-role').classList.remove('success');
+        }
+      });
+
+      document.getElementById('disable-all').addEventListener('click', () => {
+        profileForm.disable();
+        document.getElementById('profile-name').disabled = true;
+        document.getElementById('profile-email').disabled = true;
+        document.getElementById('profile-role').disabled = true;
+      });
+
+      document.getElementById('enable-all').addEventListener('click', () => {
+        profileForm.enable();
+        document.getElementById('profile-name').disabled = false;
+        document.getElementById('profile-email').disabled = false;
+        document.getElementById('profile-role').disabled = false;
+      });
+
+      // Initial display
+      profileForm.valueChanges.subscribe(() => {}); // Trigger initial
+      document.getElementById('profile-value').textContent = JSON.stringify(
+        profileForm.value,
+        null,
+        2
+      );
+      document.getElementById('profile-raw-value').textContent = JSON.stringify(
+        profileForm.getRawValue(),
+        null,
+        2
+      );
+
+      // ========== MANUAL ERROR CONTROL ==========
+      const customErrorForm = new FormGroup({
+        username: new FormControl('', [Validators.required]),
+        password: new FormControl('', [
+          Validators.required,
+          Validators.minLength(8),
+        ]),
+      });
+
+      document.getElementById('username').addEventListener('input', (e) => {
+        customErrorForm.get('username').setValue(e.target.value);
+      });
+
+      document.getElementById('password').addEventListener('input', (e) => {
+        customErrorForm.get('password').setValue(e.target.value);
+      });
+
+      customErrorForm.statusChanges.subscribe(() => {
+        document.getElementById('custom-errors-display').textContent =
+          JSON.stringify(customErrorForm.errors, null, 2);
+      });
+
+      document
+        .getElementById('simulate-server-error')
+        .addEventListener('click', () => {
+          customErrorForm
+            .get('username')
+            .setErrors({ serverError: 'Username already taken' });
+          document.getElementById('username-error').textContent =
+            'Username already taken (server error)';
+        });
+
+      document
+        .getElementById('clear-server-error')
+        .addEventListener('click', () => {
+          customErrorForm.get('username').setErrors(null);
+          document.getElementById('username-error').textContent = '';
+        });
+
+      document
+        .getElementById('check-errors')
+        .addEventListener('click', () => {
+          const usernameControl = customErrorForm.get('username');
+          const passwordControl = customErrorForm.get('password');
+
+          let message = '';
+          if (usernameControl.hasError('required')) {
+            message += 'Username has required error\n';
+          }
+          if (usernameControl.hasError('serverError')) {
+            message +=
+              'Username has serverError: ' +
+              usernameControl.getError('serverError') +
+              '\n';
+          }
+          if (passwordControl.hasError('minLength')) {
+            const error = passwordControl.getError('minLength');
+            message += `Password minLength error: needs ${error.requiredLength}, has ${error.actualLength}\n`;
+          }
+
+          alert(message || 'No specific errors found!');
+        });
+
+      // ========== PARENT TRACKING ==========
+      const addressGroup = new FormGroup({
+        city: new FormControl('', [Validators.required]),
+        zipcode: new FormControl('', [
+          Validators.required,
+          Validators.pattern(/^\d{5}$/),
+        ]),
+      });
+
+      const nestedForm = new FormGroup({
+        address: addressGroup,
+      });
+
+      document.getElementById('city').addEventListener('input', (e) => {
+        addressGroup.get('city').setValue(e.target.value);
+      });
+
+      document.getElementById('zipcode').addEventListener('input', (e) => {
+        addressGroup.get('zipcode').setValue(e.target.value);
+      });
+
+      addressGroup.statusChanges.subscribe(() => {
+        document.getElementById(
+          'address-status'
+        ).textContent = `Valid: ${addressGroup.valid}`;
+      });
+
+      nestedForm.statusChanges.subscribe(() => {
+        document.getElementById(
+          'nested-form-status'
+        ).textContent = `Valid: ${nestedForm.valid}`;
+      });
+
+      document
+        .getElementById('validate-city')
+        .addEventListener('click', () => {
+          addressGroup.get('city').updateValueAndValidity({ onlySelf: false });
+          alert('Updated with parent notification');
+        });
+
+      document
+        .getElementById('validate-city-only')
+        .addEventListener('click', () => {
+          addressGroup.get('city').updateValueAndValidity({ onlySelf: true });
+          alert('Updated without parent notification');
+        });
+
+      // ========== DYNAMIC CONTROL MANAGEMENT ==========
+      const dynamicForm = new FormGroup({
+        baseField: new FormControl('', [Validators.required]),
+      });
+
+      document.getElementById('base-field').addEventListener('input', (e) => {
+        dynamicForm.get('baseField').setValue(e.target.value);
+      });
+
+      let optionalFieldAdded = false;
+
+      document.getElementById('toggle-optional').addEventListener('click', () => {
+        if (!optionalFieldAdded) {
+          dynamicForm.addControl(
+            'optionalField',
+            new FormControl('', [Validators.required])
+          );
+          document.getElementById('optional-field-container').style.display =
+            'block';
+          document.getElementById('toggle-optional').textContent =
+            'Remove Optional Field';
+          optionalFieldAdded = true;
+
+          document
+            .getElementById('optional-field')
+            .addEventListener('input', (e) => {
+              dynamicForm.get('optionalField').setValue(e.target.value);
+            });
+        } else {
+          dynamicForm.removeControl('optionalField');
+          document.getElementById('optional-field-container').style.display =
+            'none';
+          document.getElementById('toggle-optional').textContent =
+            'Add Optional Field';
+          optionalFieldAdded = false;
+        }
+
+        updateDynamicDisplay();
+      });
+
+      document
+        .getElementById('check-contains')
+        .addEventListener('click', () => {
+          const contains = dynamicForm.contains('optionalField');
+          document.getElementById('contains-result').textContent =
+            contains.toString();
+        });
+
+      function updateDynamicDisplay() {
+        const controls = Object.keys(dynamicForm['_controls']);
+        document.getElementById('dynamic-controls').textContent =
+          JSON.stringify(controls, null, 2);
+        document.getElementById('contains-result').textContent =
+          dynamicForm.contains('optionalField').toString();
+      }
+
+      updateDynamicDisplay();
+
+      // ========== STATUS MANAGEMENT ==========
+      const statusControl = new FormControl('', [
+        Validators.required,
+        Validators.minLength(5),
+      ]);
+
+      let statusLog = [];
+
+      document.getElementById('status-input').addEventListener('input', (e) => {
+        statusControl.setValue(e.target.value);
+      });
+
+      document
+        .getElementById('disable-checkbox')
+        .addEventListener('change', (e) => {
+          if (e.target.checked) {
+            statusControl.disable();
+            document.getElementById('status-input').disabled = true;
+          } else {
+            statusControl.enable();
+            document.getElementById('status-input').disabled = false;
+          }
+        });
+
+      statusControl.statusChanges.subscribe((status) => {
+        document.getElementById('status-display').textContent = status;
+        document.getElementById('is-valid').textContent =
+          statusControl.valid.toString();
+        document.getElementById('is-invalid').textContent =
+          statusControl.invalid.toString();
+        document.getElementById('is-disabled').textContent =
+          statusControl.disabled.toString();
+        document.getElementById('is-enabled').textContent =
+          statusControl.enabled.toString();
+
+        statusLog.push(
+          `${new Date().toLocaleTimeString()}: ${status} (value: "${statusControl.value}")`
+        );
+        if (statusLog.length > 10) statusLog.shift();
+        document.getElementById('status-log').textContent =
+          statusLog.join('\n');
+      });
+
+      // Trigger initial status
+      statusControl.statusChanges.subscribe(() => {});
+      document.getElementById('status-display').textContent =
+        statusControl.status;
+      document.getElementById('is-valid').textContent =
+        statusControl.valid.toString();
+      document.getElementById('is-invalid').textContent =
+        statusControl.invalid.toString();
+      document.getElementById('is-disabled').textContent =
+        statusControl.disabled.toString();
+      document.getElementById('is-enabled').textContent =
+        statusControl.enabled.toString();
+    </script>
+  </body>
+</html>

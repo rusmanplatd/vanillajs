@@ -34,5 +34,7 @@ import { OperatorFunction } from '../types';
  * specified `defaultValue` if the source Observable emits no items, or the
  * values emitted by the source Observable.
  */
-export declare function defaultIfEmpty<T, R>(defaultValue: R): OperatorFunction<T, T | R>;
+export declare function defaultIfEmpty<T, R>(
+  defaultValue: R
+): OperatorFunction<T, T | R>;
 //# sourceMappingURL=defaultIfEmpty.d.ts.map

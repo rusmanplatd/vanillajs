@@ -58,5 +58,8 @@ import { MonoTypeOperatorFunction, SchedulerLike } from '../types';
  * @return A function that returns an Observable modified so that its
  * subscriptions happen on the specified {@link SchedulerLike}.
  */
-export declare function subscribeOn<T>(scheduler: SchedulerLike, delay?: number): MonoTypeOperatorFunction<T>;
+export declare function subscribeOn<T>(
+  scheduler: SchedulerLike,
+  delay?: number
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=subscribeOn.d.ts.map

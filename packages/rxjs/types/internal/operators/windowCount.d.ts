@@ -61,5 +61,8 @@ import { OperatorFunction } from '../types';
  * @return A function that returns an Observable of windows, which in turn are
  * Observable of values.
  */
-export declare function windowCount<T>(windowSize: number, startWindowEvery?: number): OperatorFunction<T, Observable<T>>;
+export declare function windowCount<T>(
+  windowSize: number,
+  startWindowEvery?: number
+): OperatorFunction<T, Observable<T>>;
 //# sourceMappingURL=windowCount.d.ts.map

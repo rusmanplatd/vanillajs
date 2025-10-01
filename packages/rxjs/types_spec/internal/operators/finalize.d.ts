@@ -60,5 +60,7 @@ import { MonoTypeOperatorFunction } from '../types';
  * @return A function that returns an Observable that mirrors the source, but
  * will call the specified function on termination.
  */
-export declare function finalize<T>(callback: () => void): MonoTypeOperatorFunction<T>;
+export declare function finalize<T>(
+  callback: () => void
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=finalize.d.ts.map

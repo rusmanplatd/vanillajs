@@ -1,5 +1,11 @@
 import { Observable } from '../Observable';
-import { MonoTypeOperatorFunction, OperatorFunction, TimestampProvider, ObservableInput, ObservedValueOf } from '../types';
+import {
+  MonoTypeOperatorFunction,
+  OperatorFunction,
+  TimestampProvider,
+  ObservableInput,
+  ObservedValueOf,
+} from '../types';
 /**
  * Creates a {@link ConnectableObservable} that uses a {@link ReplaySubject}
  * internally.
@@ -16,7 +22,11 @@ import { MonoTypeOperatorFunction, OperatorFunction, TimestampProvider, Observab
  * `share({ connector: () => new ReplaySubject(size, time, scheduler), resetOnError: false, resetOnComplete: false, resetOnRefCountZero: false })`.
  * Details: https://rxjs.dev/deprecations/multicasting
  */
-export declare function publishReplay<T>(bufferSize?: number, windowTime?: number, timestampProvider?: TimestampProvider): MonoTypeOperatorFunction<T>;
+export declare function publishReplay<T>(
+  bufferSize?: number,
+  windowTime?: number,
+  timestampProvider?: TimestampProvider
+): MonoTypeOperatorFunction<T>;
 /**
  * Creates an observable, that when subscribed to, will create a {@link ReplaySubject},
  * and pass an observable from it (using [asObservable](api/index/class/Subject#asObservable)) to
@@ -34,7 +44,12 @@ export declare function publishReplay<T>(bufferSize?: number, windowTime?: numbe
  * `source.pipe(connect(selector, { connector: () => new ReplaySubject(size, window, scheduler) }))`.
  * Details: https://rxjs.dev/deprecations/multicasting
  */
-export declare function publishReplay<T, O extends ObservableInput<any>>(bufferSize: number | undefined, windowTime: number | undefined, selector: (shared: Observable<T>) => O, timestampProvider?: TimestampProvider): OperatorFunction<T, ObservedValueOf<O>>;
+export declare function publishReplay<T, O extends ObservableInput<any>>(
+  bufferSize: number | undefined,
+  windowTime: number | undefined,
+  selector: (shared: Observable<T>) => O,
+  timestampProvider?: TimestampProvider
+): OperatorFunction<T, ObservedValueOf<O>>;
 /**
  * Creates a {@link ConnectableObservable} that uses a {@link ReplaySubject}
  * internally.
@@ -52,5 +67,10 @@ export declare function publishReplay<T, O extends ObservableInput<any>>(bufferS
  * `share({ connector: () => new ReplaySubject(size, time, scheduler), resetOnError: false, resetOnComplete: false, resetOnRefCountZero: false })`.
  * Details: https://rxjs.dev/deprecations/multicasting
  */
-export declare function publishReplay<T, O extends ObservableInput<any>>(bufferSize: number | undefined, windowTime: number | undefined, selector: undefined, timestampProvider: TimestampProvider): OperatorFunction<T, ObservedValueOf<O>>;
+export declare function publishReplay<T, O extends ObservableInput<any>>(
+  bufferSize: number | undefined,
+  windowTime: number | undefined,
+  selector: undefined,
+  timestampProvider: TimestampProvider
+): OperatorFunction<T, ObservedValueOf<O>>;
 //# sourceMappingURL=publishReplay.d.ts.map

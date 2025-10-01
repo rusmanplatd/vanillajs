@@ -4,31 +4,31 @@ declare type ConditionFunc<S> = (state: S) => boolean;
 declare type IterateFunc<S> = (state: S) => S;
 declare type ResultFunc<S, T> = (state: S) => T;
 export interface GenerateBaseOptions<S> {
-    /**
-     * Initial state.
-     */
-    initialState: S;
-    /**
-     * Condition function that accepts state and returns boolean.
-     * When it returns false, the generator stops.
-     * If not specified, a generator never stops.
-     */
-    condition?: ConditionFunc<S>;
-    /**
-     * Iterate function that accepts state and returns new state.
-     */
-    iterate: IterateFunc<S>;
-    /**
-     * SchedulerLike to use for generation process.
-     * By default, a generator starts immediately.
-     */
-    scheduler?: SchedulerLike;
+  /**
+   * Initial state.
+   */
+  initialState: S;
+  /**
+   * Condition function that accepts state and returns boolean.
+   * When it returns false, the generator stops.
+   * If not specified, a generator never stops.
+   */
+  condition?: ConditionFunc<S>;
+  /**
+   * Iterate function that accepts state and returns new state.
+   */
+  iterate: IterateFunc<S>;
+  /**
+   * SchedulerLike to use for generation process.
+   * By default, a generator starts immediately.
+   */
+  scheduler?: SchedulerLike;
 }
 export interface GenerateOptions<T, S> extends GenerateBaseOptions<S> {
-    /**
-     * Result selection function that accepts state and returns a value to emit.
-     */
-    resultSelector: ResultFunc<S, T>;
+  /**
+   * Result selection function that accepts state and returns a value to emit.
+   */
+  resultSelector: ResultFunc<S, T>;
 }
 /**
  * Generates an observable sequence by running a state-driven loop
@@ -82,7 +82,13 @@ export interface GenerateOptions<T, S> extends GenerateBaseOptions<S> {
  * @deprecated Instead of passing separate arguments, use the options argument.
  * Signatures taking separate arguments will be removed in v8.
  */
-export declare function generate<T, S>(initialState: S, condition: ConditionFunc<S>, iterate: IterateFunc<S>, resultSelector: ResultFunc<S, T>, scheduler?: SchedulerLike): Observable<T>;
+export declare function generate<T, S>(
+  initialState: S,
+  condition: ConditionFunc<S>,
+  iterate: IterateFunc<S>,
+  resultSelector: ResultFunc<S, T>,
+  scheduler?: SchedulerLike
+): Observable<T>;
 /**
  * Generates an Observable by running a state-driven loop
  * that emits an element on each iteration.
@@ -226,7 +232,12 @@ export declare function generate<T, S>(initialState: S, condition: ConditionFunc
  * @deprecated Instead of passing separate arguments, use the options argument.
  * Signatures taking separate arguments will be removed in v8.
  */
-export declare function generate<S>(initialState: S, condition: ConditionFunc<S>, iterate: IterateFunc<S>, scheduler?: SchedulerLike): Observable<S>;
+export declare function generate<S>(
+  initialState: S,
+  condition: ConditionFunc<S>,
+  iterate: IterateFunc<S>,
+  scheduler?: SchedulerLike
+): Observable<S>;
 /**
  * Generates an observable sequence by running a state-driven loop
  * producing the sequence's elements, using the specified scheduler
@@ -267,7 +278,9 @@ export declare function generate<S>(initialState: S, condition: ConditionFunc<S>
  * @param options Object that must contain initialState, iterate and might contain condition and scheduler.
  * @returns The generated sequence.
  */
-export declare function generate<S>(options: GenerateBaseOptions<S>): Observable<S>;
+export declare function generate<S>(
+  options: GenerateBaseOptions<S>
+): Observable<S>;
 /**
  * Generates an observable sequence by running a state-driven loop
  * producing the sequence's elements, using the specified scheduler
@@ -309,6 +322,8 @@ export declare function generate<S>(options: GenerateBaseOptions<S>): Observable
  * @param options Object that must contain initialState, iterate, resultSelector and might contain condition and scheduler.
  * @returns The generated sequence.
  */
-export declare function generate<T, S>(options: GenerateOptions<T, S>): Observable<T>;
+export declare function generate<T, S>(
+  options: GenerateOptions<T, S>
+): Observable<T>;
 export {};
 //# sourceMappingURL=generate.d.ts.map

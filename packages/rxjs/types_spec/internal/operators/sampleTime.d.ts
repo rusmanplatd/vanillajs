@@ -42,5 +42,8 @@ import { MonoTypeOperatorFunction, SchedulerLike } from '../types';
  * sampling the values emitted by the source Observable at the specified time
  * interval.
  */
-export declare function sampleTime<T>(period: number, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T>;
+export declare function sampleTime<T>(
+  period: number,
+  scheduler?: SchedulerLike
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=sampleTime.d.ts.map

@@ -1,14 +1,19 @@
-import { OperatorFunction, ObservableInput, ObservedValueOf, SubjectLike } from '../types';
+import {
+  OperatorFunction,
+  ObservableInput,
+  ObservedValueOf,
+  SubjectLike,
+} from '../types';
 import { Observable } from '../Observable';
 /**
  * An object used to configure {@link connect} operator.
  */
 export interface ConnectConfig<T> {
-    /**
-     * A factory function used to create the Subject through which the source
-     * is multicast. By default, this creates a {@link Subject}.
-     */
-    connector: () => SubjectLike<T>;
+  /**
+   * A factory function used to create the Subject through which the source
+   * is multicast. By default, this creates a {@link Subject}.
+   */
+  connector: () => SubjectLike<T>;
 }
 /**
  * Creates an observable by multicasting the source within a function that
@@ -83,5 +88,8 @@ export interface ConnectConfig<T> {
  * operator will subscribe to the source, and the connection will be made.
  * @param config The configuration object for `connect`.
  */
-export declare function connect<T, O extends ObservableInput<unknown>>(selector: (shared: Observable<T>) => O, config?: ConnectConfig<T>): OperatorFunction<T, ObservedValueOf<O>>;
+export declare function connect<T, O extends ObservableInput<unknown>>(
+  selector: (shared: Observable<T>) => O,
+  config?: ConnectConfig<T>
+): OperatorFunction<T, ObservedValueOf<O>>;
 //# sourceMappingURL=connect.d.ts.map

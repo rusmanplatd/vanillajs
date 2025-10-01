@@ -39,5 +39,7 @@ import { ObservableInputTuple, OperatorFunction } from '../types';
  * subscriptions to the source and provided Observables subscribing to the next
  * only once the current subscription completes.
  */
-export declare function concatWith<T, A extends readonly unknown[]>(...otherSources: [...ObservableInputTuple<A>]): OperatorFunction<T, T | A[number]>;
+export declare function concatWith<T, A extends readonly unknown[]>(
+  ...otherSources: [...ObservableInputTuple<A>]
+): OperatorFunction<T, T | A[number]>;
 //# sourceMappingURL=concatWith.d.ts.map

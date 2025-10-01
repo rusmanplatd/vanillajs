@@ -155,5 +155,7 @@ import { WebSocketSubject, WebSocketSubjectConfig } from './WebSocketSubject';
  * @param urlConfigOrSource The WebSocket endpoint as an url or an object with configuration and additional Observers.
  * @return Subject which allows to both send and receive messages via WebSocket connection.
  */
-export declare function webSocket<T>(urlConfigOrSource: string | WebSocketSubjectConfig<T>): WebSocketSubject<T>;
+export declare function webSocket<T>(
+  urlConfigOrSource: string | WebSocketSubjectConfig<T>
+): WebSocketSubject<T>;
 //# sourceMappingURL=webSocket.d.ts.map

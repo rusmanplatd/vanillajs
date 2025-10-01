@@ -78,5 +78,9 @@ import { ObservableInput } from '../types';
  * @param falseResult An Observable that will be subscribed if condition is false.
  * @return An observable that proxies to `trueResult` or `falseResult`, depending on the result of the `condition` function.
  */
-export declare function iif<T, F>(condition: () => boolean, trueResult: ObservableInput<T>, falseResult: ObservableInput<F>): Observable<T | F>;
+export declare function iif<T, F>(
+  condition: () => boolean,
+  trueResult: ObservableInput<T>,
+  falseResult: ObservableInput<F>
+): Observable<T | F>;
 //# sourceMappingURL=iif.d.ts.map

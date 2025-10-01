@@ -44,5 +44,7 @@ import { OperatorFunction, ObservableInput } from '../types';
  * @return A function that returns an Observable of windows, which are
  * Observables emitting values of the source Observable.
  */
-export declare function window<T>(windowBoundaries: ObservableInput<any>): OperatorFunction<T, Observable<T>>;
+export declare function window<T>(
+  windowBoundaries: ObservableInput<any>
+): OperatorFunction<T, Observable<T>>;
 //# sourceMappingURL=window.d.ts.map

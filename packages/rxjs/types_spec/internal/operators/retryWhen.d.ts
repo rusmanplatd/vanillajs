@@ -57,5 +57,7 @@ import { MonoTypeOperatorFunction, ObservableInput } from '../types';
  * Will be removed in v9 or v10. Use {@link retry}'s {@link RetryConfig#delay delay} option instead.
  * Instead of `retryWhen(() => notify$)`, use: `retry({ delay: () => notify$ })`.
  */
-export declare function retryWhen<T>(notifier: (errors: Observable<any>) => ObservableInput<any>): MonoTypeOperatorFunction<T>;
+export declare function retryWhen<T>(
+  notifier: (errors: Observable<any>) => ObservableInput<any>
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=retryWhen.d.ts.map

@@ -49,5 +49,9 @@ import { MonoTypeOperatorFunction, SchedulerLike } from '../types';
  * @return A function that returns an Observable that performs the throttle
  * operation to limit the rate of emissions from the source.
  */
-export declare function throttleTime<T>(duration: number, scheduler?: SchedulerLike, config?: ThrottleConfig): MonoTypeOperatorFunction<T>;
+export declare function throttleTime<T>(
+  duration: number,
+  scheduler?: SchedulerLike,
+  config?: ThrottleConfig
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=throttleTime.d.ts.map

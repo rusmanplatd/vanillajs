@@ -8,5 +8,11 @@ import { Subscriber } from '../Subscriber';
  * @param emitOnNext Whether or not to emit the state on next
  * @param emitBeforeComplete Whether or not to emit the before completion
  */
-export declare function scanInternals<V, A, S>(accumulator: (acc: V | A | S, value: V, index: number) => A, seed: S, hasSeed: boolean, emitOnNext: boolean, emitBeforeComplete?: undefined | true): (source: Observable<V>, subscriber: Subscriber<any>) => void;
+export declare function scanInternals<V, A, S>(
+  accumulator: (acc: V | A | S, value: V, index: number) => A,
+  seed: S,
+  hasSeed: boolean,
+  emitOnNext: boolean,
+  emitBeforeComplete?: undefined | true
+): (source: Observable<V>, subscriber: Subscriber<any>) => void;
 //# sourceMappingURL=scanInternals.d.ts.map

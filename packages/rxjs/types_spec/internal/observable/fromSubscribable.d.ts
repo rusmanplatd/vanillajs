@@ -10,5 +10,7 @@ import { Subscribable } from '../types';
  *
  * @param subscribable A subscribable
  */
-export declare function fromSubscribable<T>(subscribable: Subscribable<T>): Observable<T>;
+export declare function fromSubscribable<T>(
+  subscribable: Subscribable<T>
+): Observable<T>;
 //# sourceMappingURL=fromSubscribable.d.ts.map

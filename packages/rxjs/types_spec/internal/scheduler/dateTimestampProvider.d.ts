@@ -1,6 +1,6 @@
 import { TimestampProvider } from '../types';
 interface DateTimestampProvider extends TimestampProvider {
-    delegate: TimestampProvider | undefined;
+  delegate: TimestampProvider | undefined;
 }
 export declare const dateTimestampProvider: DateTimestampProvider;
 export {};

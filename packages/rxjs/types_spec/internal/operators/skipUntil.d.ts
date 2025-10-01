@@ -44,5 +44,7 @@ import { MonoTypeOperatorFunction, ObservableInput } from '../types';
  * source Observable until the `notifier` Observable emits an item, then emits the
  * remaining items.
  */
-export declare function skipUntil<T>(notifier: ObservableInput<any>): MonoTypeOperatorFunction<T>;
+export declare function skipUntil<T>(
+  notifier: ObservableInput<any>
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=skipUntil.d.ts.map

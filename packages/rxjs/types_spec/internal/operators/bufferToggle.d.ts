@@ -42,5 +42,8 @@ import { OperatorFunction, ObservableInput } from '../types';
  * and cleared.
  * @return A function that returns an Observable of arrays of buffered values.
  */
-export declare function bufferToggle<T, O>(openings: ObservableInput<O>, closingSelector: (value: O) => ObservableInput<any>): OperatorFunction<T, T[]>;
+export declare function bufferToggle<T, O>(
+  openings: ObservableInput<O>,
+  closingSelector: (value: O) => ObservableInput<any>
+): OperatorFunction<T, T[]>;
 //# sourceMappingURL=bufferToggle.d.ts.map

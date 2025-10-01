@@ -54,5 +54,7 @@ import { OperatorFunction } from '../types';
  * @return A function that returns an Observable that emits one number that
  * represents the count of emissions.
  */
-export declare function count<T>(predicate?: (value: T, index: number) => boolean): OperatorFunction<T, number>;
+export declare function count<T>(
+  predicate?: (value: T, index: number) => boolean
+): OperatorFunction<T, number>;
 //# sourceMappingURL=count.d.ts.map

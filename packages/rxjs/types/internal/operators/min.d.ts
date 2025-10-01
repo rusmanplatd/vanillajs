@@ -46,5 +46,7 @@ import { MonoTypeOperatorFunction } from '../types';
  * @return A function that returns an Observable that emits item with the
  * smallest value.
  */
-export declare function min<T>(comparer?: (x: T, y: T) => number): MonoTypeOperatorFunction<T>;
+export declare function min<T>(
+  comparer?: (x: T, y: T) => number
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=min.d.ts.map

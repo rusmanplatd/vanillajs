@@ -46,5 +46,7 @@ import { MonoTypeOperatorFunction } from '../types';
  * @return A function that returns an Observable that emits item with the
  * largest value.
  */
-export declare function max<T>(comparer?: (x: T, y: T) => number): MonoTypeOperatorFunction<T>;
+export declare function max<T>(
+  comparer?: (x: T, y: T) => number
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=max.d.ts.map

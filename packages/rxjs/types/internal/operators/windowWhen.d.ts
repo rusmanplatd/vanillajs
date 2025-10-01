@@ -45,5 +45,7 @@ import { ObservableInput, OperatorFunction } from '../types';
  * @return A function that returns an Observable of windows, which in turn are
  * Observables.
  */
-export declare function windowWhen<T>(closingSelector: () => ObservableInput<any>): OperatorFunction<T, Observable<T>>;
+export declare function windowWhen<T>(
+  closingSelector: () => ObservableInput<any>
+): OperatorFunction<T, Observable<T>>;
 //# sourceMappingURL=windowWhen.d.ts.map

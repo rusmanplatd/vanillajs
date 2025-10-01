@@ -37,5 +37,7 @@ import { MonoTypeOperatorFunction, ObservableInput } from '../types';
  * @return A function that returns an Observable that emits the values from the
  * source Observable until `notifier` emits its first value.
  */
-export declare function takeUntil<T>(notifier: ObservableInput<any>): MonoTypeOperatorFunction<T>;
+export declare function takeUntil<T>(
+  notifier: ObservableInput<any>
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=takeUntil.d.ts.map

@@ -48,5 +48,8 @@ import { OperatorFunction, ObservableNotification } from '../types';
  * {@link Notification} objects that wrap the original emissions from the
  * source Observable with metadata.
  */
-export declare function materialize<T>(): OperatorFunction<T, Notification<T> & ObservableNotification<T>>;
+export declare function materialize<T>(): OperatorFunction<
+  T,
+  Notification<T> & ObservableNotification<T>
+>;
 //# sourceMappingURL=materialize.d.ts.map

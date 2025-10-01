@@ -1,11 +1,10 @@
-export interface EmptyError extends Error {
-}
+export interface EmptyError extends Error {}
 export interface EmptyErrorCtor {
-    /**
-     * @deprecated Internal implementation detail. Do not construct error instances.
-     * Cannot be tagged as internal: https://github.com/ReactiveX/rxjs/issues/6269
-     */
-    new (): EmptyError;
+  /**
+   * @deprecated Internal implementation detail. Do not construct error instances.
+   * Cannot be tagged as internal: https://github.com/ReactiveX/rxjs/issues/6269
+   */
+  new (): EmptyError;
 }
 /**
  * An error thrown when an Observable or a sequence was queried but has no

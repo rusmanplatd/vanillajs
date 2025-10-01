@@ -39,5 +39,7 @@ import { MonoTypeOperatorFunction, ObservableInput } from '../types';
  * sampling the values emitted by the source Observable whenever the notifier
  * Observable emits value or completes.
  */
-export declare function sample<T>(notifier: ObservableInput<any>): MonoTypeOperatorFunction<T>;
+export declare function sample<T>(
+  notifier: ObservableInput<any>
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=sample.d.ts.map

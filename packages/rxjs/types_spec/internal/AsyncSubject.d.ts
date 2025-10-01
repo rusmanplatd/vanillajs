@@ -5,12 +5,12 @@ import { Subscriber } from './Subscriber';
  * its latest value to all its observers on completion.
  */
 export declare class AsyncSubject<T> extends Subject<T> {
-    private _value;
-    private _hasValue;
-    private _isComplete;
-    /** @internal */
-    protected _checkFinalizedStatuses(subscriber: Subscriber<T>): void;
-    next(value: T): void;
-    complete(): void;
+  private _value;
+  private _hasValue;
+  private _isComplete;
+  /** @internal */
+  protected _checkFinalizedStatuses(subscriber: Subscriber<T>): void;
+  next(value: T): void;
+  complete(): void;
 }
 //# sourceMappingURL=AsyncSubject.d.ts.map

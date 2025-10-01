@@ -1,7 +1,12 @@
 import { Subject } from '../Subject';
 import { Observable } from '../Observable';
 import { ConnectableObservable } from '../observable/ConnectableObservable';
-import { OperatorFunction, UnaryFunction, ObservedValueOf, ObservableInput } from '../types';
+import {
+  OperatorFunction,
+  UnaryFunction,
+  ObservedValueOf,
+  ObservableInput,
+} from '../types';
 /**
  * An operator that creates a {@link ConnectableObservable}, that when connected,
  * with the `connect` method, will use the provided subject to multicast the values
@@ -15,7 +20,9 @@ import { OperatorFunction, UnaryFunction, ObservedValueOf, ObservableInput } fro
  * `share({ connector: () => subject, resetOnError: false, resetOnComplete: false, resetOnRefCountZero: false })`.
  * Details: https://rxjs.dev/deprecations/multicasting
  */
-export declare function multicast<T>(subject: Subject<T>): UnaryFunction<Observable<T>, ConnectableObservable<T>>;
+export declare function multicast<T>(
+  subject: Subject<T>
+): UnaryFunction<Observable<T>, ConnectableObservable<T>>;
 /**
  * Because this is deprecated in favor of the {@link connect} operator, and was otherwise poorly documented,
  * rather than duplicate the effort of documenting the same behavior, please see documentation for the
@@ -29,7 +36,10 @@ export declare function multicast<T>(subject: Subject<T>): UnaryFunction<Observa
  * `connect(selector, { connector: () => subject })`.
  * Details: https://rxjs.dev/deprecations/multicasting
  */
-export declare function multicast<T, O extends ObservableInput<any>>(subject: Subject<T>, selector: (shared: Observable<T>) => O): OperatorFunction<T, ObservedValueOf<O>>;
+export declare function multicast<T, O extends ObservableInput<any>>(
+  subject: Subject<T>,
+  selector: (shared: Observable<T>) => O
+): OperatorFunction<T, ObservedValueOf<O>>;
 /**
  * An operator that creates a {@link ConnectableObservable}, that when connected,
  * with the `connect` method, will use the provided subject to multicast the values
@@ -45,7 +55,9 @@ export declare function multicast<T, O extends ObservableInput<any>>(subject: Su
  * `share({ connector: () => new BehaviorSubject('test') })`.
  * Details: https://rxjs.dev/deprecations/multicasting
  */
-export declare function multicast<T>(subjectFactory: () => Subject<T>): UnaryFunction<Observable<T>, ConnectableObservable<T>>;
+export declare function multicast<T>(
+  subjectFactory: () => Subject<T>
+): UnaryFunction<Observable<T>, ConnectableObservable<T>>;
 /**
  * Because this is deprecated in favor of the {@link connect} operator, and was otherwise poorly documented,
  * rather than duplicate the effort of documenting the same behavior, please see documentation for the
@@ -59,5 +71,8 @@ export declare function multicast<T>(subjectFactory: () => Subject<T>): UnaryFun
  * `connect(selector, { connector: subjectFactory })`.
  * Details: https://rxjs.dev/deprecations/multicasting
  */
-export declare function multicast<T, O extends ObservableInput<any>>(subjectFactory: () => Subject<T>, selector: (shared: Observable<T>) => O): OperatorFunction<T, ObservedValueOf<O>>;
+export declare function multicast<T, O extends ObservableInput<any>>(
+  subjectFactory: () => Subject<T>,
+  selector: (shared: Observable<T>) => O
+): OperatorFunction<T, ObservedValueOf<O>>;
 //# sourceMappingURL=multicast.d.ts.map

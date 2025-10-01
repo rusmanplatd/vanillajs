@@ -44,5 +44,7 @@ import { MonoTypeOperatorFunction, ObservableInput } from '../types';
  * @return A function that returns an Observable that performs rate-limiting of
  * emissions from the source Observable.
  */
-export declare function audit<T>(durationSelector: (value: T) => ObservableInput<any>): MonoTypeOperatorFunction<T>;
+export declare function audit<T>(
+  durationSelector: (value: T) => ObservableInput<any>
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=audit.d.ts.map

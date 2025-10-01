@@ -46,5 +46,8 @@ import { MonoTypeOperatorFunction, SchedulerLike } from '../types';
  * @return A function that returns an Observable that performs rate-limiting of
  * emissions from the source Observable.
  */
-export declare function auditTime<T>(duration: number, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T>;
+export declare function auditTime<T>(
+  duration: number,
+  scheduler?: SchedulerLike
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=auditTime.d.ts.map

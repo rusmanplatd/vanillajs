@@ -50,5 +50,8 @@ import { UnaryFunction } from '../types';
  * the predicate.
  * @deprecated Replaced with the {@link partition} static creation function. Will be removed in v8.
  */
-export declare function partition<T>(predicate: (value: T, index: number) => boolean, thisArg?: any): UnaryFunction<Observable<T>, [Observable<T>, Observable<T>]>;
+export declare function partition<T>(
+  predicate: (value: T, index: number) => boolean,
+  thisArg?: any
+): UnaryFunction<Observable<T>, [Observable<T>, Observable<T>]>;
 //# sourceMappingURL=partition.d.ts.map

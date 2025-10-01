@@ -1,4 +1,8 @@
-import { OperatorFunction, ObservableNotification, ValueFromNotification } from '../types';
+import {
+  OperatorFunction,
+  ObservableNotification,
+  ValueFromNotification,
+} from '../types';
 /**
  * Converts an Observable of {@link ObservableNotification} objects into the emissions
  * that they represent.
@@ -47,5 +51,7 @@ import { OperatorFunction, ObservableNotification, ValueFromNotification } from 
  * notifications embedded in Notification objects emitted by the source
  * Observable.
  */
-export declare function dematerialize<N extends ObservableNotification<any>>(): OperatorFunction<N, ValueFromNotification<N>>;
+export declare function dematerialize<
+  N extends ObservableNotification<any>,
+>(): OperatorFunction<N, ValueFromNotification<N>>;
 //# sourceMappingURL=dematerialize.d.ts.map

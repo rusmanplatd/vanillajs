@@ -56,5 +56,8 @@ import { OperatorFunction, ObservableInput } from '../types';
  * value representing whether or not the values emitted by the source
  * Observable and provided `ObservableInput` were equal in sequence.
  */
-export declare function sequenceEqual<T>(compareTo: ObservableInput<T>, comparator?: (a: T, b: T) => boolean): OperatorFunction<T, boolean>;
+export declare function sequenceEqual<T>(
+  compareTo: ObservableInput<T>,
+  comparator?: (a: T, b: T) => boolean
+): OperatorFunction<T, boolean>;
 //# sourceMappingURL=sequenceEqual.d.ts.map

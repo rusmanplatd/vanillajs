@@ -50,5 +50,8 @@ import { OperatorFunction } from '../types';
  * beginning of the source by default.
  * @return A function that returns an Observable of arrays of buffered values.
  */
-export declare function bufferCount<T>(bufferSize: number, startBufferEvery?: number | null): OperatorFunction<T, T[]>;
+export declare function bufferCount<T>(
+  bufferSize: number,
+  startBufferEvery?: number | null
+): OperatorFunction<T, T[]>;
 //# sourceMappingURL=bufferCount.d.ts.map

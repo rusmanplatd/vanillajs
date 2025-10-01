@@ -65,5 +65,8 @@ import { UnaryFunction } from '../types';
  * `source.pipe(share({ connector: () => new AsyncSubject(), resetOnError: false, resetOnComplete: false, resetOnRefCountZero: false }))`.
  * Details: https://rxjs.dev/deprecations/multicasting
  */
-export declare function publishLast<T>(): UnaryFunction<Observable<T>, ConnectableObservable<T>>;
+export declare function publishLast<T>(): UnaryFunction<
+  Observable<T>,
+  ConnectableObservable<T>
+>;
 //# sourceMappingURL=publishLast.d.ts.map

@@ -1,59 +1,69 @@
-import { MonoTypeOperatorFunction, SchedulerLike, OperatorFunction, ObservableInput, ObservedValueOf } from '../types';
-export interface TimeoutConfig<T, O extends ObservableInput<unknown> = ObservableInput<T>, M = unknown> {
-    /**
-     * The time allowed between values from the source before timeout is triggered.
-     */
-    each?: number;
-    /**
-     * The relative time as a `number` in milliseconds, or a specific time as a `Date` object,
-     * by which the first value must arrive from the source before timeout is triggered.
-     */
-    first?: number | Date;
-    /**
-     * The scheduler to use with time-related operations within this operator. Defaults to {@link asyncScheduler}
-     */
-    scheduler?: SchedulerLike;
-    /**
-     * A factory used to create observable to switch to when timeout occurs. Provides
-     * a {@link TimeoutInfo} about the source observable's emissions and what delay or
-     * exact time triggered the timeout.
-     */
-    with?: (info: TimeoutInfo<T, M>) => O;
-    /**
-     * Optional additional metadata you can provide to code that handles
-     * the timeout, will be provided through the {@link TimeoutError}.
-     * This can be used to help identify the source of a timeout or pass along
-     * other information related to the timeout.
-     */
-    meta?: M;
+import {
+  MonoTypeOperatorFunction,
+  SchedulerLike,
+  OperatorFunction,
+  ObservableInput,
+  ObservedValueOf,
+} from '../types';
+export interface TimeoutConfig<
+  T,
+  O extends ObservableInput<unknown> = ObservableInput<T>,
+  M = unknown,
+> {
+  /**
+   * The time allowed between values from the source before timeout is triggered.
+   */
+  each?: number;
+  /**
+   * The relative time as a `number` in milliseconds, or a specific time as a `Date` object,
+   * by which the first value must arrive from the source before timeout is triggered.
+   */
+  first?: number | Date;
+  /**
+   * The scheduler to use with time-related operations within this operator. Defaults to {@link asyncScheduler}
+   */
+  scheduler?: SchedulerLike;
+  /**
+   * A factory used to create observable to switch to when timeout occurs. Provides
+   * a {@link TimeoutInfo} about the source observable's emissions and what delay or
+   * exact time triggered the timeout.
+   */
+  with?: (info: TimeoutInfo<T, M>) => O;
+  /**
+   * Optional additional metadata you can provide to code that handles
+   * the timeout, will be provided through the {@link TimeoutError}.
+   * This can be used to help identify the source of a timeout or pass along
+   * other information related to the timeout.
+   */
+  meta?: M;
 }
 export interface TimeoutInfo<T, M = unknown> {
-    /** Optional metadata that was provided to the timeout configuration. */
-    readonly meta: M;
-    /** The number of messages seen before the timeout */
-    readonly seen: number;
-    /** The last message seen */
-    readonly lastValue: T | null;
+  /** Optional metadata that was provided to the timeout configuration. */
+  readonly meta: M;
+  /** The number of messages seen before the timeout */
+  readonly seen: number;
+  /** The last message seen */
+  readonly lastValue: T | null;
 }
 /**
  * An error emitted when a timeout occurs.
  */
 export interface TimeoutError<T = unknown, M = unknown> extends Error {
-    /**
-     * The information provided to the error by the timeout
-     * operation that created the error. Will be `null` if
-     * used directly in non-RxJS code with an empty constructor.
-     * (Note that using this constructor directly is not recommended,
-     * you should create your own errors)
-     */
-    info: TimeoutInfo<T, M> | null;
+  /**
+   * The information provided to the error by the timeout
+   * operation that created the error. Will be `null` if
+   * used directly in non-RxJS code with an empty constructor.
+   * (Note that using this constructor directly is not recommended,
+   * you should create your own errors)
+   */
+  info: TimeoutInfo<T, M> | null;
 }
 export interface TimeoutErrorCtor {
-    /**
-     * @deprecated Internal implementation detail. Do not construct error instances.
-     * Cannot be tagged as internal: https://github.com/ReactiveX/rxjs/issues/6269
-     */
-    new <T = unknown, M = unknown>(info?: TimeoutInfo<T, M>): TimeoutError<T, M>;
+  /**
+   * @deprecated Internal implementation detail. Do not construct error instances.
+   * Cannot be tagged as internal: https://github.com/ReactiveX/rxjs/issues/6269
+   */
+  new <T = unknown, M = unknown>(info?: TimeoutInfo<T, M>): TimeoutError<T, M>;
 }
 /**
  * An error thrown by the {@link timeout} operator.
@@ -132,9 +142,15 @@ export declare const TimeoutError: TimeoutErrorCtor;
  * ```
  * @param config The configuration for the timeout.
  */
-export declare function timeout<T, O extends ObservableInput<unknown>, M = unknown>(config: TimeoutConfig<T, O, M> & {
+export declare function timeout<
+  T,
+  O extends ObservableInput<unknown>,
+  M = unknown,
+>(
+  config: TimeoutConfig<T, O, M> & {
     with: (info: TimeoutInfo<T, M>) => O;
-}): OperatorFunction<T, T | ObservedValueOf<O>>;
+  }
+): OperatorFunction<T, T | ObservedValueOf<O>>;
 /**
  * Returns an observable that will error or switch to a different observable if the source does not push values
  * within the specified time parameters.
@@ -225,7 +241,9 @@ export declare function timeout<T, O extends ObservableInput<unknown>, M = unkno
  *   });
  * ```
  */
-export declare function timeout<T, M = unknown>(config: Omit<TimeoutConfig<T, any, M>, 'with'>): OperatorFunction<T, T>;
+export declare function timeout<T, M = unknown>(
+  config: Omit<TimeoutConfig<T, any, M>, 'with'>
+): OperatorFunction<T, T>;
 /**
  * Returns an observable that will error if the source does not push its first value before the specified time passed as a `Date`.
  * This is functionally the same as `timeout({ first: someDate })`.
@@ -238,7 +256,10 @@ export declare function timeout<T, M = unknown>(config: Omit<TimeoutConfig<T, an
  * does not emit at least one value.
  * @param scheduler The scheduler to use. Defaults to {@link asyncScheduler}.
  */
-export declare function timeout<T>(first: Date, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T>;
+export declare function timeout<T>(
+  first: Date,
+  scheduler?: SchedulerLike
+): MonoTypeOperatorFunction<T>;
 /**
  * Returns an observable that will error if the source does not push a value within the specified time in milliseconds.
  * This is functionally the same as `timeout({ each: milliseconds })`.
@@ -251,5 +272,8 @@ export declare function timeout<T>(first: Date, scheduler?: SchedulerLike): Mono
  * will timeout.
  * @param scheduler The scheduler to use. Defaults to {@link asyncScheduler}.
  */
-export declare function timeout<T>(each: number, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T>;
+export declare function timeout<T>(
+  each: number,
+  scheduler?: SchedulerLike
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=timeout.d.ts.map

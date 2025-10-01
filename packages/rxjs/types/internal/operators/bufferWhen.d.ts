@@ -37,5 +37,7 @@ import { ObservableInput, OperatorFunction } from '../types';
  * Observable that signals buffer closure.
  * @return A function that returns an Observable of arrays of buffered values.
  */
-export declare function bufferWhen<T>(closingSelector: () => ObservableInput<any>): OperatorFunction<T, T[]>;
+export declare function bufferWhen<T>(
+  closingSelector: () => ObservableInput<any>
+): OperatorFunction<T, T[]>;
 //# sourceMappingURL=bufferWhen.d.ts.map

@@ -55,5 +55,8 @@ import { MonoTypeOperatorFunction, SchedulerLike } from '../types';
  * @return A function that returns an Observable that delays the emissions of
  * the source Observable by the specified timeout or Date.
  */
-export declare function delay<T>(due: number | Date, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T>;
+export declare function delay<T>(
+  due: number | Date,
+  scheduler?: SchedulerLike
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=delay.d.ts.map

@@ -37,5 +37,7 @@ import { OperatorFunction, ObservableInput } from '../types';
  * @return A function that returns an Observable of buffers, which are arrays
  * of values.
  */
-export declare function buffer<T>(closingNotifier: ObservableInput<any>): OperatorFunction<T, T[]>;
+export declare function buffer<T>(
+  closingNotifier: ObservableInput<any>
+): OperatorFunction<T, T[]>;
 //# sourceMappingURL=buffer.d.ts.map

@@ -13,8 +13,14 @@ export { AsyncSubject } from './internal/AsyncSubject';
 export { asap, asapScheduler } from './internal/scheduler/asap';
 export { async, asyncScheduler } from './internal/scheduler/async';
 export { queue, queueScheduler } from './internal/scheduler/queue';
-export { animationFrame, animationFrameScheduler } from './internal/scheduler/animationFrame';
-export { VirtualTimeScheduler, VirtualAction } from './internal/scheduler/VirtualTimeScheduler';
+export {
+  animationFrame,
+  animationFrameScheduler,
+} from './internal/scheduler/animationFrame';
+export {
+  VirtualTimeScheduler,
+  VirtualAction,
+} from './internal/scheduler/VirtualTimeScheduler';
 export { Scheduler } from './internal/Scheduler';
 export { Subscription } from './internal/Subscription';
 export { Subscriber } from './internal/Subscriber';
@@ -101,7 +107,11 @@ export { finalize } from './internal/operators/finalize';
 export { find } from './internal/operators/find';
 export { findIndex } from './internal/operators/findIndex';
 export { first } from './internal/operators/first';
-export { groupBy, BasicGroupByOptions, GroupByOptionsWithElement } from './internal/operators/groupBy';
+export {
+  groupBy,
+  BasicGroupByOptions,
+  GroupByOptionsWithElement,
+} from './internal/operators/groupBy';
 export { ignoreElements } from './internal/operators/ignoreElements';
 export { isEmpty } from './internal/operators/isEmpty';
 export { last } from './internal/operators/last';
@@ -137,7 +147,10 @@ export { sampleTime } from './internal/operators/sampleTime';
 export { scan } from './internal/operators/scan';
 export { sequenceEqual } from './internal/operators/sequenceEqual';
 export { share, ShareConfig } from './internal/operators/share';
-export { shareReplay, ShareReplayConfig } from './internal/operators/shareReplay';
+export {
+  shareReplay,
+  ShareReplayConfig,
+} from './internal/operators/shareReplay';
 export { single } from './internal/operators/single';
 export { skip } from './internal/operators/skip';
 export { skipLast } from './internal/operators/skipLast';
@@ -158,7 +171,11 @@ export { throttle, ThrottleConfig } from './internal/operators/throttle';
 export { throttleTime } from './internal/operators/throttleTime';
 export { throwIfEmpty } from './internal/operators/throwIfEmpty';
 export { timeInterval } from './internal/operators/timeInterval';
-export { timeout, TimeoutConfig, TimeoutInfo } from './internal/operators/timeout';
+export {
+  timeout,
+  TimeoutConfig,
+  TimeoutInfo,
+} from './internal/operators/timeout';
 export { timeoutWith } from './internal/operators/timeoutWith';
 export { timestamp } from './internal/operators/timestamp';
 export { toArray } from './internal/operators/toArray';

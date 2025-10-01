@@ -26,5 +26,8 @@ import { Unsubscribable, ObservableInput, ObservedValueOf } from '../types';
  * @return An Observable that behaves the same as Observable returned by `observableFactory`, but
  * which - when completed, errored or unsubscribed - will also call `unsubscribe` on created resource object.
  */
-export declare function using<T extends ObservableInput<any>>(resourceFactory: () => Unsubscribable | void, observableFactory: (resource: Unsubscribable | void) => T | void): Observable<ObservedValueOf<T>>;
+export declare function using<T extends ObservableInput<any>>(
+  resourceFactory: () => Unsubscribable | void,
+  observableFactory: (resource: Unsubscribable | void) => T | void
+): Observable<ObservedValueOf<T>>;
 //# sourceMappingURL=using.d.ts.map

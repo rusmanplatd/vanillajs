@@ -14,17 +14,20 @@ import { SchedulerAction } from '../types';
  * ```
  */
 export declare class Action<T> extends Subscription {
-    constructor(scheduler: Scheduler, work: (this: SchedulerAction<T>, state?: T) => void);
-    /**
-     * Schedules this action on its parent {@link SchedulerLike} for execution. May be passed
-     * some context object, `state`. May happen at some point in the future,
-     * according to the `delay` parameter, if specified.
-     * @param state Some contextual data that the `work` function uses when called by the
-     * Scheduler.
-     * @param delay Time to wait before executing the work, where the time unit is implicit
-     * and defined by the Scheduler.
-     * @return A subscription in order to be able to unsubscribe the scheduled work.
-     */
-    schedule(state?: T, delay?: number): Subscription;
+  constructor(
+    scheduler: Scheduler,
+    work: (this: SchedulerAction<T>, state?: T) => void
+  );
+  /**
+   * Schedules this action on its parent {@link SchedulerLike} for execution. May be passed
+   * some context object, `state`. May happen at some point in the future,
+   * according to the `delay` parameter, if specified.
+   * @param state Some contextual data that the `work` function uses when called by the
+   * Scheduler.
+   * @param delay Time to wait before executing the work, where the time unit is implicit
+   * and defined by the Scheduler.
+   * @return A subscription in order to be able to unsubscribe the scheduled work.
+   */
+  schedule(state?: T, delay?: number): Subscription;
 }
 //# sourceMappingURL=Action.d.ts.map

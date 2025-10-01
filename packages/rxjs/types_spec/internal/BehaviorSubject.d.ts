@@ -6,12 +6,12 @@ import { Subscription } from './Subscription';
  * value whenever it is subscribed to.
  */
 export declare class BehaviorSubject<T> extends Subject<T> {
-    private _value;
-    constructor(_value: T);
-    get value(): T;
-    /** @internal */
-    protected _subscribe(subscriber: Subscriber<T>): Subscription;
-    getValue(): T;
-    next(value: T): void;
+  private _value;
+  constructor(_value: T);
+  get value(): T;
+  /** @internal */
+  protected _subscribe(subscriber: Subscriber<T>): Subscription;
+  getValue(): T;
+  next(value: T): void;
 }
 //# sourceMappingURL=BehaviorSubject.d.ts.map

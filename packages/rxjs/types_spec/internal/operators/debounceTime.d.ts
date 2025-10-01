@@ -55,5 +55,8 @@ import { MonoTypeOperatorFunction, SchedulerLike } from '../types';
  * the source Observable by the specified `dueTime`, and may drop some values
  * if they occur too frequently.
  */
-export declare function debounceTime<T>(dueTime: number, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T>;
+export declare function debounceTime<T>(
+  dueTime: number,
+  scheduler?: SchedulerLike
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=debounceTime.d.ts.map

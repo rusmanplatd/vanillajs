@@ -45,5 +45,8 @@ import { ObservableInput, OperatorFunction } from '../types';
  * @return A function that returns an Observable of windows, which in turn are
  * Observables.
  */
-export declare function windowToggle<T, O>(openings: ObservableInput<O>, closingSelector: (openValue: O) => ObservableInput<any>): OperatorFunction<T, Observable<T>>;
+export declare function windowToggle<T, O>(
+  openings: ObservableInput<O>,
+  closingSelector: (openValue: O) => ObservableInput<any>
+): OperatorFunction<T, Observable<T>>;
 //# sourceMappingURL=windowToggle.d.ts.map

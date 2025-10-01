@@ -10,5 +10,8 @@ import { ObservableInput } from '../types';
  * @param joinFn The type of static join to apply to the sources collected
  * @param project The projection function to apply to the values, if any
  */
-export declare function joinAllInternals<T, R>(joinFn: (sources: ObservableInput<T>[]) => Observable<T>, project?: (...args: any[]) => R): import("../types").UnaryFunction<Observable<ObservableInput<T>>, unknown>;
+export declare function joinAllInternals<T, R>(
+  joinFn: (sources: ObservableInput<T>[]) => Observable<T>,
+  project?: (...args: any[]) => R
+): import('../types').UnaryFunction<Observable<ObservableInput<T>>, unknown>;
 //# sourceMappingURL=joinAllInternals.d.ts.map

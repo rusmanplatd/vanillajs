@@ -5,5 +5,8 @@ import { SchedulerLike } from '../types';
  * @param input The iterable to create an observable from
  * @param scheduler The scheduler to use
  */
-export declare function scheduleIterable<T>(input: Iterable<T>, scheduler: SchedulerLike): Observable<T>;
+export declare function scheduleIterable<T>(
+  input: Iterable<T>,
+  scheduler: SchedulerLike
+): Observable<T>;
 //# sourceMappingURL=scheduleIterable.d.ts.map

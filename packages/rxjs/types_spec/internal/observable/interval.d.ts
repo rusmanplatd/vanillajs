@@ -44,5 +44,8 @@ import { SchedulerLike } from '../types';
  * and providing a notion of "time".
  * @return An Observable that emits a sequential number each time interval.
  */
-export declare function interval(period?: number, scheduler?: SchedulerLike): Observable<number>;
+export declare function interval(
+  period?: number,
+  scheduler?: SchedulerLike
+): Observable<number>;
 //# sourceMappingURL=interval.d.ts.map

@@ -69,8 +69,10 @@ import { TimestampProvider } from '../../types';
  *
  * @param timestampProvider An object with a `now` method that provides a numeric timestamp
  */
-export declare function animationFrames(timestampProvider?: TimestampProvider): Observable<{
-    timestamp: number;
-    elapsed: number;
+export declare function animationFrames(
+  timestampProvider?: TimestampProvider
+): Observable<{
+  timestamp: number;
+  elapsed: number;
 }>;
 //# sourceMappingURL=animationFrames.d.ts.map

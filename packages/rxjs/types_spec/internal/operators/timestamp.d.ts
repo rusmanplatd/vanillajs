@@ -31,5 +31,7 @@ import { OperatorFunction, TimestampProvider, Timestamp } from '../types';
  * @return A function that returns an Observable that attaches a timestamp to
  * each item emitted by the source Observable indicating when it was emitted.
  */
-export declare function timestamp<T>(timestampProvider?: TimestampProvider): OperatorFunction<T, Timestamp<T>>;
+export declare function timestamp<T>(
+  timestampProvider?: TimestampProvider
+): OperatorFunction<T, Timestamp<T>>;
 //# sourceMappingURL=timestamp.d.ts.map

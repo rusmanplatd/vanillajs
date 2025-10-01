@@ -47,5 +47,8 @@ import { OperatorFunction } from '../types';
  * it is found. Otherwise, it will emit the default value if given. If not, it
  * emits an error.
  */
-export declare function elementAt<T, D = T>(index: number, defaultValue?: D): OperatorFunction<T, T | D>;
+export declare function elementAt<T, D = T>(
+  index: number,
+  defaultValue?: D
+): OperatorFunction<T, T | D>;
 //# sourceMappingURL=elementAt.d.ts.map

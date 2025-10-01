@@ -7,26 +7,26 @@ import { MonoTypeOperatorFunction, ObservableInput } from '../types';
  * @see {@link throttleTime}
  */
 export interface ThrottleConfig {
-    /**
-     * If `true`, the resulting Observable will emit the first value from the source
-     * Observable at the **start** of the "throttling" process (when starting an
-     * internal timer that prevents other emissions from the source to pass through).
-     * If `false`, it will not emit the first value from the source Observable at the
-     * start of the "throttling" process.
-     *
-     * If not provided, defaults to: `true`.
-     */
-    leading?: boolean;
-    /**
-     * If `true`, the resulting Observable will emit the last value from the source
-     * Observable at the **end** of the "throttling" process (when ending an internal
-     * timer that prevents other emissions from the source to pass through).
-     * If `false`, it will not emit the last value from the source Observable at the
-     * end of the "throttling" process.
-     *
-     * If not provided, defaults to: `false`.
-     */
-    trailing?: boolean;
+  /**
+   * If `true`, the resulting Observable will emit the first value from the source
+   * Observable at the **start** of the "throttling" process (when starting an
+   * internal timer that prevents other emissions from the source to pass through).
+   * If `false`, it will not emit the first value from the source Observable at the
+   * start of the "throttling" process.
+   *
+   * If not provided, defaults to: `true`.
+   */
+  leading?: boolean;
+  /**
+   * If `true`, the resulting Observable will emit the last value from the source
+   * Observable at the **end** of the "throttling" process (when ending an internal
+   * timer that prevents other emissions from the source to pass through).
+   * If `false`, it will not emit the last value from the source Observable at the
+   * end of the "throttling" process.
+   *
+   * If not provided, defaults to: `false`.
+   */
+  trailing?: boolean;
 }
 /**
  * Emits a value from the source Observable, then ignores subsequent source
@@ -74,5 +74,8 @@ export interface ThrottleConfig {
  * @return A function that returns an Observable that performs the throttle
  * operation to limit the rate of emissions from the source.
  */
-export declare function throttle<T>(durationSelector: (value: T) => ObservableInput<any>, config?: ThrottleConfig): MonoTypeOperatorFunction<T>;
+export declare function throttle<T>(
+  durationSelector: (value: T) => ObservableInput<any>,
+  config?: ThrottleConfig
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=throttle.d.ts.map

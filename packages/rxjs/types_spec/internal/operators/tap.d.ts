@@ -45,28 +45,34 @@ import { MonoTypeOperatorFunction, Observer } from '../types';
  * ```
  */
 export interface TapObserver<T> extends Observer<T> {
-    /**
-     * The callback that `tap` operator invokes at the moment when the source Observable
-     * gets subscribed to.
-     */
-    subscribe: () => void;
-    /**
-     * The callback that `tap` operator invokes when an explicit
-     * {@link guide/glossary-and-semantics#unsubscription unsubscribe} happens. It won't get invoked on
-     * `error` or `complete` events.
-     */
-    unsubscribe: () => void;
-    /**
-     * The callback that `tap` operator invokes when any kind of
-     * {@link guide/glossary-and-semantics#finalization finalization} happens - either when
-     * the source Observable `error`s or `complete`s or when it gets explicitly unsubscribed
-     * by the user. There is no difference in using this callback or the {@link finalize}
-     * operator, but if you're already using `tap` operator, you can use this callback
-     * instead. You'd get the same result in either case.
-     */
-    finalize: () => void;
+  /**
+   * The callback that `tap` operator invokes at the moment when the source Observable
+   * gets subscribed to.
+   */
+  subscribe: () => void;
+  /**
+   * The callback that `tap` operator invokes when an explicit
+   * {@link guide/glossary-and-semantics#unsubscription unsubscribe} happens. It won't get invoked on
+   * `error` or `complete` events.
+   */
+  unsubscribe: () => void;
+  /**
+   * The callback that `tap` operator invokes when any kind of
+   * {@link guide/glossary-and-semantics#finalization finalization} happens - either when
+   * the source Observable `error`s or `complete`s or when it gets explicitly unsubscribed
+   * by the user. There is no difference in using this callback or the {@link finalize}
+   * operator, but if you're already using `tap` operator, you can use this callback
+   * instead. You'd get the same result in either case.
+   */
+  finalize: () => void;
 }
-export declare function tap<T>(observerOrNext?: Partial<TapObserver<T>> | ((value: T) => void)): MonoTypeOperatorFunction<T>;
+export declare function tap<T>(
+  observerOrNext?: Partial<TapObserver<T>> | ((value: T) => void)
+): MonoTypeOperatorFunction<T>;
 /** @deprecated Instead of passing separate callback arguments, use an observer argument. Signatures taking separate callback arguments will be removed in v8. Details: https://rxjs.dev/deprecations/subscribe-arguments */
-export declare function tap<T>(next?: ((value: T) => void) | null, error?: ((error: any) => void) | null, complete?: (() => void) | null): MonoTypeOperatorFunction<T>;
+export declare function tap<T>(
+  next?: ((value: T) => void) | null,
+  error?: ((error: any) => void) | null,
+  complete?: (() => void) | null
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=tap.d.ts.map

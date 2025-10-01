@@ -6,9 +6,9 @@ import { Subscription } from './Subscription';
  * however, we are no longer polyfilling Symbol.observable
  */
 declare global {
-    interface SymbolConstructor {
-        readonly observable: symbol;
-    }
+  interface SymbolConstructor {
+    readonly observable: symbol;
+  }
 }
 /**
  * A function type interface that describes a function that accepts one parameter `T`
@@ -18,10 +18,10 @@ declare global {
  * parameter (the source Observable) and returns another Observable.
  */
 export interface UnaryFunction<T, R> {
-    (source: T): R;
+  (source: T): R;
 }
-export interface OperatorFunction<T, R> extends UnaryFunction<Observable<T>, Observable<R>> {
-}
+export interface OperatorFunction<T, R>
+  extends UnaryFunction<Observable<T>, Observable<R>> {}
 export declare type FactoryOrValue<T> = T | (() => T);
 /**
  * A function type interface that describes a function that accepts and returns a parameter of the same type.
@@ -29,8 +29,7 @@ export declare type FactoryOrValue<T> = T | (() => T);
  * Used to describe {@link OperatorFunction} with the only one type: `OperatorFunction<T, T>`.
  *
  */
-export interface MonoTypeOperatorFunction<T> extends OperatorFunction<T, T> {
-}
+export interface MonoTypeOperatorFunction<T> extends OperatorFunction<T, T> {}
 /**
  * A value and the time at which it was emitted.
  *
@@ -39,12 +38,12 @@ export interface MonoTypeOperatorFunction<T> extends OperatorFunction<T, T> {
  * @see {@link timestamp}
  */
 export interface Timestamp<T> {
-    value: T;
-    /**
-     * The timestamp. By default, this is in epoch milliseconds.
-     * Could vary based on the timestamp provider passed to the operator.
-     */
-    timestamp: number;
+  value: T;
+  /**
+   * The timestamp. By default, this is in epoch milliseconds.
+   * Could vary based on the timestamp provider passed to the operator.
+   */
+  timestamp: number;
 }
 /**
  * A value emitted and the amount of time since the last value was emitted.
@@ -54,34 +53,49 @@ export interface Timestamp<T> {
  * @see {@link timeInterval}
  */
 export interface TimeInterval<T> {
-    value: T;
-    /**
-     * The amount of time between this value's emission and the previous value's emission.
-     * If this is the first emitted value, then it will be the amount of time since subscription
-     * started.
-     */
-    interval: number;
+  value: T;
+  /**
+   * The amount of time between this value's emission and the previous value's emission.
+   * If this is the first emitted value, then it will be the amount of time since subscription
+   * started.
+   */
+  interval: number;
 }
 export interface Unsubscribable {
-    unsubscribe(): void;
+  unsubscribe(): void;
 }
-export declare type TeardownLogic = Subscription | Unsubscribable | (() => void) | void;
+export declare type TeardownLogic =
+  | Subscription
+  | Unsubscribable
+  | (() => void)
+  | void;
 export interface SubscriptionLike extends Unsubscribable {
-    unsubscribe(): void;
-    readonly closed: boolean;
+  unsubscribe(): void;
+  readonly closed: boolean;
 }
 /**
  * @deprecated Do not use. Most likely you want to use `ObservableInput`. Will be removed in v8.
  */
-export declare type SubscribableOrPromise<T> = Subscribable<T> | Subscribable<never> | PromiseLike<T> | InteropObservable<T>;
+export declare type SubscribableOrPromise<T> =
+  | Subscribable<T>
+  | Subscribable<never>
+  | PromiseLike<T>
+  | InteropObservable<T>;
 /** OBSERVABLE INTERFACES */
 export interface Subscribable<T> {
-    subscribe(observer: Partial<Observer<T>>): Unsubscribable;
+  subscribe(observer: Partial<Observer<T>>): Unsubscribable;
 }
 /**
  * Valid types that can be converted to observables.
  */
-export declare type ObservableInput<T> = Observable<T> | InteropObservable<T> | AsyncIterable<T> | PromiseLike<T> | ArrayLike<T> | Iterable<T> | ReadableStreamLike<T>;
+export declare type ObservableInput<T> =
+  | Observable<T>
+  | InteropObservable<T>
+  | AsyncIterable<T>
+  | PromiseLike<T>
+  | ArrayLike<T>
+  | Iterable<T>
+  | ReadableStreamLike<T>;
 /**
  * @deprecated Renamed to {@link InteropObservable }. Will be removed in v8.
  */
@@ -90,57 +104,63 @@ export declare type ObservableLike<T> = InteropObservable<T>;
  * An object that implements the `Symbol.observable` interface.
  */
 export interface InteropObservable<T> {
-    [Symbol.observable]: () => Subscribable<T>;
+  [Symbol.observable]: () => Subscribable<T>;
 }
 /**
  * A notification representing a "next" from an observable.
  * Can be used with {@link dematerialize}.
  */
 export interface NextNotification<T> {
-    /** The kind of notification. Always "N" */
-    kind: 'N';
-    /** The value of the notification. */
-    value: T;
+  /** The kind of notification. Always "N" */
+  kind: 'N';
+  /** The value of the notification. */
+  value: T;
 }
 /**
  * A notification representing an "error" from an observable.
  * Can be used with {@link dematerialize}.
  */
 export interface ErrorNotification {
-    /** The kind of notification. Always "E" */
-    kind: 'E';
-    error: any;
+  /** The kind of notification. Always "E" */
+  kind: 'E';
+  error: any;
 }
 /**
  * A notification representing a "completion" from an observable.
  * Can be used with {@link dematerialize}.
  */
 export interface CompleteNotification {
-    kind: 'C';
+  kind: 'C';
 }
 /**
  * Valid observable notification types.
  */
-export declare type ObservableNotification<T> = NextNotification<T> | ErrorNotification | CompleteNotification;
+export declare type ObservableNotification<T> =
+  | NextNotification<T>
+  | ErrorNotification
+  | CompleteNotification;
 export interface NextObserver<T> {
-    closed?: boolean;
-    next: (value: T) => void;
-    error?: (err: any) => void;
-    complete?: () => void;
+  closed?: boolean;
+  next: (value: T) => void;
+  error?: (err: any) => void;
+  complete?: () => void;
 }
 export interface ErrorObserver<T> {
-    closed?: boolean;
-    next?: (value: T) => void;
-    error: (err: any) => void;
-    complete?: () => void;
+  closed?: boolean;
+  next?: (value: T) => void;
+  error: (err: any) => void;
+  complete?: () => void;
 }
 export interface CompletionObserver<T> {
-    closed?: boolean;
-    next?: (value: T) => void;
-    error?: (err: any) => void;
-    complete: () => void;
+  closed?: boolean;
+  next?: (value: T) => void;
+  error?: (err: any) => void;
+  complete: () => void;
 }
-export declare type PartialObserver<T> = NextObserver<T> | ErrorObserver<T> | CompletionObserver<T>;
+export declare type PartialObserver<T> =
+  | NextObserver<T>
+  | ErrorObserver<T>
+  | CompletionObserver<T>;
 /**
  * An object interface that defines a set of callback functions a user can use to get
  * notified of any set of {@link Observable}
@@ -149,63 +169,75 @@ export declare type PartialObserver<T> = NextObserver<T> | ErrorObserver<T> | Co
  * For more info, please refer to {@link guide/observer this guide}.
  */
 export interface Observer<T> {
-    /**
-     * A callback function that gets called by the producer during the subscription when
-     * the producer "has" the `value`. It won't be called if `error` or `complete` callback
-     * functions have been called, nor after the consumer has unsubscribed.
-     *
-     * For more info, please refer to {@link guide/glossary-and-semantics#next this guide}.
-     */
-    next: (value: T) => void;
-    /**
-     * A callback function that gets called by the producer if and when it encountered a
-     * problem of any kind. The errored value will be provided through the `err` parameter.
-     * This callback can't be called more than one time, it can't be called if the
-     * `complete` callback function have been called previously, nor it can't be called if
-     * the consumer has unsubscribed.
-     *
-     * For more info, please refer to {@link guide/glossary-and-semantics#error this guide}.
-     */
-    error: (err: any) => void;
-    /**
-     * A callback function that gets called by the producer if and when it has no more
-     * values to provide (by calling `next` callback function). This means that no error
-     * has happened. This callback can't be called more than one time, it can't be called
-     * if the `error` callback function have been called previously, nor it can't be called
-     * if the consumer has unsubscribed.
-     *
-     * For more info, please refer to {@link guide/glossary-and-semantics#complete this guide}.
-     */
-    complete: () => void;
+  /**
+   * A callback function that gets called by the producer during the subscription when
+   * the producer "has" the `value`. It won't be called if `error` or `complete` callback
+   * functions have been called, nor after the consumer has unsubscribed.
+   *
+   * For more info, please refer to {@link guide/glossary-and-semantics#next this guide}.
+   */
+  next: (value: T) => void;
+  /**
+   * A callback function that gets called by the producer if and when it encountered a
+   * problem of any kind. The errored value will be provided through the `err` parameter.
+   * This callback can't be called more than one time, it can't be called if the
+   * `complete` callback function have been called previously, nor it can't be called if
+   * the consumer has unsubscribed.
+   *
+   * For more info, please refer to {@link guide/glossary-and-semantics#error this guide}.
+   */
+  error: (err: any) => void;
+  /**
+   * A callback function that gets called by the producer if and when it has no more
+   * values to provide (by calling `next` callback function). This means that no error
+   * has happened. This callback can't be called more than one time, it can't be called
+   * if the `error` callback function have been called previously, nor it can't be called
+   * if the consumer has unsubscribed.
+   *
+   * For more info, please refer to {@link guide/glossary-and-semantics#complete this guide}.
+   */
+  complete: () => void;
 }
-export interface SubjectLike<T> extends Observer<T>, Subscribable<T> {
-}
+export interface SubjectLike<T> extends Observer<T>, Subscribable<T> {}
 export interface SchedulerLike extends TimestampProvider {
-    schedule<T>(work: (this: SchedulerAction<T>, state: T) => void, delay: number, state: T): Subscription;
-    schedule<T>(work: (this: SchedulerAction<T>, state?: T) => void, delay: number, state?: T): Subscription;
-    schedule<T>(work: (this: SchedulerAction<T>, state?: T) => void, delay?: number, state?: T): Subscription;
+  schedule<T>(
+    work: (this: SchedulerAction<T>, state: T) => void,
+    delay: number,
+    state: T
+  ): Subscription;
+  schedule<T>(
+    work: (this: SchedulerAction<T>, state?: T) => void,
+    delay: number,
+    state?: T
+  ): Subscription;
+  schedule<T>(
+    work: (this: SchedulerAction<T>, state?: T) => void,
+    delay?: number,
+    state?: T
+  ): Subscription;
 }
 export interface SchedulerAction<T> extends Subscription {
-    schedule(state?: T, delay?: number): Subscription;
+  schedule(state?: T, delay?: number): Subscription;
 }
 /**
  * This is a type that provides a method to allow RxJS to create a numeric timestamp
  */
 export interface TimestampProvider {
-    /**
-     * Returns a timestamp as a number.
-     *
-     * This is used by types like `ReplaySubject` or operators like `timestamp` to calculate
-     * the amount of time passed between events.
-     */
-    now(): number;
+  /**
+   * Returns a timestamp as a number.
+   *
+   * This is used by types like `ReplaySubject` or operators like `timestamp` to calculate
+   * the amount of time passed between events.
+   */
+  now(): number;
 }
 /**
  * Extracts the type from an `ObservableInput<any>`. If you have
  * `O extends ObservableInput<any>` and you pass in `Observable<number>`, or
  * `Promise<number>`, etc, it will type as `number`.
  */
-export declare type ObservedValueOf<O> = O extends ObservableInput<infer T> ? T : never;
+export declare type ObservedValueOf<O> =
+  O extends ObservableInput<infer T> ? T : never;
 /**
  * Extracts a union of element types from an `ObservableInput<any>[]`.
  * If you have `O extends ObservableInput<any>[]` and you pass in
@@ -214,7 +246,8 @@ export declare type ObservedValueOf<O> = O extends ObservableInput<infer T> ? T 
  * If you pass in `[Observable<string>, Observable<number>]` you would
  * get back a type of `string | number`.
  */
-export declare type ObservedValueUnionFromArray<X> = X extends Array<ObservableInput<infer T>> ? T : never;
+export declare type ObservedValueUnionFromArray<X> =
+  X extends Array<ObservableInput<infer T>> ? T : never;
 /**
  * @deprecated Renamed to {@link ObservedValueUnionFromArray}. Will be removed in v8.
  */
@@ -226,7 +259,7 @@ export declare type ObservedValuesFromArray<X> = ObservedValueUnionFromArray<X>;
  * of `[string, number]`.
  */
 export declare type ObservedValueTupleFromArray<X> = {
-    [K in keyof X]: ObservedValueOf<X[K]>;
+  [K in keyof X]: ObservedValueOf<X[K]>;
 };
 /**
  * Used to infer types from arguments to functions like {@link forkJoin}.
@@ -234,37 +267,57 @@ export declare type ObservedValueTupleFromArray<X> = {
  * et al.
  */
 export declare type ObservableInputTuple<T> = {
-    [K in keyof T]: ObservableInput<T[K]>;
+  [K in keyof T]: ObservableInput<T[K]>;
 };
 /**
  * Constructs a new tuple with the specified type at the head.
  * If you declare `Cons<A, [B, C]>` you will get back `[A, B, C]`.
  */
-export declare type Cons<X, Y extends readonly any[]> = ((arg: X, ...rest: Y) => any) extends (...args: infer U) => any ? U : never;
+export declare type Cons<X, Y extends readonly any[]> = ((
+  arg: X,
+  ...rest: Y
+) => any) extends (...args: infer U) => any
+  ? U
+  : never;
 /**
  * Extracts the head of a tuple.
  * If you declare `Head<[A, B, C]>` you will get back `A`.
  */
-export declare type Head<X extends readonly any[]> = ((...args: X) => any) extends (arg: infer U, ...rest: any[]) => any ? U : never;
+export declare type Head<X extends readonly any[]> = ((
+  ...args: X
+) => any) extends (arg: infer U, ...rest: any[]) => any
+  ? U
+  : never;
 /**
  * Extracts the tail of a tuple.
  * If you declare `Tail<[A, B, C]>` you will get back `[B, C]`.
  */
-export declare type Tail<X extends readonly any[]> = ((...args: X) => any) extends (arg: any, ...rest: infer U) => any ? U : never;
+export declare type Tail<X extends readonly any[]> = ((
+  ...args: X
+) => any) extends (arg: any, ...rest: infer U) => any
+  ? U
+  : never;
 /**
  * Extracts the generic value from an Array type.
  * If you have `T extends Array<any>`, and pass a `string[]` to it,
  * `ValueFromArray<T>` will return the actual type of `string`.
  */
-export declare type ValueFromArray<A extends readonly unknown[]> = A extends Array<infer T> ? T : never;
+export declare type ValueFromArray<A extends readonly unknown[]> =
+  A extends Array<infer T> ? T : never;
 /**
  * Gets the value type from an {@link ObservableNotification}, if possible.
  */
 export declare type ValueFromNotification<T> = T extends {
-    kind: 'N' | 'E' | 'C';
-} ? T extends NextNotification<any> ? T extends {
-    value: infer V;
-} ? V : undefined : never : never;
+  kind: 'N' | 'E' | 'C';
+}
+  ? T extends NextNotification<any>
+    ? T extends {
+        value: infer V;
+      }
+      ? V
+      : undefined
+    : never
+  : never;
 /**
  * A simple type to represent a gamut of "falsy" values... with a notable exception:
  * `NaN` is "falsy" however, it is not and cannot be typed via TypeScript. See
@@ -273,14 +326,17 @@ export declare type ValueFromNotification<T> = T extends {
 export declare type Falsy = null | undefined | false | 0 | -0 | 0n | '';
 export declare type TruthyTypesOf<T> = T extends Falsy ? never : T;
 interface ReadableStreamDefaultReaderLike<T> {
-    read(): PromiseLike<{
+  read(): PromiseLike<
+    | {
         done: false;
         value: T;
-    } | {
+      }
+    | {
         done: true;
         value?: undefined;
-    }>;
-    releaseLock(): void;
+      }
+  >;
+  releaseLock(): void;
 }
 /**
  * The base signature RxJS will look for to identify and use
@@ -288,20 +344,20 @@ interface ReadableStreamDefaultReaderLike<T> {
  * as an {@link ObservableInput} source.
  */
 export interface ReadableStreamLike<T> {
-    getReader(): ReadableStreamDefaultReaderLike<T>;
+  getReader(): ReadableStreamDefaultReaderLike<T>;
 }
 /**
  * An observable with a `connect` method that is used to create a subscription
  * to an underlying source, connecting it with all consumers via a multicast.
  */
 export interface Connectable<T> extends Observable<T> {
-    /**
-     * (Idempotent) Calling this method will connect the underlying source observable to all subscribed consumers
-     * through an underlying {@link Subject}.
-     * @returns A subscription, that when unsubscribed, will "disconnect" the source from the connector subject,
-     * severing notifications to all consumers.
-     */
-    connect(): Subscription;
+  /**
+   * (Idempotent) Calling this method will connect the underlying source observable to all subscribed consumers
+   * through an underlying {@link Subject}.
+   * @returns A subscription, that when unsubscribed, will "disconnect" the source from the connector subject,
+   * severing notifications to all consumers.
+   */
+  connect(): Subscription;
 }
 export {};
 //# sourceMappingURL=types.d.ts.map

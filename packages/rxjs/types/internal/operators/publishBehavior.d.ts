@@ -15,5 +15,7 @@ import { UnaryFunction } from '../types';
  * `source.pipe(share({ connector: () => new BehaviorSubject(initValue), resetOnError: false, resetOnComplete: false, resetOnRefCountZero: false  }))`.
  * Details: https://rxjs.dev/deprecations/multicasting
  */
-export declare function publishBehavior<T>(initialValue: T): UnaryFunction<Observable<T>, ConnectableObservable<T>>;
+export declare function publishBehavior<T>(
+  initialValue: T
+): UnaryFunction<Observable<T>, ConnectableObservable<T>>;
 //# sourceMappingURL=publishBehavior.d.ts.map

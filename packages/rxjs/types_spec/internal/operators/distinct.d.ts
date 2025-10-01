@@ -56,5 +56,8 @@ import { MonoTypeOperatorFunction, ObservableInput } from '../types';
  * @return A function that returns an Observable that emits items from the
  * source Observable with distinct values.
  */
-export declare function distinct<T, K>(keySelector?: (value: T) => K, flushes?: ObservableInput<any>): MonoTypeOperatorFunction<T>;
+export declare function distinct<T, K>(
+  keySelector?: (value: T) => K,
+  flushes?: ObservableInput<any>
+): MonoTypeOperatorFunction<T>;
 //# sourceMappingURL=distinct.d.ts.map

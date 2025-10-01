@@ -11,5 +11,8 @@ import { Observable } from '../Observable';
  * @param scheduler The scheduler to use to schedule the subscription and emissions from
  * the returned observable.
  */
-export declare function scheduled<T>(input: ObservableInput<T>, scheduler: SchedulerLike): Observable<T>;
+export declare function scheduled<T>(
+  input: ObservableInput<T>,
+  scheduler: SchedulerLike
+): Observable<T>;
 //# sourceMappingURL=scheduled.d.ts.map

@@ -1,12 +1,14 @@
 import { Subscription } from '../Subscription';
 interface AnimationFrameProvider {
-    schedule(callback: FrameRequestCallback): Subscription;
-    requestAnimationFrame: typeof requestAnimationFrame;
-    cancelAnimationFrame: typeof cancelAnimationFrame;
-    delegate: {
+  schedule(callback: FrameRequestCallback): Subscription;
+  requestAnimationFrame: typeof requestAnimationFrame;
+  cancelAnimationFrame: typeof cancelAnimationFrame;
+  delegate:
+    | {
         requestAnimationFrame: typeof requestAnimationFrame;
         cancelAnimationFrame: typeof cancelAnimationFrame;
-    } | undefined;
+      }
+    | undefined;
 }
 export declare const animationFrameProvider: AnimationFrameProvider;
 export {};

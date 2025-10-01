@@ -1,4 +1,8 @@
-import { CompleteNotification, NextNotification, ErrorNotification } from './types';
+import {
+  CompleteNotification,
+  NextNotification,
+  ErrorNotification,
+} from './types';
 /**
  * A completion object optimized for memory use and created to be the
  * same "shape" as other notifications in v8.
@@ -23,9 +27,13 @@ export declare function nextNotification<T>(value: T): NextNotification<T>;
  * TODO: This is only exported to support a crazy legacy test in `groupBy`.
  * @internal
  */
-export declare function createNotification(kind: 'N' | 'E' | 'C', value: any, error: any): {
-    kind: "N" | "E" | "C";
-    value: any;
-    error: any;
+export declare function createNotification(
+  kind: 'N' | 'E' | 'C',
+  value: any,
+  error: any
+): {
+  kind: 'N' | 'E' | 'C';
+  value: any;
+  error: any;
 };
 //# sourceMappingURL=NotificationFactories.d.ts.map
