@@ -153,6 +153,480 @@ export const Validators = {
       return null;
     };
   },
+
+  /**
+   * Validator that requires two controls to have matching values
+   * @param {string} controlName - Name of control to match against
+   * @returns {Function} Validator function
+   */
+  matchControl(controlName) {
+    return (control) => {
+      if (!control.parent) {
+        return null;
+      }
+      const matchingControl = control.parent.get(controlName);
+      if (!matchingControl) {
+        return null;
+      }
+      if (control.value !== matchingControl.value) {
+        return {
+          matchControl: {
+            message: 'Values do not match',
+            requiredValue: matchingControl.value,
+            actualValue: control.value,
+          },
+        };
+      }
+      return null;
+    };
+  },
+
+  /**
+   * Validator that requires the control's value to be a valid phone number
+   * @param {string} format - Phone format ('US', 'INTL', or custom regex)
+   * @returns {Function} Validator function
+   */
+  phone(format = 'US') {
+    return (control) => {
+      if (!control.value) {
+        return null;
+      }
+
+      let regex;
+      if (format === 'US') {
+        // US phone: (123) 456-7890 or 123-456-7890 or 1234567890
+        regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+      } else if (format === 'INTL') {
+        // International: +1234567890
+        regex = /^\+?[1-9]\d{1,14}$/;
+      } else if (format instanceof RegExp) {
+        regex = format;
+      } else {
+        regex = new RegExp(format);
+      }
+
+      if (!regex.test(control.value)) {
+        return {
+          phone: {
+            message: 'Please enter a valid phone number',
+            format,
+          },
+        };
+      }
+      return null;
+    };
+  },
+
+  /**
+   * Validator that requires the control's value to be a valid credit card number
+   * @param {FormControl} control - The form control to validate
+   * @returns {object | null} Validation error object or null if valid
+   */
+  creditCard(control) {
+    if (!control.value) {
+      return null;
+    }
+
+    // Remove spaces and dashes
+    const cleaned = control.value.replace(/[\s-]/g, '');
+
+    // Must be digits only
+    if (!/^\d+$/.test(cleaned)) {
+      return { creditCard: { message: 'Invalid credit card number' } };
+    }
+
+    // Luhn algorithm
+    let sum = 0;
+    let isEven = false;
+    for (let i = cleaned.length - 1; i >= 0; i--) {
+      let digit = parseInt(cleaned[i], 10);
+      if (isEven) {
+        digit *= 2;
+        if (digit > 9) {
+          digit -= 9;
+        }
+      }
+      sum += digit;
+      isEven = !isEven;
+    }
+
+    if (sum % 10 !== 0) {
+      return { creditCard: { message: 'Invalid credit card number' } };
+    }
+    return null;
+  },
+
+  /**
+   * Validator that requires the control's value to be a valid date
+   * @param {string} format - Date format ('ISO', 'US', or custom)
+   * @returns {Function} Validator function
+   */
+  date(format = 'ISO') {
+    return (control) => {
+      if (!control.value) {
+        return null;
+      }
+
+      let isValid = false;
+      if (format === 'ISO') {
+        // ISO 8601: YYYY-MM-DD
+        isValid = /^\d{4}-\d{2}-\d{2}$/.test(control.value);
+        if (isValid) {
+          const date = new Date(control.value);
+          isValid = !isNaN(date.getTime());
+        }
+      } else if (format === 'US') {
+        // US format: MM/DD/YYYY
+        isValid = /^\d{2}\/\d{2}\/\d{4}$/.test(control.value);
+        if (isValid) {
+          const [month, day, year] = control.value.split('/');
+          const date = new Date(year, month - 1, day);
+          isValid = !isNaN(date.getTime());
+        }
+      } else {
+        const date = new Date(control.value);
+        isValid = !isNaN(date.getTime());
+      }
+
+      if (!isValid) {
+        return {
+          date: { message: `Please enter a valid date (${format})` },
+        };
+      }
+      return null;
+    };
+  },
+
+  /**
+   * Validator that requires the control's value to be before a certain date
+   * @param {Date|string} maxDate - Maximum date
+   * @returns {Function} Validator function
+   */
+  dateBefore(maxDate) {
+    return (control) => {
+      if (!control.value) {
+        return null;
+      }
+      const controlDate = new Date(control.value);
+      const compareDate = new Date(maxDate);
+      if (controlDate >= compareDate) {
+        return {
+          dateBefore: {
+            message: `Date must be before ${compareDate.toLocaleDateString()}`,
+            maxDate: compareDate,
+          },
+        };
+      }
+      return null;
+    };
+  },
+
+  /**
+   * Validator that requires the control's value to be after a certain date
+   * @param {Date|string} minDate - Minimum date
+   * @returns {Function} Validator function
+   */
+  dateAfter(minDate) {
+    return (control) => {
+      if (!control.value) {
+        return null;
+      }
+      const controlDate = new Date(control.value);
+      const compareDate = new Date(minDate);
+      if (controlDate <= compareDate) {
+        return {
+          dateAfter: {
+            message: `Date must be after ${compareDate.toLocaleDateString()}`,
+            minDate: compareDate,
+          },
+        };
+      }
+      return null;
+    };
+  },
+
+  /**
+   * Validator that requires the control's value to contain only numbers
+   * @param {FormControl} control - The form control to validate
+   * @returns {object | null} Validation error object or null if valid
+   */
+  numeric(control) {
+    if (!control.value && control.value !== 0) {
+      return null;
+    }
+    if (!/^-?\d*\.?\d+$/.test(String(control.value))) {
+      return { numeric: { message: 'Please enter a numeric value' } };
+    }
+    return null;
+  },
+
+  /**
+   * Validator that requires the control's value to contain only alphabetic characters
+   * @param {boolean} allowSpaces - Whether to allow spaces
+   * @returns {Function} Validator function
+   */
+  alpha(allowSpaces = false) {
+    return (control) => {
+      if (!control.value) {
+        return null;
+      }
+      const regex = allowSpaces ? /^[a-zA-Z\s]+$/ : /^[a-zA-Z]+$/;
+      if (!regex.test(control.value)) {
+        return {
+          alpha: {
+            message: `Please enter only alphabetic characters${allowSpaces ? ' and spaces' : ''}`,
+          },
+        };
+      }
+      return null;
+    };
+  },
+
+  /**
+   * Validator that requires the control's value to contain only alphanumeric characters
+   * @param {boolean} allowSpaces - Whether to allow spaces
+   * @returns {Function} Validator function
+   */
+  alphanumeric(allowSpaces = false) {
+    return (control) => {
+      if (!control.value) {
+        return null;
+      }
+      const regex = allowSpaces ? /^[a-zA-Z0-9\s]+$/ : /^[a-zA-Z0-9]+$/;
+      if (!regex.test(control.value)) {
+        return {
+          alphanumeric: {
+            message: `Please enter only alphanumeric characters${allowSpaces ? ' and spaces' : ''}`,
+          },
+        };
+      }
+      return null;
+    };
+  },
+
+  /**
+   * Validator that requires the control's value to be a valid IP address
+   * @param {string} version - IP version ('v4', 'v6', or 'both')
+   * @returns {Function} Validator function
+   */
+  ipAddress(version = 'v4') {
+    return (control) => {
+      if (!control.value) {
+        return null;
+      }
+
+      const ipv4Regex =
+        /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+      const ipv6Regex = /^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$/;
+
+      let isValid = false;
+      if (version === 'v4') {
+        isValid = ipv4Regex.test(control.value);
+      } else if (version === 'v6') {
+        isValid = ipv6Regex.test(control.value);
+      } else if (version === 'both') {
+        isValid = ipv4Regex.test(control.value) || ipv6Regex.test(control.value);
+      }
+
+      if (!isValid) {
+        return {
+          ipAddress: {
+            message: `Please enter a valid IPv${version === 'both' ? '4 or IPv6' : version} address`,
+          },
+        };
+      }
+      return null;
+    };
+  },
+
+  /**
+   * Validator that requires the control's value to be a valid JSON string
+   * @param {FormControl} control - The form control to validate
+   * @returns {object | null} Validation error object or null if valid
+   */
+  json(control) {
+    if (!control.value) {
+      return null;
+    }
+    try {
+      JSON.parse(control.value);
+      return null;
+    } catch {
+      return { json: { message: 'Please enter valid JSON' } };
+    }
+  },
+
+  /**
+   * Validator that requires the control's value to be within a specific range
+   * @param {number} min - Minimum value (inclusive)
+   * @param {number} max - Maximum value (inclusive)
+   * @returns {Function} Validator function
+   */
+  range(min, max) {
+    return (control) => {
+      if (control.value === null || control.value === undefined) {
+        return null;
+      }
+      const value = Number(control.value);
+      if (isNaN(value) || value < min || value > max) {
+        return {
+          range: {
+            message: `Value must be between ${min} and ${max}`,
+            min,
+            max,
+            actual: control.value,
+          },
+        };
+      }
+      return null;
+    };
+  },
+
+  /**
+   * Validator that requires the control's value to be one of the allowed values
+   * @param {Array} allowedValues - Array of allowed values
+   * @returns {Function} Validator function
+   */
+  oneOf(allowedValues) {
+    return (control) => {
+      if (!control.value) {
+        return null;
+      }
+      if (!allowedValues.includes(control.value)) {
+        return {
+          oneOf: {
+            message: `Value must be one of: ${allowedValues.join(', ')}`,
+            allowedValues,
+            actual: control.value,
+          },
+        };
+      }
+      return null;
+    };
+  },
+
+  /**
+   * Validator that requires the control's value to NOT be one of the forbidden values
+   * @param {Array} forbiddenValues - Array of forbidden values
+   * @returns {Function} Validator function
+   */
+  notOneOf(forbiddenValues) {
+    return (control) => {
+      if (!control.value) {
+        return null;
+      }
+      if (forbiddenValues.includes(control.value)) {
+        return {
+          notOneOf: {
+            message: `Value cannot be one of: ${forbiddenValues.join(', ')}`,
+            forbiddenValues,
+            actual: control.value,
+          },
+        };
+      }
+      return null;
+    };
+  },
+
+  /**
+   * Validator that requires the control's value to be a strong password
+   * @param {Object} requirements - Password requirements
+   * @returns {Function} Validator function
+   */
+  password(requirements = {}) {
+    const defaults = {
+      minLength: 8,
+      requireUppercase: true,
+      requireLowercase: true,
+      requireNumbers: true,
+      requireSpecialChars: true,
+    };
+    const config = { ...defaults, ...requirements };
+
+    return (control) => {
+      if (!control.value) {
+        return null;
+      }
+
+      const errors = [];
+      if (
+        config.minLength &&
+        control.value.length < config.minLength
+      ) {
+        errors.push(`at least ${config.minLength} characters`);
+      }
+      if (config.requireUppercase && !/[A-Z]/.test(control.value)) {
+        errors.push('an uppercase letter');
+      }
+      if (config.requireLowercase && !/[a-z]/.test(control.value)) {
+        errors.push('a lowercase letter');
+      }
+      if (config.requireNumbers && !/\d/.test(control.value)) {
+        errors.push('a number');
+      }
+      if (
+        config.requireSpecialChars &&
+        !/[!@#$%^&*(),.?":{}|<>]/.test(control.value)
+      ) {
+        errors.push('a special character');
+      }
+
+      if (errors.length > 0) {
+        return {
+          password: {
+            message: `Password must contain ${errors.join(', ')}`,
+            requirements: config,
+          },
+        };
+      }
+      return null;
+    };
+  },
+
+  /**
+   * Compose multiple validators into a single validator
+   * @param {Array<Function>} validators - Array of validator functions
+   * @returns {Function} Composed validator function
+   */
+  compose(validators) {
+    if (!validators || validators.length === 0) {
+      return () => null;
+    }
+    return (control) => {
+      for (const validator of validators) {
+        const result = validator(control);
+        if (result !== null) {
+          return result;
+        }
+      }
+      return null;
+    };
+  },
+
+  /**
+   * Custom validator that accepts a validation function
+   * @param {Function} validatorFn - Custom validation function
+   * @param {string} errorKey - Error key for validation errors
+   * @returns {Function} Validator function
+   */
+  custom(validatorFn, errorKey = 'custom') {
+    return (control) => {
+      const result = validatorFn(control.value, control);
+      if (result === false || result === null || result === undefined) {
+        return null;
+      }
+      if (result === true) {
+        return { [errorKey]: { message: 'Validation failed' } };
+      }
+      if (typeof result === 'string') {
+        return { [errorKey]: { message: result } };
+      }
+      if (typeof result === 'object') {
+        return { [errorKey]: result };
+      }
+      return null;
+    };
+  },
 };
 
 /**
