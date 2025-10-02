@@ -1,10 +1,12 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this
+repository.
 
 ## Project Overview
 
-This is a vanilla JavaScript project for browser-based development with no framework dependencies. The project uses modern ES2021+ JavaScript with module syntax.
+This is a vanilla JavaScript project for browser-based development with no framework dependencies.
+The project uses modern ES2021+ JavaScript with module syntax.
 
 ## Development Commands
 

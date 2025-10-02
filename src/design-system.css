@@ -99,13 +99,13 @@
 
   /* Typography - Font Families */
   --font-family-base:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-    Cantarell, sans-serif;
+    -apple-system, blinkmacsystemfont, "Segoe UI", roboto, oxygen, ubuntu,
+    cantarell, sans-serif;
   --font-family-heading:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-    Cantarell, sans-serif;
-  --font-family-mono: 'Monaco', 'Courier New', monospace;
-  --font-family-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
+    -apple-system, blinkmacsystemfont, "Segoe UI", roboto, oxygen, ubuntu,
+    cantarell, sans-serif;
+  --font-family-mono: "Monaco", "Courier New", monospace;
+  --font-family-serif: georgia, cambria, "Times New Roman", times, serif;
 
   /* Typography - Font Sizes */
   --font-size-2xs: 0.625rem; /* 10px */
@@ -251,15 +251,15 @@
     var(--color-border);
 
   /* Shadows */
-  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 5%);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%);
   --shadow-base:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%);
   --shadow-md:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -2px rgb(0 0 0 / 5%);
   --shadow-lg:
-    0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    0 20px 25px -5px rgb(0 0 0 / 10%), 0 10px 10px -5px rgb(0 0 0 / 4%);
+  --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 25%);
 
   /* Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -330,7 +330,7 @@
   --container-2xl: 1536px;
 
   /* Layout Breakpoints (for reference in JS) */
-  --breakpoint-xs: 0px;
+  --breakpoint-xs: 0;
   --breakpoint-sm: 600px;
   --breakpoint-md: 960px;
   --breakpoint-lg: 1280px;
@@ -385,7 +385,6 @@
   --button-padding-y-xl: var(--padding-5);
   --button-border-radius: var(--radius-base);
   --button-font-weight: var(--font-weight-medium);
-
   --input-height-sm: 2rem;
   --input-height-md: 2.5rem;
   --input-height-lg: 3rem;
@@ -397,7 +396,6 @@
   --input-border-width: var(--border-width-2);
   --input-border-radius: var(--radius-base);
   --input-font-size: var(--font-size-base);
-
   --card-padding-sm: var(--padding-4);
   --card-padding-md: var(--padding-6);
   --card-padding-lg: var(--padding-8);
@@ -406,26 +404,21 @@
   --card-radius: var(--radius-lg);
   --card-shadow: var(--shadow-base);
   --card-border: var(--border-thin);
-
   --badge-padding-x: var(--padding-3);
   --badge-padding-y: var(--padding-1);
   --badge-font-size: var(--font-size-sm);
   --badge-font-weight: var(--font-weight-medium);
   --badge-border-radius: var(--radius-full);
-
   --chip-padding-x: var(--padding-3);
   --chip-padding-y: var(--padding-2);
   --chip-font-size: var(--font-size-sm);
   --chip-border-radius: var(--radius-full);
-
   --alert-padding: var(--padding-4);
   --alert-border-radius: var(--radius-base);
   --alert-border-width: var(--border-width-1);
-
   --modal-padding: var(--padding-6);
   --modal-border-radius: var(--radius-lg);
   --modal-max-width: var(--max-width-2xl);
-
   --tooltip-padding-x: var(--padding-3);
   --tooltip-padding-y: var(--padding-2);
   --tooltip-font-size: var(--font-size-sm);
@@ -434,7 +427,7 @@
 }
 
 /* Dark Theme */
-[data-theme='dark'] {
+[data-theme="dark"] {
   --color-background: #121212;
   --color-surface: #1e1e1e;
   --color-surface-variant: #2d2d2d;
@@ -444,19 +437,19 @@
   --color-divider: #3d3d3d;
 
   /* Elevated surfaces in dark mode */
-  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 30%);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 40%), 0 1px 2px 0 rgb(0 0 0 / 30%);
   --shadow-base:
-    0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    0 4px 6px -1px rgb(0 0 0 / 40%), 0 2px 4px -1px rgb(0 0 0 / 30%);
   --shadow-md:
-    0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+    0 10px 15px -3px rgb(0 0 0 / 40%), 0 4px 6px -2px rgb(0 0 0 / 30%);
   --shadow-lg:
-    0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
-  --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+    0 20px 25px -5px rgb(0 0 0 / 50%), 0 10px 10px -5px rgb(0 0 0 / 30%);
+  --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 60%);
 }
 
 /* High Contrast Theme */
-[data-theme='high-contrast'] {
+[data-theme="high-contrast"] {
   --color-background: #000000;
   --color-surface: #000000;
   --color-surface-variant: #1a1a1a;
@@ -464,7 +457,6 @@
   --color-on-surface: #ffffff;
   --color-border: #ffffff;
   --color-divider: #ffffff;
-
   --color-primary: #00bfff;
   --color-on-primary: #000000;
   --color-secondary: #ff69b4;
@@ -476,7 +468,7 @@
 }
 
 /* Compact Density */
-[data-density='compact'] {
+[data-density="compact"] {
   --spacing-scale: 0.75;
 
   /* Buttons */
@@ -515,7 +507,7 @@
 }
 
 /* Comfortable Density */
-[data-density='comfortable'] {
+[data-density="comfortable"] {
   --spacing-scale: 1.25;
 
   /* Buttons */

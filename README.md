@@ -1,6 +1,7 @@
 # Vanilla JavaScript HTTP Client
 
-A fully-featured HTTP client for vanilla JavaScript with Angular HttpClient feature parity, built on RxJS Observables and the Fetch API.
+A fully-featured HTTP client for vanilla JavaScript with Angular HttpClient feature parity, built on
+RxJS Observables and the Fetch API.
 
 ## Features
 
@@ -167,9 +168,7 @@ client.get('/data', { observe: 'events' }).subscribe((event) => {
 // Different response types
 client.get('/text', { responseType: 'text' }).subscribe((text) => {});
 client.get('/image', { responseType: 'blob' }).subscribe((blob) => {});
-client
-  .get('/binary', { responseType: 'arraybuffer' })
-  .subscribe((buffer) => {});
+client.get('/binary', { responseType: 'arraybuffer' }).subscribe((buffer) => {});
 ```
 
 ### Error Handling with RxJS

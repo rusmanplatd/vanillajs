@@ -276,10 +276,18 @@ export class ThemeManager {
    * themeManager.importConfig(config);
    */
   importConfig(config) {
-    if (config.theme) this.setTheme(config.theme);
-    if (config.density) this.setDensity(config.density);
-    if (config.scale) this.setScale(config.scale);
-    if (config.tokens) this.setTokens(config.tokens);
+    if (config.theme) {
+      this.setTheme(config.theme);
+    }
+    if (config.density) {
+      this.setDensity(config.density);
+    }
+    if (config.scale) {
+      this.setScale(config.scale);
+    }
+    if (config.tokens) {
+      this.setTokens(config.tokens);
+    }
   }
 
   /**

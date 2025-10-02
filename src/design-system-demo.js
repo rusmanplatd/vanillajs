@@ -11,17 +11,16 @@ const hexToRgb = (hex) => {
 // Helper to convert RGB to Hex
 const rgbToHex = (rgb) => {
   const values = rgb.match(/\d+/g);
-  if (!values || values.length < 3) return '#000000';
-  return (
-    '#' +
-    values
-      .slice(0, 3)
-      .map((x) => {
-        const hex = parseInt(x).toString(16);
-        return hex.length === 1 ? '0' + hex : hex;
-      })
-      .join('')
-  );
+  if (!values || values.length < 3) {
+    return '#000000';
+  }
+  return `#${values
+    .slice(0, 3)
+    .map((x) => {
+      const hex = parseInt(x).toString(16);
+      return hex.length === 1 ? `0${hex}` : hex;
+    })
+    .join('')}`;
 };
 
 // Get DOM elements
@@ -170,7 +169,7 @@ document.querySelectorAll('.chip-remove').forEach((btn) => {
 // Animate progress bars on load
 window.addEventListener('load', () => {
   document.querySelectorAll('.progress-bar').forEach((bar) => {
-    const width = bar.style.width;
+    const { width } = bar.style;
     bar.style.width = '0';
     setTimeout(() => {
       bar.style.width = width;

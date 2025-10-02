@@ -10,7 +10,7 @@ export const Validators = {
    * @returns {object | null} Validation error object or null if valid
    */
   required(control) {
-    const value = control.value;
+    const { value } = control;
     if (value === null || value === undefined || value === '') {
       return { required: true };
     }
@@ -454,7 +454,7 @@ export class FormControl {
     if (path) {
       return null; // FormControl doesn't have nested paths
     }
-    const errors = this.errors;
+    const { errors } = this;
     return errors && errors[errorCode] ? errors[errorCode] : null;
   }
 
