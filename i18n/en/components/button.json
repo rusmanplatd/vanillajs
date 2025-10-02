@@ -1,0 +1,12 @@
+{
+  "primary": "Primary Button",
+  "secondary": "Secondary Button",
+  "success": "Success",
+  "warning": "Warning",
+  "error": "Error",
+  "submit": "Submit",
+  "cancel": "Cancel",
+  "save": "Save Changes",
+  "delete": "Delete Item",
+  "loading": "Loading..."
+}

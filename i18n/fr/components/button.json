@@ -1,0 +1,12 @@
+{
+  "primary": "Bouton Principal",
+  "secondary": "Bouton Secondaire",
+  "success": "Succès",
+  "warning": "Avertissement",
+  "error": "Erreur",
+  "submit": "Soumettre",
+  "cancel": "Annuler",
+  "save": "Enregistrer les Modifications",
+  "delete": "Supprimer l'Élément",
+  "loading": "Chargement..."
+}

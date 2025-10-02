@@ -1,0 +1,55 @@
+{
+  "app": {
+    "title": "Aplicación Vanilla JS",
+    "description": "Aplicación moderna de JavaScript vanilla con soporte i18n"
+  },
+  "actions": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "create": "Crear",
+    "submit": "Enviar",
+    "close": "Cerrar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "reset": "Restablecer",
+    "confirm": "Confirmar"
+  },
+  "messages": {
+    "loading": "Cargando...",
+    "success": "Operación completada con éxito",
+    "error": "Ocurrió un error",
+    "warning": "Advertencia",
+    "info": "Información",
+    "noData": "No hay datos disponibles",
+    "confirmDelete": "¿Está seguro de que desea eliminar este elemento?",
+    "unsavedChanges": "Tiene cambios sin guardar. ¿Desea continuar?"
+  },
+  "validation": {
+    "required": "Este campo es obligatorio",
+    "email": "Por favor ingrese un correo electrónico válido",
+    "minLength": "La longitud mínima es de {min} caracteres",
+    "maxLength": "La longitud máxima es de {max} caracteres",
+    "pattern": "Formato inválido",
+    "number": "Por favor ingrese un número válido",
+    "url": "Por favor ingrese una URL válida"
+  },
+  "time": {
+    "justNow": "Justo ahora",
+    "minutesAgo": "hace {count} minuto|hace {count} minutos",
+    "hoursAgo": "hace {count} hora|hace {count} horas",
+    "daysAgo": "hace {count} día|hace {count} días",
+    "weeksAgo": "hace {count} semana|hace {count} semanas",
+    "monthsAgo": "hace {count} mes|hace {count} meses",
+    "yearsAgo": "hace {count} año|hace {count} años"
+  },
+  "plurals": {
+    "items": "sin elementos|un elemento|{count} elementos",
+    "users": "sin usuarios|un usuario|{count} usuarios",
+    "results": "sin resultados|un resultado|{count} resultados"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "title": "Bienvenido a Nuestra Aplicación",
+  "subtitle": "Construye cosas increíbles con JavaScript vanilla",
+  "welcome": "¡Hola, {name}!",
+  "description": "Esta es una demostración de nuestro sistema de internacionalización con soporte para archivos JSON divididos, pluralización e interpolación.",
+  "features": {
+    "title": "Características Principales",
+    "i18n": "Soporte Multi-idioma",
+    "i18nDesc": "Soporte para múltiples idiomas con archivos JSON divididos",
+    "reactive": "Actualizaciones Reactivas",
+    "reactiveDesc": "Actualiza automáticamente la UI cuando cambia el idioma",
+    "pluralization": "Pluralización",
+    "pluralizationDesc": "Formas plurales inteligentes basadas en el conteo",
+    "interpolation": "Interpolación",
+    "interpolationDesc": "Valores dinámicos en las traducciones"
+  },
+  "cta": {
+    "getStarted": "Comenzar",
+    "learnMore": "Saber Más",
+    "documentation": "Ver Documentación"
+  }
+}

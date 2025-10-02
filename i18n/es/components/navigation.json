@@ -1,0 +1,14 @@
+{
+  "home": "Inicio",
+  "about": "Acerca de",
+  "products": "Productos",
+  "services": "Servicios",
+  "contact": "Contacto",
+  "blog": "Blog",
+  "dashboard": "Panel",
+  "profile": "Perfil",
+  "settings": "Configuración",
+  "logout": "Cerrar Sesión",
+  "login": "Iniciar Sesión",
+  "register": "Registrarse"
+}

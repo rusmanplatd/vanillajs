@@ -1,0 +1,46 @@
+{
+  "app": {
+    "title": "Application Vanilla JS",
+    "description": "Application JavaScript vanilla moderne avec support i18n"
+  },
+  "actions": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "create": "Créer",
+    "submit": "Soumettre",
+    "close": "Fermer",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "reset": "Réinitialiser",
+    "confirm": "Confirmer"
+  },
+  "messages": {
+    "loading": "Chargement...",
+    "success": "Opération terminée avec succès",
+    "error": "Une erreur s'est produite",
+    "warning": "Avertissement",
+    "info": "Information",
+    "noData": "Aucune donnée disponible",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet élément?",
+    "unsavedChanges": "Vous avez des modifications non enregistrées. Voulez-vous continuer?"
+  },
+  "validation": {
+    "required": "Ce champ est obligatoire",
+    "email": "Veuillez saisir une adresse e-mail valide",
+    "minLength": "La longueur minimale est de {min} caractères",
+    "maxLength": "La longueur maximale est de {max} caractères",
+    "pattern": "Format invalide",
+    "number": "Veuillez saisir un nombre valide",
+    "url": "Veuillez saisir une URL valide"
+  },
+  "plurals": {
+    "items": "aucun élément|un élément|{count} éléments",
+    "users": "aucun utilisateur|un utilisateur|{count} utilisateurs",
+    "results": "aucun résultat|un résultat|{count} résultats"
+  }
+}
