@@ -95,8 +95,8 @@ Count-based selection ✓ Works with interpolation
 
 ### 5. Translation Loading
 
-✓ Lazy loading (on-demand) ✓ Preloading support ✓ Namespace-based loading ✓ Caching system ✓
-Loading state tracking ✓ Error handling
+✓ Lazy loading (on-demand) ✓ Preloading support ✓ Namespace-based loading ✓ Caching system ✓ Loading
+state tracking ✓ Error handling
 
 ### 6. DOM Integration
 
@@ -171,11 +171,7 @@ new LanguageSwitcher(document.getElementById('switcher'), {
 ### Formatting
 
 ```javascript
-import {
-  formatDate,
-  formatNumber,
-  formatCurrency,
-} from './src/i18n-helpers.js';
+import { formatDate, formatNumber, formatCurrency } from './src/i18n-helpers.js';
 
 formatDate(new Date(), { dateStyle: 'long' });
 // en: "January 15, 2025"
