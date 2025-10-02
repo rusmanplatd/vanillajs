@@ -5,7 +5,7 @@ import {
   HttpEventType,
   HttpHeaders,
   HttpParams,
-} from './http-client.js';
+} from '../src/http-client.js';
 import { retry } from '../packages/rxjs/cjs/internal/operators/retry.js';
 import { timeout } from '../packages/rxjs/cjs/internal/operators/timeout.js';
 import { catchError } from '../packages/rxjs/cjs/internal/operators/catchError.js';
