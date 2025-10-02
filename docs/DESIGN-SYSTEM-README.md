@@ -614,17 +614,17 @@ design-system-demo.html    # Interactive demo page
 
 ## Comparison with Popular Frameworks
 
-| Feature                 | Material UI | Chakra UI | This System |
-| ----------------------- | ----------- | --------- | ----------- |
-| CSS Tokens              | ✅          | ✅        | ✅          |
-| Reactive Theming        | ✅          | ✅        | ✅          |
-| Runtime Customization   | ✅          | ✅        | ✅          |
-| No Framework Required   | ❌          | ❌        | ✅          |
-| RxJS Observables        | ❌          | ❌        | ✅          |
-| File Size (unminified)  | ~150KB      | ~100KB    | ~15KB       |
-| Component Library       | ✅          | ✅        | ✅          |
-| TypeScript Support      | ✅          | ✅        | ✅ (JSDoc)  |
-| LocalStorage Persist    | ❌          | ✅        | ✅          |
+| Feature                | Material UI | Chakra UI | This System |
+| ---------------------- | ----------- | --------- | ----------- |
+| CSS Tokens             | ✅          | ✅        | ✅          |
+| Reactive Theming       | ✅          | ✅        | ✅          |
+| Runtime Customization  | ✅          | ✅        | ✅          |
+| No Framework Required  | ❌          | ❌        | ✅          |
+| RxJS Observables       | ❌          | ❌        | ✅          |
+| File Size (unminified) | ~150KB      | ~100KB    | ~15KB       |
+| Component Library      | ✅          | ✅        | ✅          |
+| TypeScript Support     | ✅          | ✅        | ✅ (JSDoc)  |
+| LocalStorage Persist   | ❌          | ✅        | ✅          |
 
 ## License
 

@@ -170,7 +170,10 @@ No installation needed! Just include the CSS files:
 
 ```html
 <script type="module">
-  import { breakpointObserver, Breakpoints } from './src/breakpoint-observer.js';
+  import {
+    breakpointObserver,
+    Breakpoints,
+  } from './src/breakpoint-observer.js';
   import { themeManager } from './src/theme-manager.js';
 
   breakpointObserver.observe(Breakpoints.Handset).subscribe((state) => {

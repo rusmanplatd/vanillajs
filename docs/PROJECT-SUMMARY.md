@@ -11,6 +11,7 @@ This repository contains two major systems built with vanilla JavaScript, RxJS, 
 A responsive layout detection utility inspired by Angular CDK's BreakpointObserver.
 
 **Key Features**:
+
 - Observable-based media query detection
 - Predefined breakpoints (XSmall, Small, Medium, Large, XLarge)
 - Device type detection (Handset, Tablet, Web)
@@ -19,6 +20,7 @@ A responsive layout detection utility inspired by Angular CDK's BreakpointObserv
 - Clean, reactive API
 
 **Files**:
+
 - `src/breakpoint-observer.js` - Core implementation (8KB)
 - `src/breakpoint-example.js` - Demo application
 - `breakpoint-example.html` - Interactive demo
@@ -35,6 +37,7 @@ A responsive layout detection utility inspired by Angular CDK's BreakpointObserv
 A comprehensive, reactive design system with CSS tokens and dynamic theming.
 
 **Key Features**:
+
 - Complete CSS design token system
 - Reactive theme manager with RxJS observables
 - Multiple themes (Light, Dark, High Contrast)
@@ -46,6 +49,7 @@ A comprehensive, reactive design system with CSS tokens and dynamic theming.
 - System preference detection
 
 **Files**:
+
 - `src/design-system.css` - CSS tokens and variables (8KB)
 - `src/ui-components.css` - Component library (11KB)
 - `src/theme-manager.js` - Reactive theme manager (13KB)
@@ -93,6 +97,7 @@ npm start
 ```
 
 Then open:
+
 - `index.html` - HTTP Client basic demo
 - `index-advanced.html` - HTTP Client advanced demo
 - `forms-example.html` - Forms basic demo
@@ -164,6 +169,7 @@ vanillajs/
 ### CSS Design Tokens
 
 Complete token system including:
+
 - **Colors**: Primary, Secondary, Success, Warning, Error (50-900 scales)
 - **Typography**: Font families, sizes (xs-6xl), weights, line heights
 - **Spacing**: 13-point scale (0-24)
@@ -174,6 +180,7 @@ Complete token system including:
 ### Component Library
 
 Pre-built components:
+
 - **Buttons**: 7 variants, 3 sizes
 - **Form Elements**: Inputs, selects, textareas, switches
 - **Cards**: Header, body, footer sections
@@ -186,6 +193,7 @@ Pre-built components:
 ### Theme Manager API
 
 Reactive theme management:
+
 ```javascript
 import { themeManager } from './src/theme-manager.js';
 
@@ -193,7 +201,7 @@ import { themeManager } from './src/theme-manager.js';
 themeManager.setTheme('dark');
 
 // Subscribe to changes
-themeManager.theme$.subscribe(theme => {
+themeManager.theme$.subscribe((theme) => {
   console.log('Theme:', theme);
 });
 
@@ -214,20 +222,20 @@ const config = themeManager.exportConfig();
 import { Breakpoints } from './src/breakpoint-observer.js';
 
 // Size breakpoints
-Breakpoints.XSmall   // (max-width: 599.98px)
-Breakpoints.Small    // 600px - 959.98px
-Breakpoints.Medium   // 960px - 1279.98px
-Breakpoints.Large    // 1280px - 1919.98px
-Breakpoints.XLarge   // (min-width: 1920px)
+Breakpoints.XSmall; // (max-width: 599.98px)
+Breakpoints.Small; // 600px - 959.98px
+Breakpoints.Medium; // 960px - 1279.98px
+Breakpoints.Large; // 1280px - 1919.98px
+Breakpoints.XLarge; // (min-width: 1920px)
 
 // Device types
-Breakpoints.Handset  // Phone
-Breakpoints.Tablet   // Tablet
-Breakpoints.Web      // Desktop
+Breakpoints.Handset; // Phone
+Breakpoints.Tablet; // Tablet
+Breakpoints.Web; // Desktop
 
 // Orientation
-Breakpoints.HandsetPortrait
-Breakpoints.TabletLandscape
+Breakpoints.HandsetPortrait;
+Breakpoints.TabletLandscape;
 // ... and more
 ```
 
@@ -237,20 +245,19 @@ Breakpoints.TabletLandscape
 import { breakpointObserver } from './src/breakpoint-observer.js';
 
 // Observe single breakpoint
-breakpointObserver.observe(Breakpoints.Handset).subscribe(state => {
+breakpointObserver.observe(Breakpoints.Handset).subscribe((state) => {
   if (state.matches) {
     console.log('Mobile device');
   }
 });
 
 // Observe multiple breakpoints
-breakpointObserver.observe([
-  Breakpoints.Small,
-  Breakpoints.Medium
-]).subscribe(state => {
-  console.log('Matches:', state.matches);
-  console.log('Individual states:', state.breakpoints);
-});
+breakpointObserver
+  .observe([Breakpoints.Small, Breakpoints.Medium])
+  .subscribe((state) => {
+    console.log('Matches:', state.matches);
+    console.log('Individual states:', state.breakpoints);
+  });
 
 // Check current state
 if (breakpointObserver.isMatched(Breakpoints.Handset)) {
@@ -309,7 +316,7 @@ import { breakpointObserver, Breakpoints } from './src/breakpoint-observer.js';
 import { themeManager } from './src/theme-manager.js';
 
 // Auto-adjust density based on screen size
-breakpointObserver.observe(Breakpoints.Handset).subscribe(state => {
+breakpointObserver.observe(Breakpoints.Handset).subscribe((state) => {
   if (state.matches) {
     themeManager.setDensity('compact');
   } else {
@@ -318,7 +325,7 @@ breakpointObserver.observe(Breakpoints.Handset).subscribe(state => {
 });
 
 // Combine with dark mode detection
-themeManager.darkMode$.subscribe(prefersDark => {
+themeManager.darkMode$.subscribe((prefersDark) => {
   if (prefersDark) {
     themeManager.setTheme('dark');
   }
@@ -329,15 +336,15 @@ themeManager.darkMode$.subscribe(prefersDark => {
 
 ## 📈 Bundle Sizes (Unminified)
 
-| System               | Size  | Minified (est.) |
-| -------------------- | ----- | --------------- |
-| BreakpointObserver   | 8KB   | ~3KB            |
-| Design System CSS    | 8KB   | ~5KB            |
-| UI Components CSS    | 11KB  | ~7KB            |
-| Theme Manager        | 13KB  | ~5KB            |
-| HTTP Client          | 31KB  | ~12KB           |
-| Forms System         | 31KB  | ~12KB           |
-| **Total (all)**      | 102KB | ~44KB           |
+| System             | Size  | Minified (est.) |
+| ------------------ | ----- | --------------- |
+| BreakpointObserver | 8KB   | ~3KB            |
+| Design System CSS  | 8KB   | ~5KB            |
+| UI Components CSS  | 11KB  | ~7KB            |
+| Theme Manager      | 13KB  | ~5KB            |
+| HTTP Client        | 31KB  | ~12KB           |
+| Forms System       | 31KB  | ~12KB           |
+| **Total (all)**    | 102KB | ~44KB           |
 
 ---
 

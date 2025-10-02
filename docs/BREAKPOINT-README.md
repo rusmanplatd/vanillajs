@@ -81,30 +81,30 @@ myObserver.destroy();
 ### Size Breakpoints
 
 ```javascript
-Breakpoints.XSmall;  // (max-width: 599.98px)
-Breakpoints.Small;   // (min-width: 600px) and (max-width: 959.98px)
-Breakpoints.Medium;  // (min-width: 960px) and (max-width: 1279.98px)
-Breakpoints.Large;   // (min-width: 1280px) and (max-width: 1919.98px)
-Breakpoints.XLarge;  // (min-width: 1920px)
+Breakpoints.XSmall; // (max-width: 599.98px)
+Breakpoints.Small; // (min-width: 600px) and (max-width: 959.98px)
+Breakpoints.Medium; // (min-width: 960px) and (max-width: 1279.98px)
+Breakpoints.Large; // (min-width: 1280px) and (max-width: 1919.98px)
+Breakpoints.XLarge; // (min-width: 1920px)
 ```
 
 ### Device Type Breakpoints
 
 ```javascript
 Breakpoints.Handset; // Phone in portrait or landscape
-Breakpoints.Tablet;  // Tablet in portrait or landscape
-Breakpoints.Web;     // Desktop/web browser
+Breakpoints.Tablet; // Tablet in portrait or landscape
+Breakpoints.Web; // Desktop/web browser
 ```
 
 ### Orientation Breakpoints
 
 ```javascript
-Breakpoints.HandsetPortrait;  // Phone in portrait
+Breakpoints.HandsetPortrait; // Phone in portrait
 Breakpoints.HandsetLandscape; // Phone in landscape
-Breakpoints.TabletPortrait;   // Tablet in portrait
-Breakpoints.TabletLandscape;  // Tablet in landscape
-Breakpoints.WebPortrait;      // Desktop in portrait
-Breakpoints.WebLandscape;     // Desktop in landscape
+Breakpoints.TabletPortrait; // Tablet in portrait
+Breakpoints.TabletLandscape; // Tablet in landscape
+Breakpoints.WebPortrait; // Desktop in portrait
+Breakpoints.WebLandscape; // Desktop in landscape
 ```
 
 ## API Reference
@@ -277,9 +277,11 @@ breakpointObserver.observe('(max-width: 768px)').subscribe((state) => {
 });
 
 // Dark mode
-breakpointObserver.observe('(prefers-color-scheme: dark)').subscribe((state) => {
-  console.log('Dark mode:', state.matches);
-});
+breakpointObserver
+  .observe('(prefers-color-scheme: dark)')
+  .subscribe((state) => {
+    console.log('Dark mode:', state.matches);
+  });
 
 // High resolution
 breakpointObserver.observe('(min-resolution: 2dppx)').subscribe((state) => {
@@ -302,16 +304,16 @@ breakpointObserver.observe('(hover: hover)').subscribe((state) => {
 
 This implementation provides similar functionality to Angular CDK's BreakpointObserver:
 
-| Feature                  | Angular CDK | This Implementation |
-| ------------------------ | ----------- | ------------------- |
-| Observable-based         | ✅          | ✅                  |
-| Predefined breakpoints   | ✅          | ✅                  |
-| Multiple queries         | ✅          | ✅                  |
-| Custom queries           | ✅          | ✅                  |
-| Singleton instance       | ✅          | ✅                  |
-| TypeScript support       | ✅          | ✅ (via JSDoc)      |
-| Framework dependency     | Angular     | None (Vanilla JS)   |
-| Size (unminified)        | ~10KB       | ~8KB                |
+| Feature                | Angular CDK | This Implementation |
+| ---------------------- | ----------- | ------------------- |
+| Observable-based       | ✅          | ✅                  |
+| Predefined breakpoints | ✅          | ✅                  |
+| Multiple queries       | ✅          | ✅                  |
+| Custom queries         | ✅          | ✅                  |
+| Singleton instance     | ✅          | ✅                  |
+| TypeScript support     | ✅          | ✅ (via JSDoc)      |
+| Framework dependency   | Angular     | None (Vanilla JS)   |
+| Size (unminified)      | ~10KB       | ~8KB                |
 
 ## Performance Notes
 

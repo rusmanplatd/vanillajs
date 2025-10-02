@@ -16,7 +16,8 @@ body {
   line-height: var(--line-height-normal);
   color: var(--color-on-background);
   background-color: var(--color-background);
-  transition: background-color var(--transition-base),
+  transition:
+    background-color var(--transition-base),
     color var(--transition-base);
 }
 

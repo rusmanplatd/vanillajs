@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -375,9 +375,11 @@
         profileForm.get('name').setValue(e.target.value);
       });
 
-      document.getElementById('profile-email').addEventListener('input', (e) => {
-        profileForm.get('email').setValue(e.target.value);
-      });
+      document
+        .getElementById('profile-email')
+        .addEventListener('input', (e) => {
+          profileForm.get('email').setValue(e.target.value);
+        });
 
       document.getElementById('profile-role').addEventListener('input', (e) => {
         profileForm.get('role').setValue(e.target.value);
@@ -395,9 +397,8 @@
       });
 
       profileForm.statusChanges.subscribe(() => {
-        document.getElementById(
-          'profile-status'
-        ).textContent = `Valid: ${profileForm.valid}, Disabled controls: ${!profileForm.get('role').enabled}`;
+        document.getElementById('profile-status').textContent =
+          `Valid: ${profileForm.valid}, Disabled controls: ${!profileForm.get('role').enabled}`;
       });
 
       // Toggle buttons
@@ -493,29 +494,27 @@
           document.getElementById('username-error').textContent = '';
         });
 
-      document
-        .getElementById('check-errors')
-        .addEventListener('click', () => {
-          const usernameControl = customErrorForm.get('username');
-          const passwordControl = customErrorForm.get('password');
+      document.getElementById('check-errors').addEventListener('click', () => {
+        const usernameControl = customErrorForm.get('username');
+        const passwordControl = customErrorForm.get('password');
 
-          let message = '';
-          if (usernameControl.hasError('required')) {
-            message += 'Username has required error\n';
-          }
-          if (usernameControl.hasError('serverError')) {
-            message +=
-              'Username has serverError: ' +
-              usernameControl.getError('serverError') +
-              '\n';
-          }
-          if (passwordControl.hasError('minLength')) {
-            const error = passwordControl.getError('minLength');
-            message += `Password minLength error: needs ${error.requiredLength}, has ${error.actualLength}\n`;
-          }
+        let message = '';
+        if (usernameControl.hasError('required')) {
+          message += 'Username has required error\n';
+        }
+        if (usernameControl.hasError('serverError')) {
+          message +=
+            'Username has serverError: ' +
+            usernameControl.getError('serverError') +
+            '\n';
+        }
+        if (passwordControl.hasError('minLength')) {
+          const error = passwordControl.getError('minLength');
+          message += `Password minLength error: needs ${error.requiredLength}, has ${error.actualLength}\n`;
+        }
 
-          alert(message || 'No specific errors found!');
-        });
+        alert(message || 'No specific errors found!');
+      });
 
       // ========== PARENT TRACKING ==========
       const addressGroup = new FormGroup({
@@ -539,23 +538,19 @@
       });
 
       addressGroup.statusChanges.subscribe(() => {
-        document.getElementById(
-          'address-status'
-        ).textContent = `Valid: ${addressGroup.valid}`;
+        document.getElementById('address-status').textContent =
+          `Valid: ${addressGroup.valid}`;
       });
 
       nestedForm.statusChanges.subscribe(() => {
-        document.getElementById(
-          'nested-form-status'
-        ).textContent = `Valid: ${nestedForm.valid}`;
+        document.getElementById('nested-form-status').textContent =
+          `Valid: ${nestedForm.valid}`;
       });
 
-      document
-        .getElementById('validate-city')
-        .addEventListener('click', () => {
-          addressGroup.get('city').updateValueAndValidity({ onlySelf: false });
-          alert('Updated with parent notification');
-        });
+      document.getElementById('validate-city').addEventListener('click', () => {
+        addressGroup.get('city').updateValueAndValidity({ onlySelf: false });
+        alert('Updated with parent notification');
+      });
 
       document
         .getElementById('validate-city-only')
@@ -575,34 +570,36 @@
 
       let optionalFieldAdded = false;
 
-      document.getElementById('toggle-optional').addEventListener('click', () => {
-        if (!optionalFieldAdded) {
-          dynamicForm.addControl(
-            'optionalField',
-            new FormControl('', [Validators.required])
-          );
-          document.getElementById('optional-field-container').style.display =
-            'block';
-          document.getElementById('toggle-optional').textContent =
-            'Remove Optional Field';
-          optionalFieldAdded = true;
+      document
+        .getElementById('toggle-optional')
+        .addEventListener('click', () => {
+          if (!optionalFieldAdded) {
+            dynamicForm.addControl(
+              'optionalField',
+              new FormControl('', [Validators.required])
+            );
+            document.getElementById('optional-field-container').style.display =
+              'block';
+            document.getElementById('toggle-optional').textContent =
+              'Remove Optional Field';
+            optionalFieldAdded = true;
 
-          document
-            .getElementById('optional-field')
-            .addEventListener('input', (e) => {
-              dynamicForm.get('optionalField').setValue(e.target.value);
-            });
-        } else {
-          dynamicForm.removeControl('optionalField');
-          document.getElementById('optional-field-container').style.display =
-            'none';
-          document.getElementById('toggle-optional').textContent =
-            'Add Optional Field';
-          optionalFieldAdded = false;
-        }
+            document
+              .getElementById('optional-field')
+              .addEventListener('input', (e) => {
+                dynamicForm.get('optionalField').setValue(e.target.value);
+              });
+          } else {
+            dynamicForm.removeControl('optionalField');
+            document.getElementById('optional-field-container').style.display =
+              'none';
+            document.getElementById('toggle-optional').textContent =
+              'Add Optional Field';
+            optionalFieldAdded = false;
+          }
 
-        updateDynamicDisplay();
-      });
+          updateDynamicDisplay();
+        });
 
       document
         .getElementById('check-contains')
@@ -616,8 +613,9 @@
         const controls = Object.keys(dynamicForm['_controls']);
         document.getElementById('dynamic-controls').textContent =
           JSON.stringify(controls, null, 2);
-        document.getElementById('contains-result').textContent =
-          dynamicForm.contains('optionalField').toString();
+        document.getElementById('contains-result').textContent = dynamicForm
+          .contains('optionalField')
+          .toString();
       }
 
       updateDynamicDisplay();

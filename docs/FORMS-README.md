@@ -168,13 +168,13 @@ const emailControl = new FormControl('user@example.com');
 
 // Disable the control
 emailControl.disable();
-console.log(emailControl.disabled);  // true
-console.log(emailControl.enabled);   // false
-console.log(emailControl.status);    // 'DISABLED'
+console.log(emailControl.disabled); // true
+console.log(emailControl.enabled); // false
+console.log(emailControl.status); // 'DISABLED'
 
 // Enable the control
 emailControl.enable();
-console.log(emailControl.enabled);   // true
+console.log(emailControl.enabled); // true
 ```
 
 For FormGroups and FormArrays, you can disable all child controls:
@@ -182,11 +182,11 @@ For FormGroups and FormArrays, you can disable all child controls:
 ```javascript
 const form = new FormGroup({
   name: new FormControl(''),
-  email: new FormControl('')
+  email: new FormControl(''),
 });
 
-form.disable();  // Disables all controls
-form.enable();   // Enables all controls
+form.disable(); // Disables all controls
+form.enable(); // Enables all controls
 ```
 
 ### Get Raw Values
@@ -196,12 +196,12 @@ Get values including disabled controls:
 ```javascript
 const form = new FormGroup({
   name: new FormControl('John'),
-  email: new FormControl('john@example.com')
+  email: new FormControl('john@example.com'),
 });
 
 form.get('email').disable();
 
-console.log(form.value);        // { name: 'John' } - excludes disabled
+console.log(form.value); // { name: 'John' } - excludes disabled
 console.log(form.getRawValue()); // { name: 'John', email: 'john@example.com' } - includes disabled
 ```
 
@@ -230,7 +230,7 @@ For nested forms, use path parameter:
 ```javascript
 const form = new FormGroup({
   username: new FormControl(''),
-  email: new FormControl('')
+  email: new FormControl(''),
 });
 
 // Check error on specific control
@@ -246,12 +246,12 @@ Controls maintain references to their parent forms:
 ```javascript
 const addressGroup = new FormGroup({
   street: new FormControl(''),
-  city: new FormControl('')
+  city: new FormControl(''),
 });
 
 const userForm = new FormGroup({
   name: new FormControl(''),
-  address: addressGroup
+  address: addressGroup,
 });
 
 // Update control and notify parent
@@ -267,11 +267,11 @@ Add, remove, and check for controls dynamically:
 
 ```javascript
 const form = new FormGroup({
-  name: new FormControl('')
+  name: new FormControl(''),
 });
 
 // Check if control exists
-console.log(form.contains('name'));  // true
+console.log(form.contains('name')); // true
 console.log(form.contains('email')); // false
 
 // Add control
@@ -288,15 +288,15 @@ Controls have detailed status tracking:
 ```javascript
 const control = new FormControl('', [Validators.required]);
 
-console.log(control.status);   // 'INVALID'
-console.log(control.valid);    // false
-console.log(control.invalid);  // true
+console.log(control.status); // 'INVALID'
+console.log(control.valid); // false
+console.log(control.invalid); // true
 
 control.setValue('value');
-console.log(control.status);   // 'VALID'
+console.log(control.status); // 'VALID'
 
 control.disable();
-console.log(control.status);   // 'DISABLED'
+console.log(control.status); // 'DISABLED'
 ```
 
 ## FormControl API
@@ -304,17 +304,17 @@ console.log(control.status);   // 'DISABLED'
 ### Properties
 
 ```javascript
-control.value          // Current value
-control.valid          // Boolean: is valid
-control.invalid        // Boolean: is invalid
-control.errors         // Validation errors object
-control.touched        // Boolean: has been touched (blurred)
-control.untouched      // Boolean: has not been touched
-control.dirty          // Boolean: value has changed
-control.pristine       // Boolean: value unchanged
-control.enabled        // Boolean: is enabled (NEW)
-control.disabled       // Boolean: is disabled (NEW)
-control.status         // String: 'VALID', 'INVALID', 'DISABLED', 'PENDING' (NEW)
+control.value; // Current value
+control.valid; // Boolean: is valid
+control.invalid; // Boolean: is invalid
+control.errors; // Validation errors object
+control.touched; // Boolean: has been touched (blurred)
+control.untouched; // Boolean: has not been touched
+control.dirty; // Boolean: value has changed
+control.pristine; // Boolean: value unchanged
+control.enabled; // Boolean: is enabled (NEW)
+control.disabled; // Boolean: is disabled (NEW)
+control.status; // String: 'VALID', 'INVALID', 'DISABLED', 'PENDING' (NEW)
 ```
 
 ### Methods
@@ -402,19 +402,19 @@ formArray.valid; // Boolean: all controls valid
 ### Methods
 
 ```javascript
-formArray.at(index)                      // Get control at index
-formArray.push(control)                  // Add control to end
-formArray.insert(index, control)         // Insert at index
-formArray.removeAt(index)                // Remove at index
-formArray.clear()                        // Remove all controls
-formArray.setValue([val1, val2])         // Set all values
-formArray.patchValue([val1])             // Update some values
-formArray.disable(options)               // Disable all controls (NEW)
-formArray.enable(options)                // Enable all controls (NEW)
-formArray.getRawValue()                  // Get all values including disabled (NEW)
-formArray.hasError(errorCode, path)      // Check for specific error (NEW)
-formArray.getError(errorCode, path)      // Get specific error value (NEW)
-formArray.updateValueAndValidity(options) // Update value and validity (NEW)
+formArray.at(index); // Get control at index
+formArray.push(control); // Add control to end
+formArray.insert(index, control); // Insert at index
+formArray.removeAt(index); // Remove at index
+formArray.clear(); // Remove all controls
+formArray.setValue([val1, val2]); // Set all values
+formArray.patchValue([val1]); // Update some values
+formArray.disable(options); // Disable all controls (NEW)
+formArray.enable(options); // Enable all controls (NEW)
+formArray.getRawValue(); // Get all values including disabled (NEW)
+formArray.hasError(errorCode, path); // Check for specific error (NEW)
+formArray.getError(errorCode, path); // Get specific error value (NEW)
+formArray.updateValueAndValidity(options); // Update value and validity (NEW)
 ```
 
 ## Usage with HTML Forms
