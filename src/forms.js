@@ -1,4 +1,4 @@
-import { BehaviorSubject } from '../packages/rxjs/index.js';
+import { BehaviorSubject } from '../packages/rxjs/cjs/index.js';
 
 /**
  * Validators namespace containing common validation functions
@@ -11,10 +11,25 @@ export const Validators = {
    */
   required(control) {
     const { value } = control;
-    if (value === null || value === undefined || value === '') {
-      return { required: true };
+    if (
+      value === null ||
+      value === undefined ||
+      value === '' ||
+      (typeof value === 'string' && value.trim() === '') ||
+      (Array.isArray(value) && value.length === 0)
+    ) {
+      return { required: { message: 'This field is required' } };
     }
     return null;
+  },
+
+  /**
+   * Validator that requires a control to be truthy (for checkboxes)
+   * @param {FormControl} control - The form control to validate
+   * @returns {object | null} Validation error object or null if valid
+   */
+  requiredTrue(control) {
+    return control.value === true ? null : { requiredTrue: true };
   },
 
   /**
@@ -23,11 +38,29 @@ export const Validators = {
    * @returns {object | null} Validation error object or null if valid
    */
   email(control) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (control.value && !emailRegex.test(control.value)) {
-      return { email: true };
+      return {
+        email: { message: 'Please enter a valid email address' },
+      };
     }
     return null;
+  },
+
+  /**
+   * Validator that requires the control's value to be a valid URL
+   * @param {FormControl} control - The form control to validate
+   * @returns {object | null} Validation error object or null if valid
+   */
+  url(control) {
+    try {
+      if (control.value) {
+        new URL(control.value);
+      }
+      return null;
+    } catch {
+      return { url: { message: 'Please enter a valid URL' } };
+    }
   },
 
   /**

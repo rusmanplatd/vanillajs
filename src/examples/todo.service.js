@@ -5,7 +5,6 @@ import { Service } from '../injector.js';
  * Todo Service
  * Manages todo items with reactive state
  */
-@Service({ providedIn: 'root' })
 export class TodoService {
   constructor() {
     this.todos$ = new BehaviorSubject([]);
@@ -110,3 +109,6 @@ export class TodoService {
     }
   }
 }
+
+// Apply Service decorator as a function call (browser-compatible)
+Service({ providedIn: 'root' })(TodoService);

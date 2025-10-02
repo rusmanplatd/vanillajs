@@ -210,15 +210,19 @@ export class Component {
    */
   _evaluateExpression(expr) {
     try {
-      // Create function with component context
-      const fn = new Function(
-        'state',
-        'methods',
-        'computed',
-        `with(state) { with(methods) { with(computed) { return ${expr}; } } }`
-      );
+      // Create context object with all accessible properties
+      const context = {
+        ...this._state,
+        ...this._computed,
+        ...this._methods,
+      };
 
-      return fn(this._state, this._methods, this._computed);
+      // Create function with component context (no 'with' for better performance)
+      const keys = Object.keys(context);
+      const values = keys.map((key) => context[key]);
+      const fn = new Function(...keys, `return ${expr}`);
+
+      return fn(...values);
     } catch (error) {
       console.error(`Expression evaluation error: ${expr}`, error);
       return undefined;
@@ -292,14 +296,17 @@ export class Component {
         if (expr) {
           const listener = (event) => {
             try {
-              const fn = new Function(
-                'state',
-                'methods',
-                'event',
-                '$event',
-                `with(state) { with(methods) { ${expr}; } }`
-              );
-              fn(this._state, this._methods, event, event);
+              // Create context with event
+              const context = {
+                ...this._state,
+                ...this._methods,
+                event,
+                $event: event,
+              };
+              const keys = Object.keys(context);
+              const values = keys.map((key) => context[key]);
+              const fn = new Function(...keys, expr);
+              fn(...values);
             } catch (error) {
               console.error(`Event handler error: ${expr}`, error);
             }

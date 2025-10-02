@@ -59,7 +59,7 @@ export function processNgIf(element, evaluator) {
 }
 
 /**
- * Process *ngFor directive
+ * Process *ngFor directive with improved performance
  * @param {HTMLElement} element - Element with *ngFor
  * @param {Function} evaluator - Expression evaluator
  * @returns {Object} Directive binding
@@ -67,7 +67,7 @@ export function processNgIf(element, evaluator) {
 export function processNgFor(element, evaluator) {
   const expression = element.getAttribute('*ngFor');
   const match = expression.match(
-    /let\s+(\w+)\s+of\s+([^;]+)(?:;\s*let\s+(\w+)\s*=\s*index)?(?:;\s*trackBy:\s*(\w+))?/
+    /let\s+(\w+)\s+of\s+([^;]+)(?:;\s*let\s+(\w+)\s*=\s*(index|first|last|even|odd))?(?:;\s*trackBy:\s*(\w+))?/
   );
 
   if (!match) {
@@ -75,7 +75,7 @@ export function processNgFor(element, evaluator) {
     return null;
   }
 
-  const [, itemName, arrayExpr, indexName, trackByFn] = match;
+  const [, itemName, arrayExpr, varName, varType, trackByFn] = match;
   const placeholder = document.createComment(`ngFor: ${expression}`);
   const parent = element.parentNode;
 
@@ -83,14 +83,40 @@ export function processNgFor(element, evaluator) {
   const template = element.cloneNode(true);
   template.removeAttribute('*ngFor');
 
-  // Track generated elements
-  let renderedElements = [];
+  // Track generated elements with keys for efficient updates
+  let renderedElements = new Map();
+  let previousKeys = [];
 
   // Replace original element with placeholder
   parent.replaceChild(placeholder, element);
 
+  const getTrackingKey = (item, index) => {
+    if (trackByFn) {
+      return evaluator(`${trackByFn}(${index}, ${JSON.stringify(item)})`);
+    }
+    return typeof item === 'object' && item !== null && 'id' in item
+      ? item.id
+      : index;
+  };
+
+  const getContextValue = (type, index, length) => {
+    switch (type) {
+      case 'index':
+        return index;
+      case 'first':
+        return index === 0;
+      case 'last':
+        return index === length - 1;
+      case 'even':
+        return index % 2 === 0;
+      case 'odd':
+        return index % 2 !== 0;
+      default:
+        return index;
+    }
+  };
+
   const update = () => {
-    // Get array from expression
     const array = evaluator(arrayExpr.trim());
 
     if (!Array.isArray(array)) {
@@ -98,44 +124,68 @@ export function processNgFor(element, evaluator) {
       return;
     }
 
-    // Remove old elements
-    renderedElements.forEach((el) => {
-      if (el.parentNode) {
-        el.remove();
-      }
-    });
-    renderedElements = [];
+    const newKeys = [];
+    const newElements = new Map();
+    const fragment = document.createDocumentFragment();
 
-    // Render new elements
+    // Render elements
     array.forEach((item, index) => {
-      const newElement = template.cloneNode(true);
+      const key = getTrackingKey(item, index);
+      newKeys.push(key);
 
-      // Replace interpolations with item data
-      const html = newElement.innerHTML;
-      const processed = html
-        .replace(new RegExp(`\\{\\{\\s*${itemName}\\s*\\}\\}`, 'g'), item)
-        .replace(
-          new RegExp(`\\{\\{\\s*${itemName}\\.(\\w+)\\s*\\}\\}`, 'g'),
-          (match, prop) => {
-            return item && typeof item === 'object' && prop in item
-              ? item[prop]
-              : '';
-          }
-        );
-
-      if (indexName) {
-        newElement.innerHTML = processed.replace(
-          new RegExp(`\\{\\{\\s*${indexName}\\s*\\}\\}`, 'g'),
-          index
-        );
-      } else {
-        newElement.innerHTML = processed;
+      // Reuse existing element if possible
+      let elementData = renderedElements.get(key);
+      if (!elementData) {
+        const newElement = template.cloneNode(true);
+        elementData = { element: newElement, item, index };
       }
 
-      // Insert into DOM
-      parent.insertBefore(newElement, placeholder.nextSibling);
-      renderedElements.push(newElement);
+      // Update element content
+      const { element } = elementData;
+      const html = template.innerHTML;
+      let processed = html.replace(
+        new RegExp(`\\{\\{\\s*${itemName}(\\.[\\w.]+)?\\s*\\}\\}`, 'g'),
+        (match, path) => {
+          if (!path) {
+            return item;
+          }
+          const props = path.slice(1).split('.');
+          let value = item;
+          for (const prop of props) {
+            value = value?.[prop];
+            if (value === undefined) {
+              break;
+            }
+          }
+          return value ?? '';
+        }
+      );
+
+      if (varName && varType) {
+        const contextValue = getContextValue(varType, index, array.length);
+        processed = processed.replace(
+          new RegExp(`\\{\\{\\s*${varName}\\s*\\}\\}`, 'g'),
+          contextValue
+        );
+      }
+
+      element.innerHTML = processed;
+      fragment.appendChild(element);
+      newElements.set(key, { element, item, index });
     });
+
+    // Remove old elements
+    renderedElements.forEach((data, key) => {
+      if (!newKeys.includes(key) && data.element.parentNode) {
+        data.element.remove();
+      }
+    });
+
+    // Insert updated elements
+    parent.insertBefore(fragment, placeholder.nextSibling);
+
+    renderedElements = newElements;
+    previousKeys = newKeys;
   };
 
   update();
@@ -145,12 +195,12 @@ export function processNgFor(element, evaluator) {
     element: placeholder,
     update,
     destroy: () => {
-      renderedElements.forEach((el) => {
-        if (el.parentNode) {
-          el.remove();
+      renderedElements.forEach((data) => {
+        if (data.element.parentNode) {
+          data.element.remove();
         }
       });
-      renderedElements = [];
+      renderedElements.clear();
     },
   };
 }

@@ -1,24 +1,42 @@
 /**
- * Dependency Injection system
- * Similar to Angular's DI system
+ * Modern Dependency Injection system
+ * Improved Angular-inspired DI with better performance
  */
 
+const INJECTION_TOKEN_SYMBOL = Symbol('InjectionToken');
+
 /**
- * Injectable decorator/marker
+ * InjectionToken - Type-safe injection token
+ */
+export class InjectionToken {
+  constructor(description, options = {}) {
+    this.description = description;
+    this.factory = options.factory;
+    this._symbol = Symbol(description);
+  }
+
+  toString() {
+    return `InjectionToken(${this.description})`;
+  }
+}
+
+/**
+ * Injectable decorator/marker with enhanced features
  * @param {Object} options - Injectable options
  * @returns {Function} Class decorator
  */
 export function Injectable(options = {}) {
   return function (target) {
     target._injectable = true;
-    target._providedIn = options.providedIn || 'root';
+    target._providedIn = options.providedIn || null;
+    target._deps = options.deps || [];
     return target;
   };
 }
 
 /**
- * Dependency Injector
- * Manages service instances and dependencies
+ * Modern Dependency Injector with caching and scoping
+ * Manages service instances and dependencies efficiently
  */
 export class Injector {
   /**
@@ -30,6 +48,7 @@ export class Injector {
     this.providers = new Map();
     this.instances = new Map();
     this.parent = parent;
+    this._resolutionStack = new Set();
 
     // Register providers
     providers.forEach((provider) => this.register(provider));
@@ -55,22 +74,41 @@ export class Injector {
   }
 
   /**
-   * Get or create service instance
-   * @param {Function|string} token - Service token/class
+   * Get or create service instance with circular dependency detection
+   * @param {Function|string|InjectionToken} token - Service token/class
    * @returns {*} Service instance
    */
   get(token) {
-    // Check if instance already exists
+    // Circular dependency detection
+    if (this._resolutionStack.has(token)) {
+      throw new Error(
+        `Circular dependency detected: ${token.name || token.toString()}`
+      );
+    }
+
+    // Check if instance already exists (cached)
     if (this.instances.has(token)) {
       return this.instances.get(token);
     }
 
-    // Check if provider exists
-    if (this.providers.has(token)) {
-      const provider = this.providers.get(token);
-      const instance = this._createInstance(provider);
+    // Check for InjectionToken with factory
+    if (token instanceof InjectionToken && token.factory) {
+      const instance = token.factory(this);
       this.instances.set(token, instance);
       return instance;
+    }
+
+    // Check if provider exists
+    if (this.providers.has(token)) {
+      this._resolutionStack.add(token);
+      try {
+        const provider = this.providers.get(token);
+        const instance = this._createInstance(provider);
+        this.instances.set(token, instance);
+        return instance;
+      } finally {
+        this._resolutionStack.delete(token);
+      }
     }
 
     // Try parent injector
@@ -78,7 +116,9 @@ export class Injector {
       return this.parent.get(token);
     }
 
-    throw new Error(`No provider found for ${token}`);
+    throw new Error(
+      `No provider found for ${token.name || token.toString()}`
+    );
   }
 
   /**
