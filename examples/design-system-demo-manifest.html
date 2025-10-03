@@ -4,12 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Design System Demo (with Manifest)</title>
-    <link rel="stylesheet" href="../src/css/design-system.css" />
-    <link rel="stylesheet" href="../src/css/ui-components.css" />
-    <link rel="stylesheet" href="../src/css/grid-system.css" />
-    <link rel="stylesheet" href="../src/css/typography-utilities.css" />
-    <link rel="stylesheet" href="../src/css/utility-classes.css" />
-    <link rel="stylesheet" href="../src/css/animations.css" />
+    <!-- CSS will be loaded dynamically with cache-busted filenames -->
     <style>
       /* Same styles as original demo */
       .demo-section {
@@ -120,13 +115,25 @@
     </div>
 
     <script type="module">
-      import { loadScript } from '../dist/manifest-loader.js';
+      import { loadScript, loadStyle } from '../dist/js/manifest-loader.1759462964683.09af92db.js';
 
-      // Load the theme manager using manifest
-      loadScript('js/theme-manager.js')
+      // Load CSS bundle first
+      loadStyle('css/styles.bundle.min.css', '/dist/bundle/manifest.json')
+        .then(() => {
+          console.log('✅ CSS bundle loaded');
+
+          // Then load the theme manager bundle
+          return loadScript('js/theme.bundle.min.js', '/dist/bundle/manifest.json');
+        })
         .then(module => {
+          console.log('Module loaded:', module);
           const { themeManager } = module;
-          document.getElementById('loadedModule').textContent = 'theme-manager.js (versioned)';
+
+          if (!themeManager) {
+            throw new Error('themeManager not found in module');
+          }
+
+          document.getElementById('loadedModule').textContent = 'theme.bundle.min.js (versioned)';
 
           // Set up theme controls
           document.getElementById('themeSelect').addEventListener('change', (e) => {
@@ -145,14 +152,15 @@
 
           document.getElementById('resetBtn').addEventListener('click', () => {
             themeManager.resetToDefaults();
-            document.getElementById('themeSelect').value = themeManager.getConfig().theme;
-            document.getElementById('densitySelect').value = themeManager.getConfig().density;
+            const config = themeManager.config$.getValue();
+            document.getElementById('themeSelect').value = config.theme;
+            document.getElementById('densitySelect').value = config.density;
             document.getElementById('scaleSlider').value = '1.0';
             document.getElementById('scaleValue').textContent = '1.0';
           });
 
-          // Display system info
-          const config = themeManager.getConfig();
+          // Display system info using observable
+          const config = themeManager.config$.getValue();
           document.getElementById('systemInfo').innerHTML = `
             <strong>Current Theme:</strong> ${config.theme}<br>
             <strong>Density:</strong> ${config.density}<br>
