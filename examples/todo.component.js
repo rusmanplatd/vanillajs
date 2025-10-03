@@ -1,5 +1,5 @@
-import { ReactiveComponent } from '../reactive-component.js';
-import { TodoService } from './todo.service.js';
+import { ReactiveComponent } from ../src/js/reactive-component.js';
+import { TodoService } from '../todo.service.js';
 
 /**
  * Todo Component

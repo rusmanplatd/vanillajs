@@ -1,4 +1,4 @@
-import { BehaviorSubject, Subject } from '../packages/rxjs/cjs/index.js';
+import { BehaviorSubject, Subject } from '../../packages/rxjs/esm/index.js';
 
 /**
  * Base Component class for reactive components

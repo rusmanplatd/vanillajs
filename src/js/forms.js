@@ -1,4 +1,4 @@
-import { BehaviorSubject } from '../packages/rxjs/cjs/index.js';
+import { BehaviorSubject } from '../../packages/rxjs/esm/index.js';
 
 /**
  * Validators namespace containing common validation functions

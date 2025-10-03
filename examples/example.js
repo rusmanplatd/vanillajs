@@ -1,4 +1,4 @@
-import { HttpClient } from '../src/http-client.js';
+import { HttpClient } from ../src/js/http-client.js';
 
 /**
  * Example usage of HttpClient

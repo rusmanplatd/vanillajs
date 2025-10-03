@@ -5,12 +5,12 @@ import {
   HttpEventType,
   HttpHeaders,
   HttpParams,
-} from '../src/http-client.js';
-import { retry } from '../packages/rxjs/cjs/internal/operators/retry.js';
-import { timeout } from '../packages/rxjs/cjs/internal/operators/timeout.js';
-import { catchError } from '../packages/rxjs/cjs/internal/operators/catchError.js';
-import { map } from '../packages/rxjs/cjs/internal/operators/map.js';
-import { of } from '../packages/rxjs/cjs/internal/observable/of.js';
+} from ../src/js/http-client.js';
+import { retry } from '../packages/rxjs/esm/internal/operators/retry.js';
+import { timeout } from '../packages/rxjs/esm/internal/operators/timeout.js';
+import { catchError } from '../packages/rxjs/esm/internal/operators/catchError.js';
+import { map } from '../packages/rxjs/esm/internal/operators/map.js';
+import { of } from '../packages/rxjs/esm/internal/observable/of.js';
 
 /**
  * Advanced examples demonstrating all Angular HttpClient features

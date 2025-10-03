@@ -1,4 +1,4 @@
-import { BehaviorSubject } from '../packages/rxjs/cjs/index.js';
+import { BehaviorSubject } from '../../packages/rxjs/esm/index.js';
 
 /**
  * I18n manager for internationalization with support for split JSON files

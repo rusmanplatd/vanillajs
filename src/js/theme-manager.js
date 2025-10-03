@@ -1,4 +1,4 @@
-import { BehaviorSubject } from '../packages/rxjs/index.js';
+import { BehaviorSubject } from '../../packages/rxjs/esm/index.js';
 
 /**
  * Theme configuration object

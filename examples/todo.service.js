@@ -1,5 +1,5 @@
-import { BehaviorSubject } from '../../packages/rxjs/cjs/index.js';
-import { Service } from '../injector.js';
+import { BehaviorSubject } from '../packages/rxjs/esm/index.js';
+import { Service } from ../src/js/injector.js';
 
 /**
  * Todo Service

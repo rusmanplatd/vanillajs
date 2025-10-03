@@ -3,9 +3,20 @@
   "version": "1.0.0",
   "description": "Vanilla JavaScript project",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "live-server --port=8080 --open=index.html",
     "dev": "live-server --port=8080",
+    "build": "node scripts/build.js",
+    "build:dev": "node scripts/build.js",
+    "build:prod": "node scripts/build.js --prod && node scripts/minify.js",
+    "build:watch": "node scripts/build.js --watch",
+    "bundle": "node scripts/bundle.js",
+    "bundle:min": "node scripts/bundle.js --minify",
+    "minify": "node scripts/minify.js",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "prebundle": "npm run clean",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:html && npm run lint:md",
     "lint:js": "eslint .",
     "lint:css": "stylelint \"**/*.css\"",
@@ -24,6 +35,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "csso-cli": "^4.0.2",
+    "esbuild": "^0.25.10",
     "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsdoc": "^60.7.1",
@@ -35,6 +48,10 @@
     "nodemon": "^3.1.10",
     "prettier": "^3.2.5",
     "stylelint": "^16.24.0",
-    "stylelint-config-standard": "^39.0.0"
+    "stylelint-config-standard": "^39.0.0",
+    "terser": "^5.44.0"
+  },
+  "dependencies": {
+    "tslib": "^2.8.1"
   }
 }

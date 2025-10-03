@@ -1,4 +1,4 @@
-import { Breakpoints, breakpointObserver } from '../src/breakpoint-observer.js';
+import { Breakpoints, breakpointObserver } from ../src/js/breakpoint-observer.js';
 
 // Helper function to format time
 const formatTime = () => {

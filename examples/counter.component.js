@@ -1,4 +1,4 @@
-import { ReactiveComponent } from '../reactive-component.js';
+import { ReactiveComponent } from ../src/js/reactive-component.js';
 
 /**
  * Counter Component

@@ -1,14 +1,4 @@
-import { Observable } from '../../packages/rxjs/cjs/internal/Observable.js';
-import { HttpParams } from './http-params.js';
-import { HttpHeaders } from './http-headers.js';
-import { HttpContext } from './http-context.js';
-import {
-  HttpSentEvent,
-  HttpHeaderResponse,
-  HttpDownloadProgressEvent,
-  HttpResponse,
-  HttpErrorResponse,
-} from './http-event.js';
+import { Observable } from '../../packages/rxjs/esm/internal/Observable.js';
 
 /**
  * HTTP request options

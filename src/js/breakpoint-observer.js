@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable } from '../packages/rxjs/index.js';
+import { BehaviorSubject, Observable } from '../../packages/rxjs/esm/index.js';
 
 /**
  * Breakpoint state representing the result of a media query
