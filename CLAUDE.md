@@ -16,7 +16,6 @@ component-based architecture for building web applications.
 ├── src/                    # Source code (all development happens here)
 │   ├── js/                 # JavaScript modules
 │   │   ├── component.js              # Base component system
-│   │   ├── reactive-component.js     # Reactive data binding
 │   │   ├── directives.js             # DOM directives
 │   │   ├── forms.js                  # Form validation framework
 │   │   ├── http-client.js            # HTTP utilities with interceptors
@@ -92,8 +91,6 @@ npm run docs:watch    # Auto-regenerate docs when src/ changes
 ### Component System
 
 - Base component class in [src/js/component.js](src/js/component.js)
-- Reactive components with data binding in
-  [src/js/reactive-component.js](src/js/reactive-component.js)
 - DOM directives for declarative templates in [src/js/directives.js](src/js/directives.js)
 - Manifest-based component loading in [src/js/manifest-loader.js](src/js/manifest-loader.js)
 
