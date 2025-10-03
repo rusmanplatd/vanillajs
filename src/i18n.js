@@ -2,6 +2,7 @@ import { BehaviorSubject } from '../packages/rxjs/cjs/index.js';
 
 /**
  * I18n manager for internationalization with support for split JSON files
+ * Modern implementation with performance optimizations and advanced features
  * Supports structure: /i18n/{lang}/{components,pages,etc}/{name}.json or nested folders
  */
 export class I18n {
@@ -13,6 +14,9 @@ export class I18n {
    * @param {string} options.translationsPath - Base path for translations (default: '/i18n')
    * @param {boolean} options.preload - Whether to preload all translations
    * @param {string[]} options.supportedLocales - List of supported locales
+   * @param {boolean} options.debug - Enable debug logging
+   * @param {Function} options.onMissingTranslation - Custom handler for missing translations
+   * @param {AbortController} options.abortController - Controller for cancelling requests
    */
   constructor(options = {}) {
     const {
@@ -21,21 +25,30 @@ export class I18n {
       translationsPath = '/i18n',
       preload = false,
       supportedLocales = ['en'],
+      debug = false,
+      onMissingTranslation = null,
+      abortController = null,
     } = options;
 
     this.defaultLocale = defaultLocale;
     this.fallbackLocale = fallbackLocale;
     this.translationsPath = translationsPath;
     this.supportedLocales = supportedLocales;
+    this.debug = debug;
+    this.onMissingTranslation = onMissingTranslation;
+    this.abortController = abortController;
 
     // Current locale as observable
     this.locale$ = new BehaviorSubject(defaultLocale);
 
-    // Translation cache: { locale: { namespace: translations } }
+    // Translation cache using nested Maps for better performance
     this._translations = new Map();
 
     // Loading state per locale
     this._loadingState = new Map();
+
+    // Missing translations tracker
+    this._missingKeys = new Set();
 
     // Persist locale to localStorage
     this._loadPersistedLocale();
@@ -122,7 +135,7 @@ export class I18n {
   }
 
   /**
-   * Fetch translation file from server
+   * Fetch translation file from server with modern fetch API
    * @param {string} locale - Locale to fetch
    * @param {string} namespace - Namespace path
    * @returns {Promise<Object>} Translation data
@@ -131,7 +144,18 @@ export class I18n {
     const url = `${this.translationsPath}/${locale}/${namespace}.json`;
 
     try {
-      const response = await fetch(url);
+      const fetchOptions = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      if (this.abortController) {
+        fetchOptions.signal = this.abortController.signal;
+      }
+
+      const response = await fetch(url, fetchOptions);
 
       if (!response.ok) {
         throw new Error(
@@ -139,8 +163,21 @@ export class I18n {
         );
       }
 
-      return await response.json();
+      const data = await response.json();
+
+      if (this.debug) {
+        console.log(`[i18n] Loaded namespace "${namespace}" for "${locale}"`);
+      }
+
+      return data;
     } catch (error) {
+      if (error.name === 'AbortError') {
+        if (this.debug) {
+          console.log(`[i18n] Fetch aborted: ${url}`);
+        }
+        return {};
+      }
+
       console.error(`Error loading translation ${url}:`, error);
       return {};
     }
@@ -181,11 +218,12 @@ export class I18n {
    * @param {string} params.locale - Override current locale
    * @param {number} params.count - Count for pluralization
    * @param {Object} params.values - Values for interpolation
+   * @param {string} params.defaultValue - Default value if translation missing
    * @returns {Promise<string>} Translated string
    */
   async t(key, params = {}) {
     const locale = params.locale || this.getCurrentLocale();
-    const { count, values = {} } = params;
+    const { count, values = {}, defaultValue } = params;
 
     // Parse key: 'components/button.submit' -> namespace: 'components/button', path: 'submit'
     const { namespace, path } = this._parseKey(key);
@@ -202,13 +240,22 @@ export class I18n {
       translation = this._getTranslation(this.fallbackLocale, namespace, path);
     }
 
+    // Handle missing translation
+    if (translation === path) {
+      this._handleMissingTranslation(key, locale);
+
+      if (defaultValue !== undefined) {
+        translation = defaultValue;
+      }
+    }
+
     // Handle pluralization
     if (typeof count === 'number') {
-      translation = this._pluralize(translation, count);
+      translation = this._pluralize(translation, count, locale);
     }
 
     // Handle interpolation
-    translation = this._interpolate(translation, values);
+    translation = this._interpolate(translation, { ...values, count });
 
     return translation;
   }
@@ -288,27 +335,75 @@ export class I18n {
   }
 
   /**
-   * Handle pluralization
+   * Handle missing translation
+   * @param {string} key - Missing translation key
+   * @param {string} locale - Current locale
+   */
+  _handleMissingTranslation(key, locale) {
+    const missingKey = `${locale}:${key}`;
+
+    if (!this._missingKeys.has(missingKey)) {
+      this._missingKeys.add(missingKey);
+
+      if (this.debug) {
+        console.warn(`[i18n] Missing translation: "${key}" for locale "${locale}"`);
+      }
+
+      if (this.onMissingTranslation) {
+        this.onMissingTranslation(key, locale);
+      }
+    }
+  }
+
+  /**
+   * Get missing translations
+   * @returns {Array<string>} Array of missing translation keys
+   */
+  getMissingTranslations() {
+    return Array.from(this._missingKeys);
+  }
+
+  /**
+   * Clear missing translations tracker
+   */
+  clearMissingTranslations() {
+    this._missingKeys.clear();
+  }
+
+  /**
+   * Handle pluralization with Intl.PluralRules support
    * Supports formats:
-   * - Object: { zero: '...', one: '...', other: '...' }
+   * - Object: { zero: '...', one: '...', two: '...', few: '...', many: '...', other: '...' }
    * - String with pipes: 'no items|one item|{count} items'
    * @param {string|Object} translation - Translation value
    * @param {number} count - Count for pluralization
+   * @param {string} locale - Locale for plural rules
    * @returns {string} Pluralized string
    */
-  _pluralize(translation, count) {
+  _pluralize(translation, count, locale) {
     if (typeof translation === 'object') {
+      // Use Intl.PluralRules for accurate pluralization
+      const pr = new Intl.PluralRules(locale);
+      const rule = pr.select(count);
+
+      // Check for explicit count match first
       if (count === 0 && 'zero' in translation) {
         return translation.zero;
       }
-      if (count === 1 && 'one' in translation) {
-        return translation.one;
+
+      // Then check plural rules
+      if (rule in translation) {
+        return translation[rule];
       }
+
+      // Fallback chain
       return translation.other || translation.many || '';
     }
 
     if (typeof translation === 'string' && translation.includes('|')) {
-      const parts = translation.split('|');
+      const parts = translation.split('|').map((p) => p.trim());
+
+      // Simple pipe format: zero|one|other
       if (count === 0 && parts[0]) {
         return parts[0];
       }
@@ -322,8 +417,8 @@ export class I18n {
   }
 
   /**
-   * Interpolate values into translation string
-   * Supports: {key}, {{key}}, ${key}
+   * Interpolate values into translation string with nested object support
+   * Supports: {key}, {{key}}, ${key}, {user.name}, {items[0]}
    * @param {string} translation - Translation string
    * @param {Object} values - Values to interpolate
    * @returns {string} Interpolated string
@@ -334,12 +429,47 @@ export class I18n {
     }
 
     return translation.replace(
-      /\{\{?(\w+)\}?\}?|\$\{(\w+)\}/g,
+      /\{\{?([\w.[\]]+)\}?\}?|\$\{([\w.[\]]+)\}/g,
       (match, key1, key2) => {
         const key = key1 || key2;
-        return key in values ? values[key] : match;
+
+        // Support nested keys: user.name, items[0]
+        const value = this._getNestedValue(values, key);
+
+        if (value !== undefined && value !== null) {
+          return String(value);
+        }
+
+        return match;
       }
     );
+  }
+
+  /**
+   * Get nested value from object using dot notation or bracket notation
+   * @param {Object} obj - Object to traverse
+   * @param {string} path - Path to value (e.g., 'user.name', 'items[0]')
+   * @returns {*} Value at path or undefined
+   */
+  _getNestedValue(obj, path) {
+    // Handle simple keys first
+    if (path in obj) {
+      return obj[path];
+    }
+
+    // Handle nested paths
+    const keys = path.split(/[.[\]]+/).filter(Boolean);
+    let current = obj;
+
+    for (const key of keys) {
+      if (current && typeof current === 'object' && key in current) {
+        current = current[key];
+      } else {
+        return undefined;
+      }
+    }
+
+    return current;
   }
 
   /**
@@ -403,6 +533,134 @@ export class I18n {
       }
     }
     keysToDelete.forEach((key) => this._translations.delete(key));
+  }
+
+  /**
+   * Batch translate multiple keys at once
+   * @param {string[]} keys - Array of translation keys
+   * @param {Object} params - Parameters for all translations
+   * @returns {Promise<Object>} Object with keys and translations
+   */
+  async batchTranslate(keys, params = {}) {
+    const results = {};
+
+    await Promise.all(
+      keys.map(async (key) => {
+        results[key] = await this.t(key, params);
+      })
+    );
+
+    return results;
+  }
+
+  /**
+   * Get all translations for current locale
+   * @returns {Object} All loaded translations
+   */
+  getAllTranslations() {
+    const locale = this.getCurrentLocale();
+    const translations = {};
+
+    for (const [key, value] of this._translations.entries()) {
+      if (key.startsWith(`${locale}:`)) {
+        const namespace = key.substring(locale.length + 1);
+        translations[namespace] = value;
+      }
+    }
+
+    return translations;
+  }
+
+  /**
+   * Validate that all required translation keys exist
+   * @param {string[]} requiredKeys - Array of required translation keys
+   * @param {string} locale - Locale to check (defaults to current)
+   * @returns {Promise<Object>} Validation result with missing keys
+   */
+  async validateTranslations(requiredKeys, locale = null) {
+    const targetLocale = locale || this.getCurrentLocale();
+    const missing = [];
+    const found = [];
+
+    for (const key of requiredKeys) {
+      const { namespace } = this._parseKey(key);
+      await this.loadTranslation(targetLocale, namespace);
+
+      if (this.has(key, targetLocale)) {
+        found.push(key);
+      } else {
+        missing.push(key);
+      }
+    }
+
+    return {
+      valid: missing.length === 0,
+      locale: targetLocale,
+      found,
+      missing,
+      coverage: (found.length / requiredKeys.length) * 100,
+    };
+  }
+
+  /**
+   * Export translations to JSON
+   * @param {string} locale - Locale to export
+   * @returns {string} JSON string of all translations
+   */
+  exportTranslations(locale = null) {
+    const targetLocale = locale || this.getCurrentLocale();
+    const translations = {};
+
+    for (const [key, value] of this._translations.entries()) {
+      if (key.startsWith(`${targetLocale}:`)) {
+        const namespace = key.substring(targetLocale.length + 1);
+        translations[namespace] = value;
+      }
+    }
+
+    return JSON.stringify(translations, null, 2);
+  }
+
+  /**
+   * Get translation statistics
+   * @returns {Object} Statistics about loaded translations
+   */
+  getStats() {
+    const stats = {
+      currentLocale: this.getCurrentLocale(),
+      supportedLocales: this.supportedLocales,
+      loadedNamespaces: {},
+      totalKeys: 0,
+      missingKeys: this._missingKeys.size,
+      cacheSize: this._translations.size,
+    };
+
+    for (const [cacheKey, translations] of this._translations.entries()) {
+      const [locale, namespace] = cacheKey.split(':');
+
+      if (!stats.loadedNamespaces[locale]) {
+        stats.loadedNamespaces[locale] = [];
+      }
+
+      stats.loadedNamespaces[locale].push(namespace);
+
+      // Count keys recursively
+      const countKeys = (obj) => {
+        let count = 0;
+        for (const value of Object.values(obj)) {
+          if (typeof value === 'string') {
+            count++;
+          } else if (typeof value === 'object' && value !== null) {
+            count += countKeys(value);
+          }
+        }
+        return count;
+      };
+
+      stats.totalKeys += countKeys(translations);
+    }
+
+    return stats;
   }
 }
 

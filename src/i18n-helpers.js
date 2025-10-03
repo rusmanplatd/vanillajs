@@ -1,7 +1,7 @@
 import { i18n } from './i18n.js';
 
 /**
- * Translation directive for DOM elements
+ * Translation directive for DOM elements with MutationObserver support
  * Usage: <div data-i18n="components/button.submit"></div>
  * With interpolation: <div data-i18n="pages/home.welcome" data-i18n-values='{"name":"John"}'></div>
  */
@@ -9,21 +9,31 @@ export class I18nDirective {
   /**
    * Initialize i18n directives on the page
    * @param {HTMLElement} root - Root element to scan
+   * @param {Object} options - Configuration options
+   * @param {boolean} options.autoObserve - Automatically observe DOM changes
    */
-  static init(root = document.body) {
-    const directive = new I18nDirective(root);
+  static init(root = document.body, options = {}) {
+    const directive = new I18nDirective(root, options);
     directive.scan();
     directive.observeLocaleChanges();
+
+    if (options.autoObserve !== false) {
+      directive.observeDOMChanges();
+    }
+
     return directive;
   }
 
   /**
    * Creates an I18nDirective instance
    * @param {HTMLElement} root - Root element
+   * @param {Object} options - Configuration options
    */
-  constructor(root = document.body) {
+  constructor(root = document.body, options = {}) {
     this.root = root;
-    this.elements = new Set();
+    this.elements = new WeakSet();
+    this.options = options;
+    this.mutationObserver = null;
   }
 
   /**
@@ -38,13 +48,59 @@ export class I18nDirective {
   }
 
   /**
-   * Translate a single element
+   * Observe DOM changes and translate new elements automatically
+   */
+  observeDOMChanges() {
+    this.mutationObserver = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (mutation.type === 'childList') {
+          mutation.addedNodes.forEach((node) => {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+              // Check the node itself
+              if (node.hasAttribute('data-i18n')) {
+                this.elements.add(node);
+                this.translateElement(node);
+              }
+
+              // Check descendants
+              const descendants = node.querySelectorAll('[data-i18n]');
+              descendants.forEach((el) => {
+                this.elements.add(el);
+                this.translateElement(el);
+              });
+            }
+          });
+        } else if (
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'data-i18n'
+        ) {
+          const el = mutation.target;
+          this.elements.add(el);
+          this.translateElement(el);
+        }
+      }
+    });
+
+    this.mutationObserver.observe(this.root, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['data-i18n', 'data-i18n-values'],
+    });
+  }
+
+  /**
+   * Translate a single element with enhanced attribute support
    * @param {HTMLElement} element - Element to translate
    */
   async translateElement(element) {
     const key = element.getAttribute('data-i18n');
+    if (!key) return;
+
     const valuesAttr = element.getAttribute('data-i18n-values');
+    const countAttr = element.getAttribute('data-i18n-count');
     const target = element.getAttribute('data-i18n-target') || 'text';
+    const defaultValue = element.getAttribute('data-i18n-default');
 
     let values = {};
     if (valuesAttr) {
@@ -55,23 +111,45 @@ export class I18nDirective {
       }
     }
 
-    const translation = await i18n.t(key, { values });
+    const params = { values };
 
-    switch (target) {
-      case 'html':
-        element.innerHTML = translation;
-        break;
-      case 'placeholder':
-        element.placeholder = translation;
-        break;
-      case 'title':
-        element.title = translation;
-        break;
-      case 'aria-label':
-        element.setAttribute('aria-label', translation);
-        break;
-      default:
-        element.textContent = translation;
+    if (countAttr !== null) {
+      params.count = parseInt(countAttr, 10);
+    }
+
+    if (defaultValue) {
+      params.defaultValue = defaultValue;
+    }
+
+    const translation = await i18n.t(key, params);
+
+    // Support multiple targets separated by comma
+    const targets = target.split(',').map((t) => t.trim());
+
+    for (const t of targets) {
+      switch (t) {
+        case 'html':
+          element.innerHTML = translation;
+          break;
+        case 'placeholder':
+          element.placeholder = translation;
+          break;
+        case 'title':
+          element.title = translation;
+          break;
+        case 'aria-label':
+          element.setAttribute('aria-label', translation);
+          break;
+        case 'value':
+          element.value = translation;
+          break;
+        case 'alt':
+          element.alt = translation;
+          break;
+        case 'text':
+        default:
+          element.textContent = translation;
+      }
     }
   }
 
@@ -80,7 +158,9 @@ export class I18nDirective {
    */
   observeLocaleChanges() {
     this.subscription = i18n.locale$.subscribe(() => {
-      this.elements.forEach((el) => this.translateElement(el));
+      // Re-scan all elements
+      const elements = this.root.querySelectorAll('[data-i18n]');
+      elements.forEach((el) => this.translateElement(el));
     });
   }
 
@@ -91,7 +171,12 @@ export class I18nDirective {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    this.elements.clear();
+
+    if (this.mutationObserver) {
+      this.mutationObserver.disconnect();
+    }
+
+    this.elements = new WeakSet();
   }
 }
 
@@ -242,13 +327,89 @@ export function getSupportedLocales() {
 }
 
 /**
- * Language switcher component
+ * Format list with locale-aware conjunction
+ * @param {Array} items - Items to format
+ * @param {Object} options - Intl.ListFormat options
+ * @returns {string} Formatted list
+ */
+export function formatList(items, options = {}) {
+  const locale = i18n.getCurrentLocale();
+
+  if (!Intl.ListFormat) {
+    // Fallback for browsers without ListFormat
+    return items.join(', ');
+  }
+
+  return new Intl.ListFormat(locale, {
+    style: 'long',
+    type: 'conjunction',
+    ...options,
+  }).format(items);
+}
+
+/**
+ * Get text direction for current locale
+ * @returns {string} 'ltr' or 'rtl'
+ */
+export function getTextDirection() {
+  const locale = i18n.getCurrentLocale();
+  const rtlLocales = ['ar', 'he', 'fa', 'ur'];
+
+  return rtlLocales.some((rtl) => locale.startsWith(rtl)) ? 'rtl' : 'ltr';
+}
+
+/**
+ * Apply text direction to element
+ * @param {HTMLElement} element - Element to apply direction to
+ */
+export function applyTextDirection(element = document.documentElement) {
+  const dir = getTextDirection();
+  element.setAttribute('dir', dir);
+}
+
+/**
+ * Translation hook for reactive frameworks
+ * Returns a function that gets the current translation and updates on locale change
+ * @param {string} key - Translation key
+ * @param {Object} params - Translation parameters
+ * @returns {Object} Object with translation value and update function
+ */
+export function useTranslation(key, params = {}) {
+  let currentValue = key;
+
+  const update = async () => {
+    currentValue = await i18n.t(key, params);
+    return currentValue;
+  };
+
+  const subscription = i18n.locale$.subscribe(() => {
+    update();
+  });
+
+  // Initial load
+  update();
+
+  return {
+    get value() {
+      return currentValue;
+    },
+    update,
+    destroy: () => subscription.unsubscribe(),
+  };
+}
+
+/**
+ * Language switcher component with enhanced features
  */
 export class LanguageSwitcher {
   /**
    * Create a language switcher
    * @param {HTMLElement} container - Container element
    * @param {Object} options - Options
+   * @param {string} options.type - 'dropdown' or 'buttons'
+   * @param {boolean} options.showFlag - Show country flags
+   * @param {string} options.className - CSS class name
+   * @param {Function} options.onChange - Callback when language changes
    */
   constructor(container, options = {}) {
     this.container = container;
@@ -256,6 +417,7 @@ export class LanguageSwitcher {
       type: 'dropdown', // 'dropdown' or 'buttons'
       showFlag: false,
       className: 'language-switcher',
+      onChange: null,
       ...options,
     };
 
@@ -309,20 +471,29 @@ export class LanguageSwitcher {
    */
   attachEvents() {
     if (this.options.type === 'dropdown') {
-      this.element.addEventListener('change', (e) => {
-        i18n.setLocale(e.target.value);
+      this.element.addEventListener('change', async (e) => {
+        const newLocale = e.target.value;
+        await i18n.setLocale(newLocale);
+
+        if (this.options.onChange) {
+          this.options.onChange(newLocale);
+        }
       });
     } else {
-      this.element.addEventListener('click', (e) => {
+      this.element.addEventListener('click', async (e) => {
         if (e.target.classList.contains('language-button')) {
           const locale = e.target.dataset.locale;
-          i18n.setLocale(locale);
+          await i18n.setLocale(locale);
 
           // Update active state
           this.element
             .querySelectorAll('.language-button')
             .forEach((btn) => btn.classList.remove('active'));
           e.target.classList.add('active');
+
+          if (this.options.onChange) {
+            this.options.onChange(locale);
+          }
         }
       });
     }
@@ -342,6 +513,9 @@ export class LanguageSwitcher {
           activeBtn.classList.add('active');
         }
       }
+
+      // Apply text direction
+      applyTextDirection();
     });
   }
 
