@@ -316,12 +316,40 @@
   color: var(--color-error);
 }
 
+.text-info {
+  color: var(--color-info);
+}
+
+.text-accent {
+  color: var(--color-accent);
+}
+
 .text-on-surface {
   color: var(--color-on-surface);
 }
 
 .text-on-background {
   color: var(--color-on-background);
+}
+
+.text-text-primary {
+  color: var(--color-text-primary);
+}
+
+.text-text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-text-tertiary {
+  color: var(--color-text-tertiary);
+}
+
+.text-link {
+  color: var(--color-text-link);
+}
+
+.text-link:hover {
+  color: var(--color-text-link-hover);
 }
 
 /* Text Opacity */
