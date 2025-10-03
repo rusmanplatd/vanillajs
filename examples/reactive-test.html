@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reactive Component Test</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: #f3f4f6;
+        padding: 2rem;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+      }
+
+      h1 {
+        color: #1f2937;
+        margin-bottom: 2rem;
+      }
+
+      .status {
+        padding: 1rem;
+        margin: 1rem 0;
+        border-radius: 8px;
+        background: #e0e7ff;
+        color: #3730a3;
+      }
+
+      .error {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .success {
+        background: #d1fae5;
+        color: #065f46;
+      }
+
+      pre {
+        background: #1f2937;
+        color: #e5e7eb;
+        padding: 1rem;
+        border-radius: 8px;
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🧪 Reactive Component Test</h1>
+
+      <div id="status" class="status">Loading...</div>
+
+      <h2>Component Demo:</h2>
+      <counter-component initial-count="10"></counter-component>
+
+      <h2 style="margin-top: 2rem">Console Output:</h2>
+      <pre id="console"></pre>
+    </div>
+
+    <script type="module">
+      const statusDiv = document.getElementById('status');
+      const consoleDiv = document.getElementById('console');
+      let logs = [];
+
+      function log(message, type = 'info') {
+        const timestamp = new Date().toLocaleTimeString();
+        const logMessage = `[${timestamp}] ${type.toUpperCase()}: ${message}`;
+        logs.push(logMessage);
+        consoleDiv.textContent = logs.join('\n');
+        console.log(logMessage);
+      }
+
+      // Override console methods to capture output
+      const originalLog = console.log;
+      const originalError = console.error;
+
+      console.log = function (...args) {
+        log(args.join(' '), 'info');
+        originalLog.apply(console, args);
+      };
+
+      console.error = function (...args) {
+        log(args.join(' '), 'error');
+        originalError.apply(console, args);
+      };
+
+      log('Starting component import...');
+
+      try {
+        import('../src/js/counter.component.js')
+          .then((module) => {
+            log('✓ Module imported successfully', 'success');
+            statusDiv.className = 'status success';
+            statusDiv.textContent = '✓ Component loaded successfully!';
+
+            // Wait a bit for component to register
+            setTimeout(() => {
+              const component = document.querySelector('counter-component');
+              if (component) {
+                log('✓ Component found in DOM', 'success');
+
+                component.addEventListener('countChanged', (e) => {
+                  log(`Event received: count = ${e.detail}`, 'info');
+                });
+              } else {
+                log('✗ Component not found in DOM', 'error');
+              }
+            }, 500);
+          })
+          .catch((error) => {
+            log(`✗ Import failed: ${error.message}`, 'error');
+            statusDiv.className = 'status error';
+            statusDiv.textContent = `✗ Failed to load: ${error.message}`;
+          });
+      } catch (error) {
+        log(`✗ Critical error: ${error.message}`, 'error');
+        statusDiv.className = 'status error';
+        statusDiv.textContent = `✗ Critical error: ${error.message}`;
+      }
+    </script>
+  </body>
+</html>

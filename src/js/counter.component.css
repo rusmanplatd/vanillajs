@@ -1,0 +1,104 @@
+counter-component {
+  display: block;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    sans-serif;
+}
+
+counter-component .counter-container {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  color: white;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+counter-component h2 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+counter-component .counter-display {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+counter-component .count-value {
+  font-size: 4rem;
+  font-weight: bold;
+  display: block;
+  line-height: 1;
+}
+
+counter-component .button-group {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+counter-component .btn {
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 80px;
+}
+
+counter-component .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+counter-component .btn:active {
+  transform: translateY(0);
+}
+
+counter-component .btn-success {
+  background: #10b981;
+  color: white;
+}
+
+counter-component .btn-danger {
+  background: #ef4444;
+  color: white;
+}
+
+counter-component .btn-secondary {
+  background: rgba(255, 255, 255, 0.9);
+  color: #667eea;
+}
+
+counter-component .counter-info {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 0.9rem;
+}
+
+counter-component .warning {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(255, 193, 7, 0.9);
+  color: #000;
+  border-radius: 8px;
+  font-weight: 600;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}

@@ -7,35 +7,33 @@ export const buildConfig = {
   // JavaScript entry points
   entryPoints: [
     // Core modules
-    'src/component.js',
-    'src/reactive-component.js',
-    'src/directives.js',
-    'src/injector.js',
-    'src/forms.js',
-    'src/i18n.js',
-    'src/i18n-helpers.js',
-    'src/http-client.js',
-    'src/breakpoint-observer.js',
-    'src/theme-manager.js',
+    'src/js/reactive-component.js',
+    'src/js/directives.js',
+    'src/js/injector.js',
+    'src/js/forms.js',
+    'src/js/i18n.js',
+    'src/js/i18n-helpers.js',
+    'src/js/http-client.js',
+    'src/js/breakpoint-observer.js',
+    'src/js/theme-manager.js',
+    'src/js/manifest-loader.js',
 
-    // Demo files
-    'src/design-system-demo.js',
-    'src/i18n-demo.js',
-
-    // Examples
-    'src/examples/counter.component.js',
-    'src/examples/todo.component.js',
-    'src/examples/todo.service.js',
+    // Component examples
+    'src/js/counter.component.js',
   ],
 
   // CSS files to process
   cssFiles: [
-    'src/design-system.css',
-    'src/ui-components.css',
-    'src/grid-system.css',
-    'src/typography-utilities.css',
-    'src/utility-classes.css',
-    'src/animations.css',
+    'src/css/all.css',
+    'src/css/design-system.css',
+    'src/css/ui-components.css',
+    'src/css/grid-system.css',
+    'src/css/typography-utilities.css',
+    'src/css/utility-classes.css',
+    'src/css/animations.css',
+
+    // Component styles
+    'src/js/counter.component.css',
   ],
 
   // Output directories

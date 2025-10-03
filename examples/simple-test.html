@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Inline Component Test</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 2rem;
+        background: #f3f4f6;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Simple Inline Component Test</h1>
+      <p>Testing ReactiveComponent with inline template and styles:</p>
+
+      <simple-counter></simple-counter>
+      <simple-counter></simple-counter>
+
+      <div id="log" style="margin-top: 2rem; padding: 1rem; background: #f9fafb; border-radius: 8px">
+        <strong>Event Log:</strong>
+        <div id="events"></div>
+      </div>
+    </div>
+
+    <script type="module">
+      import { ReactiveComponent, Component } from '../src/js/reactive-component.js';
+
+      // Define a simple inline component
+      class SimpleCounter extends ReactiveComponent {
+        constructor() {
+          super();
+          this.state = { count: 0 };
+        }
+
+        template() {
+          return `
+            <div style="padding: 1rem; margin: 1rem 0; border: 2px solid #667eea; border-radius: 8px;">
+              <h3 style="margin: 0 0 1rem 0;">Counter: ${this.state.count}</h3>
+              <button @click="increment" style="padding: 0.5rem 1rem; margin-right: 0.5rem; cursor: pointer;">
+                Increment
+              </button>
+              <button @click="decrement" style="padding: 0.5rem 1rem; cursor: pointer;">
+                Decrement
+              </button>
+            </div>
+          `;
+        }
+
+        styles() {
+          return `
+            :host {
+              display: block;
+            }
+          `;
+        }
+
+        increment() {
+          this.setState({ count: this.state.count + 1 });
+          this.emit('countChanged', this.state.count);
+        }
+
+        decrement() {
+          this.setState({ count: this.state.count - 1 });
+          this.emit('countChanged', this.state.count);
+        }
+
+        onStateChange(prevState, newState) {
+          console.log('State changed from', prevState.count, 'to', newState.count);
+        }
+      }
+
+      // Register the component
+      Component({
+        selector: 'simple-counter',
+      })(SimpleCounter);
+
+      // Listen for events
+      const eventsDiv = document.getElementById('events');
+      document.querySelectorAll('simple-counter').forEach((counter, index) => {
+        counter.addEventListener('countChanged', (e) => {
+          const msg = document.createElement('div');
+          msg.textContent = `Counter ${index + 1}: ${e.detail}`;
+          msg.style.padding = '0.25rem 0';
+          eventsDiv.insertBefore(msg, eventsDiv.firstChild);
+
+          // Keep only last 10 events
+          while (eventsDiv.children.length > 10) {
+            eventsDiv.removeChild(eventsDiv.lastChild);
+          }
+        });
+      });
+
+      console.log('Component registered successfully!');
+    </script>
+  </body>
+</html>

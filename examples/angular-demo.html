@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Angular-style Components Demo</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+          Cantarell, sans-serif;
+        background: #f3f4f6;
+        min-height: 100vh;
+        padding: 2rem;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+      }
+
+      .subtitle {
+        font-size: 1.1rem;
+        color: #6b7280;
+      }
+
+      .demo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .code-section {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 2rem;
+      }
+
+      .code-section h2 {
+        color: #1f2937;
+        margin-bottom: 1rem;
+      }
+
+      pre {
+        background: #1f2937;
+        color: #e5e7eb;
+        padding: 1.5rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      code {
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      }
+
+      .event-log {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 2rem;
+      }
+
+      .event-log h2 {
+        color: #1f2937;
+        margin-bottom: 1rem;
+      }
+
+      .log-items {
+        max-height: 300px;
+        overflow-y: auto;
+        background: #f3f4f6;
+        border-radius: 8px;
+        padding: 1rem;
+      }
+
+      .log-item {
+        padding: 0.5rem;
+        border-bottom: 1px solid #e5e7eb;
+        font-size: 0.9rem;
+        color: #374151;
+      }
+
+      .log-item:last-child {
+        border-bottom: none;
+      }
+
+      .log-item .time {
+        color: #6b7280;
+        font-size: 0.8rem;
+      }
+
+      .log-item .value {
+        font-weight: 600;
+        color: #667eea;
+      }
+
+      .clear-btn {
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+
+      .clear-btn:hover {
+        background: #5568d3;
+      }
+
+      .features {
+        list-style: none;
+        padding: 0;
+      }
+
+      .features li {
+        padding: 0.5rem 0;
+        color: #374151;
+      }
+
+      .features li::before {
+        content: '✓ ';
+        color: #10b981;
+        font-weight: bold;
+        margin-right: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🅰️ Angular-style Web Components</h1>
+        <p class="subtitle">
+          Pure Angular architecture with Shadow DOM, {{interpolation}}, *ngIf, *ngFor, (click),
+          [property]
+        </p>
+      </header>
+
+      <div class="demo-grid">
+        <counter-component initial-count="5" max-count="20"></counter-component>
+        <counter-component initial-count="10"></counter-component>
+        <counter-component initial-count="-5"></counter-component>
+      </div>
+
+      <div class="event-log">
+        <h2>📡 Event Log (Angular @Output)</h2>
+        <div class="log-items" id="eventLog">
+          <div class="log-item">Waiting for events...</div>
+        </div>
+        <button class="clear-btn" onclick="clearLog()">Clear Log</button>
+      </div>
+
+      <div class="code-section">
+        <h2>📝 Component Class (TypeScript-like)</h2>
+        <pre><code>class CounterComponent extends ReactiveComponent {
+  // @Input decorators
+  static _inputs = {
+    'initial-count': 'initialCount',
+    'max-count': 'maxCount'
+  };
+
+  // @Output decorators
+  static _outputs = ['countChanged'];
+
+  constructor() {
+    super();
+    this.count = 0;
+  }
+
+  ngOnInit() {
+    this.count = parseInt(this.initialCount, 10) || 0;
+  }
+
+  increment() {
+    if (this.count < this.maxCount) {
+      this.count++;
+      this.countChanged.emit(this.count);
+      this.detectChanges();
+    }
+  }
+
+  decrement() {
+    this.count--;
+    this.countChanged.emit(this.count);
+    this.detectChanges();
+  }
+}
+
+Component({
+  selector: 'counter-component',
+  templateUrl: './counter.component.html',
+  styleUrl: './counter.component.css'
+})(CounterComponent);</code></pre>
+      </div>
+
+      <div class="code-section">
+        <h2>🎨 Template (Angular syntax)</h2>
+        <pre><code>&lt;div class="counter-container"&gt;
+  &lt;h2&gt;Counter Component&lt;/h2&gt;
+  &lt;div class="counter-display"&gt;
+    &lt;span class="count-value"&gt;{{count}}&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="button-group"&gt;
+    &lt;button (click)="decrement()"&gt;-&lt;/button&gt;
+    &lt;button (click)="reset()"&gt;Reset&lt;/button&gt;
+    &lt;button (click)="increment()"&gt;+&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;!-- Structural directives --&gt;
+  &lt;div *ngIf="count > 10"&gt;Count is high!&lt;/div&gt;
+  &lt;div *ngIf="count < 0"&gt;Count is negative!&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+
+      <div class="code-section">
+        <h2>✨ Angular Features Implemented</h2>
+        <ul class="features">
+          <li><strong>{{interpolation}}</strong> - Template interpolation</li>
+          <li><strong>(event)="method()"</strong> - Event binding</li>
+          <li><strong>[property]="value"</strong> - Property binding</li>
+          <li><strong>*ngIf="condition"</strong> - Conditional rendering</li>
+          <li><strong>*ngFor="let item of items"</strong> - List rendering</li>
+          <li><strong>@Input()</strong> - Component inputs</li>
+          <li><strong>@Output()</strong> - Event emitters</li>
+          <li><strong>@ViewChild()</strong> - View queries</li>
+          <li><strong>@HostListener()</strong> - Host event listeners</li>
+          <li><strong>ngOnInit()</strong> - Lifecycle hook</li>
+          <li><strong>ngOnDestroy()</strong> - Cleanup hook</li>
+          <li><strong>ngOnChanges()</strong> - Input change detection</li>
+          <li><strong>ngAfterViewInit()</strong> - After view initialization</li>
+          <li><strong>ngAfterViewChecked()</strong> - After view checked</li>
+          <li><strong>detectChanges()</strong> - Manual change detection</li>
+          <li><strong>EventEmitter</strong> - Event emission class</li>
+          <li><strong>Shadow DOM</strong> - Style encapsulation</li>
+          <li><strong>External files</strong> - Separate HTML/CSS</li>
+        </ul>
+      </div>
+
+      <div class="code-section">
+        <h2>🚀 Usage in HTML</h2>
+        <pre><code>&lt;!-- Use the component --&gt;
+&lt;counter-component
+  initial-count="10"
+  max-count="50"
+&gt;&lt;/counter-component&gt;
+
+&lt;script type="module"&gt;
+  import './counter.component.js';
+
+  // Listen to @Output events
+  const counter = document.querySelector('counter-component');
+  counter.addEventListener('countChanged', (e) => {
+    console.log('Count changed to:', e.detail);
+  });
+&lt;/script&gt;</code></pre>
+      </div>
+    </div>
+
+    <script type="module">
+      import '../src/js/counter.component.js';
+
+      // Listen to custom events from all counters
+      let eventCount = 0;
+      document.querySelectorAll('counter-component').forEach((component, index) => {
+        component.addEventListener('countChanged', (e) => {
+          logEvent(`Counter #${index + 1} changed to: ${e.detail}`);
+        });
+      });
+
+      function logEvent(message) {
+        eventCount++;
+        const logContainer = document.getElementById('eventLog');
+        const time = new Date().toLocaleTimeString();
+        const logItem = document.createElement('div');
+        logItem.className = 'log-item';
+        logItem.innerHTML = `
+          <span class="time">[${time}]</span>
+          <span class="value">#${eventCount}</span> - ${message}
+        `;
+        logContainer.insertBefore(logItem, logContainer.firstChild);
+
+        // Keep only last 20 events
+        while (logContainer.children.length > 20) {
+          logContainer.removeChild(logContainer.lastChild);
+        }
+      }
+
+      window.clearLog = function () {
+        document.getElementById('eventLog').innerHTML =
+          '<div class="log-item">Waiting for events...</div>';
+        eventCount = 0;
+      };
+
+      console.log('%c✓ Angular-style components loaded!', 'color: #10b981; font-weight: bold');
+    </script>
+  </body>
+</html>

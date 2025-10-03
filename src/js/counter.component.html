@@ -1,0 +1,14 @@
+<div class="counter-container">
+  <h2>Counter Component</h2>
+  <div class="counter-display">
+    <span class="count-value">{{count}}</span>
+  </div>
+  <div class="button-group">
+    <button (click)="decrement()" class="btn btn-danger">-</button>
+    <button (click)="reset()" class="btn btn-secondary">Reset</button>
+    <button (click)="increment()" class="btn btn-success">+</button>
+  </div>
+  <p class="counter-info">Click the buttons to change the count</p>
+  <div *ngIf="count > 10" class="warning">Count is greater than 10!</div>
+  <div *ngIf="count < 0" class="warning">Count is negative!</div>
+</div>

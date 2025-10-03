@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Full Angular Features Demo</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 2rem;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        color: white;
+        margin-bottom: 2rem;
+      }
+
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        opacity: 0.95;
+      }
+
+      .demo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 2rem;
+      }
+
+      .card {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .card h2 {
+        color: #667eea;
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+      }
+
+      .feature-list {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+      }
+
+      .feature-list h3 {
+        color: #495057;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+      }
+
+      .feature-list ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .feature-list li {
+        padding: 0.5rem 0;
+        color: #6c757d;
+        font-size: 0.95rem;
+      }
+
+      .feature-list li::before {
+        content: '✓ ';
+        color: #10b981;
+        font-weight: bold;
+        margin-right: 0.5rem;
+      }
+
+      code {
+        background: #e9ecef;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9em;
+        color: #d63384;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin: 0.25rem;
+      }
+
+      .badge-primary {
+        background: #0d6efd;
+        color: white;
+      }
+      .badge-success {
+        background: #198754;
+        color: white;
+      }
+      .badge-info {
+        background: #0dcaf0;
+        color: #000;
+      }
+      .badge-warning {
+        background: #ffc107;
+        color: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🅰️ Full Angular Features Demo</h1>
+        <p class="subtitle">
+          Complete Angular-style framework in vanilla JavaScript with Light DOM
+        </p>
+      </header>
+
+      <div class="demo-grid">
+        <!-- Feature Showcase Card -->
+        <div class="card">
+          <h2>📋 All Angular Features</h2>
+
+          <div class="feature-list">
+            <h3>Template Syntax</h3>
+            <ul>
+              <li><code>{{'{{'}}expression{{'}}'}}</code> - Interpolation</li>
+              <li><code>(click)="method()"</code> - Event binding</li>
+              <li><code>[property]="value"</code> - Property binding</li>
+              <li><code>[(ngModel)]="prop"</code> - Two-way binding</li>
+              <li><code>*ngIf="condition"</code> - Conditional</li>
+              <li><code>*ngFor="let x of items"</code> - Loops</li>
+              <li><code>[ngClass]="classes"</code> - Dynamic classes</li>
+              <li><code>[ngStyle]="styles"</code> - Dynamic styles</li>
+            </ul>
+          </div>
+
+          <div class="feature-list">
+            <h3>Pipes</h3>
+            <ul>
+              <li><code>value | uppercase</code></li>
+              <li><code>value | lowercase</code></li>
+              <li><code>value | titlecase</code></li>
+              <li><code>value | json</code></li>
+              <li><code>value | date:'format'</code></li>
+              <li><code>value | currency:'USD'</code></li>
+              <li><code>value | percent</code></li>
+              <li><code>value | number:'1.0-2'</code></li>
+            </ul>
+          </div>
+
+          <div class="feature-list">
+            <h3>Decorators</h3>
+            <ul>
+              <li><code>@Component({})</code> - Component</li>
+              <li><code>@Input()</code> - Input properties</li>
+              <li><code>@Output()</code> - Event emitters</li>
+              <li><code>@ViewChild()</code> - Query elements</li>
+              <li><code>@HostListener()</code> - Host events</li>
+              <li><code>@Injectable()</code> - Services</li>
+              <li><code>@Pipe({})</code> - Custom pipes</li>
+            </ul>
+          </div>
+
+          <div class="feature-list">
+            <h3>Lifecycle Hooks</h3>
+            <ul>
+              <li><code>ngOnInit()</code> - Initialization</li>
+              <li><code>ngOnChanges()</code> - Input changes</li>
+              <li><code>ngOnDestroy()</code> - Cleanup</li>
+              <li><code>ngAfterViewInit()</code> - View ready</li>
+              <li><code>ngAfterViewChecked()</code> - View checked</li>
+            </ul>
+          </div>
+
+          <div class="feature-list">
+            <h3>Architecture</h3>
+            <ul>
+              <li><code>EventEmitter</code> - Event emission</li>
+              <li><code>Injector</code> - Dependency injection</li>
+              <li><code>ChangeDetectionStrategy</code> - Strategies</li>
+              <li><code>detectChanges()</code> - Manual detection</li>
+              <li><code>registerPipe()</code> - Custom pipes</li>
+              <li>Light DOM - No Shadow DOM</li>
+              <li>External HTML/CSS files</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Live Demo Card -->
+        <div class="card">
+          <h2>🎮 Interactive Demo</h2>
+          <demo-component></demo-component>
+        </div>
+
+        <!-- Technology Badges -->
+        <div class="card">
+          <h2>🏷️ Technologies</h2>
+          <div style="margin-top: 1rem">
+            <span class="badge badge-primary">ES2021+</span>
+            <span class="badge badge-success">Web Components</span>
+            <span class="badge badge-info">Light DOM</span>
+            <span class="badge badge-warning">Zero Dependencies</span>
+            <span class="badge badge-primary">TypeScript-like</span>
+            <span class="badge badge-success">Reactive</span>
+            <span class="badge badge-info">Declarative</span>
+            <span class="badge badge-warning">Component-Based</span>
+            <span class="badge badge-primary">Template Driven</span>
+            <span class="badge badge-success">Dependency Injection</span>
+            <span class="badge badge-info">Change Detection</span>
+            <span class="badge badge-warning">Pipes</span>
+          </div>
+
+          <div style="margin-top: 2rem">
+            <h3 style="color: #495057; margin-bottom: 1rem">Comparison</h3>
+            <table
+              style="
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 0.9rem;
+                background: #f8f9fa;
+              "
+            >
+              <thead>
+                <tr style="background: #e9ecef">
+                  <th style="padding: 0.75rem; text-align: left; color: #495057">Feature</th>
+                  <th style="padding: 0.75rem; text-align: center; color: #495057">Angular</th>
+                  <th style="padding: 0.75rem; text-align: center; color: #495057">This</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 0.5rem">{{'{{'}}interpolation{{'}}'}}</td>
+                  <td style="padding: 0.5rem; text-align: center">✅</td>
+                  <td style="padding: 0.5rem; text-align: center">✅</td>
+                </tr>
+                <tr style="background: white">
+                  <td style="padding: 0.5rem">Event binding</td>
+                  <td style="padding: 0.5rem; text-align: center">✅</td>
+                  <td style="padding: 0.5rem; text-align: center">✅</td>
+                </tr>
+                <tr>
+                  <td style="padding: 0.5rem">Two-way binding</td>
+                  <td style="padding: 0.5rem; text-align: center">✅</td>
+                  <td style="padding: 0.5rem; text-align: center">✅</td>
+                </tr>
+                <tr style="background: white">
+                  <td style="padding: 0.5rem">Structural directives</td>
+                  <td style="padding: 0.5rem; text-align: center">✅</td>
+                  <td style="padding: 0.5rem; text-align: center">✅</td>
+                </tr>
+                <tr>
+                  <td style="padding: 0.5rem">Pipes</td>
+                  <td style="padding: 0.5rem; text-align: center">✅</td>
+                  <td style="padding: 0.5rem; text-align: center">✅</td>
+                </tr>
+                <tr style="background: white">
+                  <td style="padding: 0.5rem">DI Container</td>
+                  <td style="padding: 0.5rem; text-align: center">✅</td>
+                  <td style="padding: 0.5rem; text-align: center">✅</td>
+                </tr>
+                <tr>
+                  <td style="padding: 0.5rem">Shadow DOM</td>
+                  <td style="padding: 0.5rem; text-align: center">❌</td>
+                  <td style="padding: 0.5rem; text-align: center">❌</td>
+                </tr>
+                <tr style="background: white">
+                  <td style="padding: 0.5rem">Framework Size</td>
+                  <td style="padding: 0.5rem; text-align: center">~150KB</td>
+                  <td style="padding: 0.5rem; text-align: center">~25KB</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      import {
+        ReactiveComponent,
+        Component,
+        registerPipe,
+        Injectable,
+        Injector,
+      } from '../src/js/reactive-component.js';
+
+      // Custom pipe
+      registerPipe('reverse', (value) => String(value).split('').reverse().join(''));
+
+      // Injectable service
+      class DataService {
+        constructor() {
+          this.data = ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry'];
+        }
+
+        getData() {
+          return this.data;
+        }
+      }
+
+      // Register as injectable
+      Injectable()(DataService);
+
+      // Demo component
+      class DemoComponent extends ReactiveComponent {
+        constructor() {
+          super();
+
+          // Inject service
+          this.dataService = Injector.get(DataService);
+
+          // Component state
+          this.name = 'Angular';
+          this.count = 42;
+          this.price = 99.99;
+          this.date = new Date();
+          this.items = this.dataService.getData();
+          this.showDetails = true;
+          this.inputValue = 'Two-way binding works!';
+
+          // ngClass example
+          this.dynamicClasses = {
+            'text-primary': true,
+            'text-bold': false,
+          };
+
+          // ngStyle example
+          this.dynamicStyles = {
+            color: '#667eea',
+            fontSize: '18px',
+            fontWeight: 'bold',
+          };
+        }
+
+        template() {
+          return \`
+            <div style="font-family: -apple-system, sans-serif;">
+              <h3 style="color: #667eea; margin-bottom: 1rem;">Live Examples</h3>
+
+              <div style="margin-bottom: 1.5rem;">
+                <h4 style="color: #495057; margin-bottom: 0.5rem;">Pipes:</h4>
+                <p>Uppercase: {{name | uppercase}}</p>
+                <p>Lowercase: {{name | lowercase}}</p>
+                <p>Custom reverse: {{name | reverse}}</p>
+                <p>Currency: {{price | currency:'USD'}}</p>
+                <p>Date: {{date | date:'long'}}</p>
+              </div>
+
+              <div style="margin-bottom: 1.5rem;">
+                <h4 style="color: #495057; margin-bottom: 0.5rem;">Two-way Binding:</h4>
+                <input
+                  type="text"
+                  [(ngModel)]="inputValue"
+                  style="padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; width: 100%;"
+                />
+                <p style="margin-top: 0.5rem;">Value: {{inputValue}}</p>
+              </div>
+
+              <div style="margin-bottom: 1.5rem;">
+                <h4 style="color: #495057; margin-bottom: 0.5rem;">*ngIf Directive:</h4>
+                <button
+                  (click)="toggleDetails()"
+                  style="padding: 0.5rem 1rem; background: #667eea; color: white; border: none; border-radius: 4px; cursor: pointer;"
+                >
+                  Toggle Details
+                </button>
+                <div *ngIf="showDetails" style="margin-top: 0.5rem; padding: 1rem; background: #f8f9fa; border-radius: 4px;">
+                  Details are visible! Count: {{count}}
+                </div>
+              </div>
+
+              <div style="margin-bottom: 1.5rem;">
+                <h4 style="color: #495057; margin-bottom: 0.5rem;">*ngFor Directive:</h4>
+                <ul style="list-style: none; padding: 0;">
+                  <li *ngFor="let item of items" style="padding: 0.5rem; background: #e9ecef; margin: 0.25rem 0; border-radius: 4px;">
+                    {{item}}
+                  </li>
+                </ul>
+              </div>
+
+              <div style="margin-bottom: 1.5rem;">
+                <h4 style="color: #495057; margin-bottom: 0.5rem;">[ngStyle] Directive:</h4>
+                <p [ngStyle]="dynamicStyles">This text has dynamic styles applied!</p>
+              </div>
+            </div>
+          \`;
+        }
+
+        ngOnInit() {
+          console.log('DemoComponent initialized');
+        }
+
+        toggleDetails() {
+          this.showDetails = !this.showDetails;
+          this.count++;
+          this.detectChanges();
+        }
+      }
+
+      Component({
+        selector: 'demo-component',
+      })(DemoComponent);
+    </script>
+  </body>
+</html>

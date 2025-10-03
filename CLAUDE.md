@@ -41,7 +41,7 @@ component-based architecture for building web applications.
 ├── examples/               # Demo files and usage examples
 ├── docs/                   # JSDoc generated documentation
 ├── i18n/                   # Internationalization JSON files
-├── packages/rxjs/          # Third-party: RxJS library (CommonJS)
+├── packages/rxjs/          # Third-party: RxJS library (ESM)
 ├── index.html              # Main entry point
 └── build.config.js         # Build configuration
 ```
@@ -124,7 +124,7 @@ npm run docs:watch    # Auto-regenerate docs when src/ changes
 
 ## Third-Party Dependencies
 
-- **RxJS**: Available in `packages/rxjs/` (CommonJS format) for reactive programming
+- **RxJS**: Available in `packages/rxjs/` (ESM format) for reactive programming
 - **Development tools**: esbuild, terser, csso-cli for bundling and minification
 
 ## Important Guidelines
