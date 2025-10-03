@@ -14,13 +14,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const rootDir = join(__dirname, '..');
 
-const args = process.argv.slice(2);
-const isMinify = args.includes('--minify');
-
 const outDir = 'dist/bundle';
 
 console.log(`📦 Bundling project...`);
-console.log(`   Minify: ${isMinify ? 'YES' : 'NO'}`);
 console.log(`   Output: ${outDir}`);
 console.log('');
 
@@ -69,8 +65,9 @@ const bundles = [
 /**
  * Bundle a single entry point
  */
-async function bundleEntry(config) {
-  const outputFile = join(rootDir, outDir, 'js', `${config.name}.bundle.js`);
+async function bundleEntry(config, minify = false) {
+  const suffix = minify ? '.min' : '';
+  const outputFile = join(rootDir, outDir, 'js', `${config.name}.bundle${suffix}.js`);
 
   try {
     const result = await esbuild.build({
@@ -78,7 +75,7 @@ async function bundleEntry(config) {
       bundle: true,
       format: 'esm',
       target: 'es2021',
-      minify: isMinify,
+      minify: minify,
       sourcemap: true,
       splitting: false,
       treeShaking: true,
@@ -105,21 +102,22 @@ async function bundleEntry(config) {
 /**
  * Bundle all CSS files into one
  */
-async function bundleCss() {
-  const outputFile = join(rootDir, outDir, 'css', 'styles.bundle.css');
+async function bundleCss(minify = false) {
+  const suffix = minify ? '.min' : '';
+  const outputFile = join(rootDir, outDir, 'css', `styles.bundle${suffix}.css`);
 
   try {
     const result = await esbuild.build({
       entryPoints: [join(rootDir, 'src/css/all.css')],
       bundle: true,
-      minify: isMinify,
+      minify: minify,
       sourcemap: true,
       outfile: outputFile,
       logLevel: 'info',
       loader: { '.css': 'css' },
     });
 
-    console.log(`  ✓ styles.bundle.css - Complete CSS bundle`);
+    console.log(`  ✓ styles.bundle${suffix}.css - Complete CSS bundle`);
 
     return result;
   } catch (error) {
@@ -131,8 +129,9 @@ async function bundleCss() {
 /**
  * Create a complete all-in-one bundle
  */
-async function bundleAll() {
-  const outputFile = join(rootDir, outDir, 'js', 'vanillajs.bundle.js');
+async function bundleAll(minify = false) {
+  const suffix = minify ? '.min' : '';
+  const outputFile = join(rootDir, outDir, 'js', `vanillajs.bundle${suffix}.js`);
 
   try {
     const result = await esbuild.build({
@@ -140,7 +139,7 @@ async function bundleAll() {
       bundle: true,
       format: 'esm',
       target: 'es2021',
-      minify: isMinify,
+      minify: minify,
       sourcemap: true,
       splitting: false,
       treeShaking: true,
@@ -153,7 +152,7 @@ async function bundleAll() {
     const output = Object.keys(meta.outputs)[0];
     const sizeKb = (meta.outputs[output].bytes / 1024).toFixed(1);
 
-    console.log(`  ✓ vanillajs.bundle.js ${sizeKb}KB - Complete framework bundle`);
+    console.log(`  ✓ vanillajs.bundle${suffix}.js ${sizeKb}KB - Complete framework bundle`);
 
     return result;
   } catch (error) {
@@ -173,20 +172,34 @@ async function bundle() {
 
     console.log('📦 Building individual bundles...\n');
     for (const config of bundles) {
-      await bundleEntry(config);
+      await bundleEntry(config, false);
+    }
+
+    console.log('\n📦 Building individual bundles (minified)...\n');
+    for (const config of bundles) {
+      await bundleEntry(config, true);
     }
 
     console.log('\n📦 Building all-in-one bundle...\n');
-    await bundleAll();
+    await bundleAll(false);
+
+    console.log('\n📦 Building all-in-one bundle (minified)...\n');
+    await bundleAll(true);
 
     console.log('\n🎨 Building CSS bundle...\n');
-    await bundleCss();
+    await bundleCss(false);
+
+    console.log('\n🎨 Building CSS bundle (minified)...\n');
+    await bundleCss(true);
 
     console.log('\n🎉 Bundling complete!\n');
     console.log(`📁 Output directory: ${outDir}/`);
     console.log(`   - Individual bundles: ${outDir}/js/*.bundle.js`);
+    console.log(`   - Individual bundles (min): ${outDir}/js/*.bundle.min.js`);
     console.log(`   - Complete bundle: ${outDir}/js/vanillajs.bundle.js`);
+    console.log(`   - Complete bundle (min): ${outDir}/js/vanillajs.bundle.min.js`);
     console.log(`   - CSS bundle: ${outDir}/css/styles.bundle.css`);
+    console.log(`   - CSS bundle (min): ${outDir}/css/styles.bundle.min.css`);
   } catch (error) {
     console.error('\n❌ Bundling failed:', error);
     process.exit(1);
