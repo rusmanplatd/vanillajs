@@ -1,4 +1,4 @@
-import { i18n } from ../src/js/i18n.js';
+import { i18n } from './i18n.js';
 import {
   I18nDirective,
   LanguageSwitcher,
@@ -6,7 +6,7 @@ import {
   formatNumber,
   formatCurrency,
   formatRelativeTime,
-} from ../src/js/i18n-helpers.js';
+} from './i18n-helpers.js';
 
 /**
  * I18n Demo Application

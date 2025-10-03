@@ -222,4 +222,14 @@ async function minify() {
   }
 }
 
-minify();
+/**
+ * Export for use in build.js
+ */
+export async function minifyBuild() {
+  return minify();
+}
+
+// Only run if called directly
+if (import.meta.url === `file://${process.argv[1]}`) {
+  minify();
+}
