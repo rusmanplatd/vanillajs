@@ -1,0 +1,173 @@
+carousel-component {
+  display: block;
+  width: 100%;
+}
+
+carousel-component .carousel-container {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+carousel-component .carousel-viewport {
+  overflow: hidden;
+  position: relative;
+  height: 400px;
+}
+
+carousel-component .carousel-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+carousel-component .carousel-slide {
+  min-width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+carousel-component .slide-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+carousel-component .slide-image {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+carousel-component .slide-body {
+  padding: 2rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  color: white;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+carousel-component .slide-body h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+carousel-component .slide-body p {
+  margin: 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+carousel-component .carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  border-radius: 50%;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+carousel-component .carousel-button:hover:not(:disabled) {
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-50%) scale(1.1);
+}
+
+carousel-component .carousel-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+carousel-component .prev-button {
+  left: 1rem;
+}
+
+carousel-component .next-button {
+  right: 1rem;
+}
+
+carousel-component .carousel-indicators {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+carousel-component .indicator-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  border: 2px solid white;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+carousel-component .indicator-dot:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: scale(1.2);
+}
+
+carousel-component .indicator-dot.active {
+  background: white;
+  transform: scale(1.3);
+}
+
+carousel-component .carousel-counter {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  z-index: 10;
+}
+
+@media (max-width: 640px) {
+  carousel-component .carousel-viewport {
+    height: 300px;
+  }
+
+  carousel-component .carousel-button {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.5rem;
+  }
+
+  carousel-component .slide-body h3 {
+    font-size: 1.3rem;
+  }
+
+  carousel-component .slide-body p {
+    font-size: 0.95rem;
+  }
+}

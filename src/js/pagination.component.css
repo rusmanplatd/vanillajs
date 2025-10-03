@@ -1,0 +1,80 @@
+pagination-component {
+  display: block;
+  width: 100%;
+}
+
+pagination-component .pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 1rem;
+}
+
+pagination-component .page-numbers {
+  display: flex;
+  gap: 0.25rem;
+}
+
+pagination-component .page-button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #dee2e6;
+  background: white;
+  color: #495057;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+pagination-component .page-button:hover:not(.disabled):not(.dots) {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+pagination-component .page-button.active {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+pagination-component .page-button.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+pagination-component .page-button.dots {
+  cursor: default;
+  border: none;
+  background: transparent;
+}
+
+pagination-component .prev-button,
+pagination-component .next-button {
+  font-weight: 600;
+}
+
+pagination-component .page-info {
+  margin-left: 1rem;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 640px) {
+  pagination-component .page-info {
+    width: 100%;
+    text-align: center;
+    margin: 0.5rem 0 0 0;
+  }
+}

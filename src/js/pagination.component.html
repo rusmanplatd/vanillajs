@@ -1,0 +1,27 @@
+<div class="pagination-container">
+  <button
+    (click)="goToPage(currentPage - 1)"
+    [disabled]="currentPage === 1"
+    class="page-button prev-button"
+    [ngClass]="{ disabled: currentPage === 1 }"
+  >
+    ‹ Previous
+  </button>
+
+  <div class="page-numbers">
+    <!-- Page buttons will be rendered dynamically -->
+  </div>
+
+  <button
+    (click)="goToPage(currentPage + 1)"
+    [disabled]="currentPage === totalPages"
+    class="page-button next-button"
+    [ngClass]="{ disabled: currentPage === totalPages }"
+  >
+    Next ›
+  </button>
+
+  <div class="page-info">
+    Page {{currentPage}} of {{totalPages}}
+  </div>
+</div>

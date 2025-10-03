@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Components Demo</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 2rem;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        color: white;
+        margin-bottom: 3rem;
+      }
+
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        opacity: 0.95;
+      }
+
+      .demo-section {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .demo-section h2 {
+        color: #667eea;
+        margin-bottom: 1rem;
+        font-size: 1.8rem;
+      }
+
+      .demo-section p {
+        color: #6c757d;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+
+      .component-wrapper {
+        margin: 2rem 0;
+      }
+
+      .event-log {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-top: 1rem;
+        max-height: 150px;
+        overflow-y: auto;
+      }
+
+      .event-log h4 {
+        color: #495057;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .log-item {
+        font-size: 0.85rem;
+        color: #6c757d;
+        padding: 0.25rem 0;
+        border-bottom: 1px solid #e9ecef;
+      }
+
+      .log-item:last-child {
+        border-bottom: none;
+      }
+
+      .log-item .time {
+        color: #adb5bd;
+        margin-right: 0.5rem;
+      }
+
+      .log-item .event {
+        color: #667eea;
+        font-weight: 600;
+      }
+
+      .tab-content {
+        padding: 1.5rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        margin-top: 1rem;
+      }
+
+      .tab-content h3 {
+        color: #495057;
+        margin-bottom: 0.5rem;
+      }
+
+      .tab-content p {
+        color: #6c757d;
+        line-height: 1.6;
+      }
+
+      .data-grid {
+        display: grid;
+        gap: 1rem;
+        margin: 1rem 0;
+      }
+
+      .data-item {
+        background: white;
+        padding: 1rem;
+        border-radius: 8px;
+        border-left: 4px solid #667eea;
+      }
+
+      .data-item strong {
+        color: #495057;
+      }
+
+      .controls {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin: 1rem 0;
+      }
+
+      .btn {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background: #667eea;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: #5568d3;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+      }
+
+      .btn-secondary {
+        background: #6c757d;
+        color: white;
+      }
+
+      .btn-secondary:hover {
+        background: #5a6268;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🎯 Interactive Components</h1>
+        <p class="subtitle">Tabs, Pagination & Carousel - Built with Angular-style Framework</p>
+      </header>
+
+      <!-- Tabs Component Demo -->
+      <div class="demo-section">
+        <h2>📑 Tabs Component</h2>
+        <p>Navigate between different content sections with animated tab switching.</p>
+
+        <div class="component-wrapper">
+          <tabs-component id="tabs-demo"></tabs-component>
+
+          <div class="tab-content" id="tab-content">
+            <div id="tab-tab1" style="display: block">
+              <h3>🏠 Home Tab</h3>
+              <p>
+                Welcome to the Home tab! This demonstrates the tabs component with dynamic
+                content. Tabs are a great way to organize related information without cluttering
+                your interface.
+              </p>
+            </div>
+            <div id="tab-tab2" style="display: none">
+              <h3>⚙️ Settings Tab</h3>
+              <p>
+                This is the Settings tab. Here you could display configuration options, user
+                preferences, or application settings. The tab component supports unlimited tabs.
+              </p>
+            </div>
+            <div id="tab-tab3" style="display: none">
+              <h3>📊 Statistics Tab</h3>
+              <p>
+                View your statistics here! The carousel component is fully responsive and works
+                great on mobile devices. Each tab can contain any content you want.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-log">
+          <h4>Event Log:</h4>
+          <div id="tabs-log"></div>
+        </div>
+      </div>
+
+      <!-- Pagination Component Demo -->
+      <div class="demo-section">
+        <h2>📄 Pagination Component</h2>
+        <p>Navigate through large datasets with smart ellipsis pagination.</p>
+
+        <div class="component-wrapper">
+          <div class="data-grid" id="data-container"></div>
+
+          <pagination-component
+            id="pagination-demo"
+            current-page="1"
+            total-pages="20"
+            max-visible="5"
+          ></pagination-component>
+        </div>
+
+        <div class="controls">
+          <button class="btn btn-secondary" onclick="changeTotalPages(10)">10 Pages</button>
+          <button class="btn btn-secondary" onclick="changeTotalPages(20)">20 Pages</button>
+          <button class="btn btn-secondary" onclick="changeTotalPages(50)">50 Pages</button>
+          <button class="btn btn-secondary" onclick="changeTotalPages(100)">100 Pages</button>
+        </div>
+
+        <div class="event-log">
+          <h4>Event Log:</h4>
+          <div id="pagination-log"></div>
+        </div>
+      </div>
+
+      <!-- Carousel Component Demo -->
+      <div class="demo-section">
+        <h2>🎠 Carousel Component</h2>
+        <p>
+          Image slider with autoplay, loop, and indicator dots. Smooth animations and touch-ready.
+        </p>
+
+        <div class="component-wrapper">
+          <carousel-component id="carousel-demo" loop="true"></carousel-component>
+        </div>
+
+        <div class="controls">
+          <button class="btn btn-primary" onclick="toggleAutoplay()">Toggle Autoplay</button>
+          <button class="btn btn-secondary" onclick="changeSlide(0)">Go to Slide 1</button>
+          <button class="btn btn-secondary" onclick="changeSlide(1)">Go to Slide 2</button>
+          <button class="btn btn-secondary" onclick="changeSlide(2)">Go to Slide 3</button>
+        </div>
+
+        <div class="event-log">
+          <h4>Event Log:</h4>
+          <div id="carousel-log"></div>
+        </div>
+      </div>
+
+      <!-- Features Section -->
+      <div class="demo-section">
+        <h2>✨ Component Features</h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 1.5rem;">
+          <div>
+            <h3 style="color: #667eea; margin-bottom: 1rem">🎨 Tabs Component</h3>
+            <ul style="list-style: none; padding: 0">
+              <li style="padding: 0.5rem 0; color: #6c757d">✓ Animated transitions</li>
+              <li style="padding: 0.5rem 0; color: #6c757d">✓ Icon support</li>
+              <li style="padding: 0.5rem 0; color: #6c757d">✓ Active state tracking</li>
+              <li style="padding: 0.5rem 0; color: #6c757d">✓ Event emission</li>
+              <li style="padding: 0.5rem 0; color: #6c757d">✓ Customizable styling</li>
+              <li style="padding: 0.5rem 0; color: #6c757d">✓ Keyboard navigation ready</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 style="color: #667eea; margin-bottom: 1rem">📄 Pagination</h3>
+            <ul style="list-style: none; padding: 0">
+              <li style="padding: 0.5rem 0; color: #6c757d">✓ Smart ellipsis display</li>
+              <li style="padding: 0.5rem 0; color: #6c757d">✓ Configurable visible pages</li>
+              <li style="padding: 0.5rem 0; color: #6c757d">✓ Previous/Next buttons</li>
+              <li style="padding: 0.5rem 0; color: #6c757d">✓ Page info display</li>
+              <li style="padding: 0.5rem 0; color: #6c757d">✓ Disabled state handling</li>
+              <li style="padding: 0.5rem 0; color: #6c757d">✓ Responsive design</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 style="color: #667eea; margin-bottom: 1rem">🎠 Carousel</h3>
+            <ul style="list-style: none; padding: 0">
+              <li style="padding: 0.5rem 0; color: #6c757d">✓ Smooth transitions</li>
+              <li style="padding: 0.5rem 0; color: #6c757d">✓ Autoplay support</li>
+              <li style="padding: 0.5rem 0; color: #6c757d">✓ Loop mode</li>
+              <li style="padding: 0.5rem 0; color: #6c757d">✓ Indicator dots</li>
+              <li style="padding: 0.5rem 0; color: #6c757d">✓ Prev/Next controls</li>
+              <li style="padding: 0.5rem 0; color: #6c757d">✓ Slide counter</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      import '../src/js/tabs.component.js';
+      import '../src/js/pagination.component.js';
+      import '../src/js/carousel.component.js';
+
+      // Tabs Component Setup
+      const tabsComponent = document.getElementById('tabs-demo');
+      const tabsLog = document.getElementById('tabs-log');
+
+      tabsComponent.tabs = [
+        { id: 'tab1', label: 'Home', icon: '🏠' },
+        { id: 'tab2', label: 'Settings', icon: '⚙️' },
+        { id: 'tab3', label: 'Statistics', icon: '📊' },
+      ];
+
+      tabsComponent.addEventListener('tabChanged', (e) => {
+        const tabId = e.detail;
+        logEvent(tabsLog, `Tab changed to: ${tabId}`);
+
+        // Show/hide tab content
+        document.querySelectorAll('[id^="tab-"]').forEach((el) => {
+          el.style.display = el.id === `tab-${tabId}` ? 'block' : 'none';
+        });
+      });
+
+      // Pagination Component Setup
+      const paginationComponent = document.getElementById('pagination-demo');
+      const paginationLog = document.getElementById('pagination-log');
+      const dataContainer = document.getElementById('data-container');
+
+      let currentPage = 1;
+      let totalPages = 20;
+
+      function updateDataDisplay() {
+        const itemsPerPage = 5;
+        const startItem = (currentPage - 1) * itemsPerPage + 1;
+        const endItem = Math.min(currentPage * itemsPerPage, totalPages * itemsPerPage);
+
+        dataContainer.innerHTML = '';
+        for (let i = startItem; i <= startItem + itemsPerPage - 1; i++) {
+          const item = document.createElement('div');
+          item.className = 'data-item';
+          item.innerHTML = `<strong>Item ${i}</strong> - Sample data for page ${currentPage}`;
+          dataContainer.appendChild(item);
+        }
+      }
+
+      paginationComponent.addEventListener('pageChanged', (e) => {
+        currentPage = e.detail;
+        logEvent(paginationLog, `Page changed to: ${currentPage}`);
+        updateDataDisplay();
+      });
+
+      window.changeTotalPages = function (pages) {
+        totalPages = pages;
+        currentPage = 1;
+        paginationComponent.setAttribute('total-pages', pages);
+        paginationComponent.setAttribute('current-page', 1);
+        logEvent(paginationLog, `Total pages changed to: ${pages}`);
+        updateDataDisplay();
+      };
+
+      updateDataDisplay();
+
+      // Carousel Component Setup
+      const carouselComponent = document.getElementById('carousel-demo');
+      const carouselLog = document.getElementById('carousel-log');
+
+      carouselComponent.items = [
+        {
+          title: 'Beautiful Landscape',
+          description: 'Stunning mountain views at sunset',
+          image: 'https://picsum.photos/800/400?random=1',
+        },
+        {
+          title: 'City Skyline',
+          description: 'Modern architecture and urban design',
+          image: 'https://picsum.photos/800/400?random=2',
+        },
+        {
+          title: 'Natural Wonders',
+          description: 'Exploring the beauty of nature',
+          image: 'https://picsum.photos/800/400?random=3',
+        },
+      ];
+
+      carouselComponent.addEventListener('slideChanged', (e) => {
+        logEvent(carouselLog, `Slide changed to: ${e.detail + 1}`);
+      });
+
+      window.toggleAutoplay = function () {
+        const current = carouselComponent.getAttribute('autoplay') === 'true';
+        carouselComponent.setAttribute('autoplay', !current);
+        logEvent(carouselLog, `Autoplay ${!current ? 'enabled' : 'disabled'}`);
+      };
+
+      window.changeSlide = function (index) {
+        carouselComponent.currentIndex = index;
+        carouselComponent.detectChanges();
+        logEvent(carouselLog, `Manually changed to slide ${index + 1}`);
+      };
+
+      // Utility function
+      function logEvent(container, message) {
+        const time = new Date().toLocaleTimeString();
+        const logItem = document.createElement('div');
+        logItem.className = 'log-item';
+        logItem.innerHTML = `<span class="time">${time}</span><span class="event">${message}</span>`;
+        container.insertBefore(logItem, container.firstChild);
+
+        while (container.children.length > 10) {
+          container.removeChild(container.lastChild);
+        }
+      }
+
+      console.log('✅ Interactive components loaded successfully!');
+    </script>
+  </body>
+</html>

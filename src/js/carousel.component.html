@@ -1,0 +1,33 @@
+<div class="carousel-container">
+  <button
+    (click)="prev()"
+    class="carousel-button prev-button"
+    [disabled]="!loop && currentIndex === 0"
+  >
+    ‹
+  </button>
+
+  <div class="carousel-viewport">
+    <div class="carousel-track" [ngStyle]="{ transform: 'translateX(' + translateX + '%)' }">
+      <!-- Slides will be rendered dynamically -->
+    </div>
+  </div>
+
+  <button
+    (click)="next()"
+    class="carousel-button next-button"
+    [disabled]="!loop && currentIndex === items.length - 1"
+  >
+    ›
+  </button>
+
+  <div class="carousel-indicators">
+    <span class="indicators-wrapper">
+      <!-- Indicators will be rendered dynamically -->
+    </span>
+  </div>
+
+  <div class="carousel-counter">
+    {{currentIndex + 1}} / {{items.length}}
+  </div>
+</div>
