@@ -8,16 +8,25 @@
 import * as esbuild from 'esbuild';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { mkdir } from 'fs/promises';
+import { mkdir, writeFile } from 'fs/promises';
+import { createHash } from 'crypto';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const rootDir = join(__dirname, '..');
 
+// Generate cache suffix with timestamp and hash
+const timestamp = Date.now();
+const hash = createHash('md5').update(timestamp.toString()).digest('hex').substring(0, 8);
+const cacheSuffix = `.${timestamp}.${hash}`;
+
 const outDir = 'dist/bundle';
 
 console.log(`📦 Bundling project...`);
 console.log(`   Output: ${outDir}`);
+if (cacheSuffix) {
+  console.log(`   Cache suffix: ${cacheSuffix}`);
+}
 console.log('');
 
 /**
@@ -67,7 +76,7 @@ const bundles = [
  */
 async function bundleEntry(config, minify = false) {
   const suffix = minify ? '.min' : '';
-  const outputFile = join(rootDir, outDir, 'js', `${config.name}.bundle${suffix}.js`);
+  const outputFile = join(rootDir, outDir, 'js', `${config.name}.bundle${cacheSuffix}${suffix}.js`);
 
   try {
     const result = await esbuild.build({
@@ -104,7 +113,7 @@ async function bundleEntry(config, minify = false) {
  */
 async function bundleCss(minify = false) {
   const suffix = minify ? '.min' : '';
-  const outputFile = join(rootDir, outDir, 'css', `styles.bundle${suffix}.css`);
+  const outputFile = join(rootDir, outDir, 'css', `styles.bundle${cacheSuffix}${suffix}.css`);
 
   try {
     const result = await esbuild.build({
@@ -131,7 +140,7 @@ async function bundleCss(minify = false) {
  */
 async function bundleAll(minify = false) {
   const suffix = minify ? '.min' : '';
-  const outputFile = join(rootDir, outDir, 'js', `vanillajs.bundle${suffix}.js`);
+  const outputFile = join(rootDir, outDir, 'js', `vanillajs.bundle${cacheSuffix}${suffix}.js`);
 
   try {
     const result = await esbuild.build({
@@ -159,6 +168,32 @@ async function bundleAll(minify = false) {
     console.error(`  ✗ All-in-one bundle failed: ${error.message}`);
     throw error;
   }
+}
+
+/**
+ * Generate manifest.json for bundle files
+ */
+async function generateManifest() {
+  const manifest = {};
+
+  // Add individual bundles
+  for (const config of bundles) {
+    manifest[`js/${config.name}.bundle.js`] = `js/${config.name}.bundle${cacheSuffix}.js`;
+    manifest[`js/${config.name}.bundle.min.js`] = `js/${config.name}.bundle${cacheSuffix}.min.js`;
+  }
+
+  // Add all-in-one bundle
+  manifest['js/vanillajs.bundle.js'] = `js/vanillajs.bundle${cacheSuffix}.js`;
+  manifest['js/vanillajs.bundle.min.js'] = `js/vanillajs.bundle${cacheSuffix}.min.js`;
+
+  // Add CSS bundle
+  manifest['css/styles.bundle.css'] = `css/styles.bundle${cacheSuffix}.css`;
+  manifest['css/styles.bundle.min.css'] = `css/styles.bundle${cacheSuffix}.min.css`;
+
+  const manifestPath = join(rootDir, outDir, 'manifest.json');
+  await writeFile(manifestPath, JSON.stringify(manifest, null, 2), 'utf8');
+
+  console.log(`\n📋 Generated manifest.json with ${Object.keys(manifest).length} entries`);
 }
 
 /**
@@ -192,14 +227,27 @@ async function bundle() {
     console.log('\n🎨 Building CSS bundle (minified)...\n');
     await bundleCss(true);
 
+    // Generate manifest
+    await generateManifest();
+
     console.log('\n🎉 Bundling complete!\n');
     console.log(`📁 Output directory: ${outDir}/`);
-    console.log(`   - Individual bundles: ${outDir}/js/*.bundle.js`);
-    console.log(`   - Individual bundles (min): ${outDir}/js/*.bundle.min.js`);
-    console.log(`   - Complete bundle: ${outDir}/js/vanillajs.bundle.js`);
-    console.log(`   - Complete bundle (min): ${outDir}/js/vanillajs.bundle.min.js`);
-    console.log(`   - CSS bundle: ${outDir}/css/styles.bundle.css`);
-    console.log(`   - CSS bundle (min): ${outDir}/css/styles.bundle.min.css`);
+    if (cacheSuffix) {
+      console.log(`   - Individual bundles: ${outDir}/js/*.bundle${cacheSuffix}.js`);
+      console.log(`   - Individual bundles (min): ${outDir}/js/*.bundle${cacheSuffix}.min.js`);
+      console.log(`   - Complete bundle: ${outDir}/js/vanillajs.bundle${cacheSuffix}.js`);
+      console.log(`   - Complete bundle (min): ${outDir}/js/vanillajs.bundle${cacheSuffix}.min.js`);
+      console.log(`   - CSS bundle: ${outDir}/css/styles.bundle${cacheSuffix}.css`);
+      console.log(`   - CSS bundle (min): ${outDir}/css/styles.bundle${cacheSuffix}.min.css`);
+      console.log(`   - Manifest: ${outDir}/manifest.json`);
+    } else {
+      console.log(`   - Individual bundles: ${outDir}/js/*.bundle.js`);
+      console.log(`   - Individual bundles (min): ${outDir}/js/*.bundle.min.js`);
+      console.log(`   - Complete bundle: ${outDir}/js/vanillajs.bundle.js`);
+      console.log(`   - Complete bundle (min): ${outDir}/js/vanillajs.bundle.min.js`);
+      console.log(`   - CSS bundle: ${outDir}/css/styles.bundle.css`);
+      console.log(`   - CSS bundle (min): ${outDir}/css/styles.bundle.min.css`);
+    }
   } catch (error) {
     console.error('\n❌ Bundling failed:', error);
     process.exit(1);

@@ -1,4 +1,4 @@
-import { themeManager } from './theme-manager.js';
+import { themeManager } from '../src/js/theme-manager.js';
 
 // Helper to convert hex to RGB
 const hexToRgb = (hex) => {
