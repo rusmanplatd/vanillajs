@@ -90,31 +90,39 @@ npm run docs:watch    # Auto-regenerate docs when src/ changes
 ## Architecture Features
 
 ### Component System
+
 - Base component class in [src/js/component.js](src/js/component.js)
-- Reactive components with data binding in [src/js/reactive-component.js](src/js/reactive-component.js)
+- Reactive components with data binding in
+  [src/js/reactive-component.js](src/js/reactive-component.js)
 - DOM directives for declarative templates in [src/js/directives.js](src/js/directives.js)
 - Manifest-based component loading in [src/js/manifest-loader.js](src/js/manifest-loader.js)
 
 ### Forms & Validation
+
 - Comprehensive form validation framework in [src/js/forms.js](src/js/forms.js)
 - Custom validators and error handling
 
 ### HTTP & Data
+
 - HTTP client with interceptors in [src/js/http-client.js](src/js/http-client.js)
 - Request/response transformation
 
 ### Internationalization (i18n)
+
 - Core i18n engine in [src/js/i18n.js](src/js/i18n.js)
 - Helper utilities in [src/js/i18n-helpers.js](src/js/i18n-helpers.js)
 - Locale files in `i18n/` directory
 
 ### Dependency Injection
+
 - DI container in [src/js/injector.js](src/js/injector.js)
 - Service registration and resolution
 
 ### UI & Theming
+
 - Theme manager for dark/light modes in [src/js/theme-manager.js](src/js/theme-manager.js)
-- Breakpoint observer for responsive design in [src/js/breakpoint-observer.js](src/js/breakpoint-observer.js)
+- Breakpoint observer for responsive design in
+  [src/js/breakpoint-observer.js](src/js/breakpoint-observer.js)
 - Design system with CSS custom properties in [src/css/design-system.css](src/css/design-system.css)
 
 ## Third-Party Dependencies

@@ -143,19 +143,13 @@
   </head>
   <body>
     <h1>Advanced Reactive Forms Features</h1>
-    <p>
-      This demonstrates the new Angular-compatible features added to the
-      reactive forms library.
-    </p>
+    <p> This demonstrates the new Angular-compatible features added to the reactive forms library. </p>
 
     <!-- Enable/Disable Feature -->
     <div class="form-section">
-      <h2 class="feature-title">
-        Enable/Disable Controls <span class="badge badge-new">NEW</span>
-      </h2>
+      <h2 class="feature-title"> Enable/Disable Controls <span class="badge badge-new">NEW</span> </h2>
       <div class="info-box">
-        <strong>Features:</strong> disable(), enable(), disabled property,
-        enabled property, getRawValue()
+        <strong>Features:</strong> disable(), enable(), disabled property, enabled property, getRawValue()
       </div>
 
       <form id="profile-form">
@@ -177,15 +171,9 @@
         </div>
 
         <button type="button" id="toggle-email">Toggle Email</button>
-        <button type="button" id="toggle-role" class="success">
-          Enable Role
-        </button>
-        <button type="button" id="disable-all" class="danger">
-          Disable All
-        </button>
-        <button type="button" id="enable-all" class="success">
-          Enable All
-        </button>
+        <button type="button" id="toggle-role" class="success"> Enable Role </button>
+        <button type="button" id="disable-all" class="danger"> Disable All </button>
+        <button type="button" id="enable-all" class="success"> Enable All </button>
 
         <div class="info-box">
           <strong>Value:</strong>
@@ -199,12 +187,8 @@
 
     <!-- setErrors and hasError Feature -->
     <div class="form-section">
-      <h2 class="feature-title">
-        Manual Error Control <span class="badge badge-new">NEW</span>
-      </h2>
-      <div class="info-box">
-        <strong>Features:</strong> setErrors(), hasError(), getError()
-      </div>
+      <h2 class="feature-title"> Manual Error Control <span class="badge badge-new">NEW</span> </h2>
+      <div class="info-box"> <strong>Features:</strong> setErrors(), hasError(), getError() </div>
 
       <form id="custom-error-form">
         <div class="form-group">
@@ -219,9 +203,7 @@
           <div id="password-error" class="error"></div>
         </div>
 
-        <button type="button" id="simulate-server-error">
-          Simulate Server Error
-        </button>
+        <button type="button" id="simulate-server-error"> Simulate Server Error </button>
         <button type="button" id="clear-server-error">Clear Errors</button>
         <button type="button" id="check-errors">Check Specific Errors</button>
 
@@ -234,12 +216,9 @@
 
     <!-- Parent Tracking Feature -->
     <div class="form-section">
-      <h2 class="feature-title">
-        Parent Tracking <span class="badge badge-new">NEW</span>
-      </h2>
+      <h2 class="feature-title"> Parent Tracking <span class="badge badge-new">NEW</span> </h2>
       <div class="info-box">
-        <strong>Features:</strong> Parent references, updateValueAndValidity(),
-        onlySelf option
+        <strong>Features:</strong> Parent references, updateValueAndValidity(), onlySelf option
       </div>
 
       <form id="nested-form">
@@ -255,12 +234,8 @@
           <div id="zipcode-error" class="error"></div>
         </div>
 
-        <button type="button" id="validate-city">
-          Validate City (onlySelf: false)
-        </button>
-        <button type="button" id="validate-city-only">
-          Validate City (onlySelf: true)
-        </button>
+        <button type="button" id="validate-city"> Validate City (onlySelf: false) </button>
+        <button type="button" id="validate-city-only"> Validate City (onlySelf: true) </button>
 
         <div class="info-box">
           <strong>Address Group Status:</strong>
@@ -273,12 +248,8 @@
 
     <!-- contains() method -->
     <div class="form-section">
-      <h2 class="feature-title">
-        Dynamic Control Management <span class="badge badge-new">NEW</span>
-      </h2>
-      <div class="info-box">
-        <strong>Features:</strong> contains(), addControl(), removeControl()
-      </div>
+      <h2 class="feature-title"> Dynamic Control Management <span class="badge badge-new">NEW</span> </h2>
+      <div class="info-box"> <strong>Features:</strong> contains(), addControl(), removeControl() </div>
 
       <form id="dynamic-form">
         <div class="form-group">
@@ -307,12 +278,9 @@
 
     <!-- Status Updates -->
     <div class="form-section">
-      <h2 class="feature-title">
-        Status Management <span class="badge badge-new">NEW</span>
-      </h2>
+      <h2 class="feature-title"> Status Management <span class="badge badge-new">NEW</span> </h2>
       <div class="info-box">
-        <strong>Features:</strong> status property (VALID, INVALID, DISABLED,
-        PENDING), statusChanges observable
+        <strong>Features:</strong> status property (VALID, INVALID, DISABLED, PENDING), statusChanges observable
       </div>
 
       <form id="status-form">
@@ -327,8 +295,7 @@
         </div>
 
         <div class="info-box">
-          <strong>Control Status:</strong> <span id="status-display"></span
-          ><br />
+          <strong>Control Status:</strong> <span id="status-display"></span><br />
           <strong>Is Valid:</strong> <span id="is-valid"></span><br />
           <strong>Is Invalid:</strong> <span id="is-invalid"></span><br />
           <strong>Is Disabled:</strong> <span id="is-disabled"></span><br />
@@ -343,20 +310,12 @@
     </div>
 
     <script type="module">
-      import {
-        FormControl,
-        FormGroup,
-        FormArray,
-        Validators,
-      } from '../src/forms.js';
+      import { FormControl, FormGroup, FormArray, Validators } from '../src/forms.js';
 
       // ========== ENABLE/DISABLE FEATURE ==========
       const profileForm = new FormGroup({
         name: new FormControl('John Doe', [Validators.required]),
-        email: new FormControl('john@example.com', [
-          Validators.required,
-          Validators.email,
-        ]),
+        email: new FormControl('john@example.com', [Validators.required, Validators.email]),
         role: new FormControl({ value: 'Admin', disabled: true }),
       });
 
@@ -364,22 +323,17 @@
       profileForm.get('role').disable();
 
       // Bind inputs
-      document.getElementById('profile-name').value =
-        profileForm.get('name').value;
-      document.getElementById('profile-email').value =
-        profileForm.get('email').value;
-      document.getElementById('profile-role').value =
-        profileForm.get('role').value;
+      document.getElementById('profile-name').value = profileForm.get('name').value;
+      document.getElementById('profile-email').value = profileForm.get('email').value;
+      document.getElementById('profile-role').value = profileForm.get('role').value;
 
       document.getElementById('profile-name').addEventListener('input', (e) => {
         profileForm.get('name').setValue(e.target.value);
       });
 
-      document
-        .getElementById('profile-email')
-        .addEventListener('input', (e) => {
-          profileForm.get('email').setValue(e.target.value);
-        });
+      document.getElementById('profile-email').addEventListener('input', (e) => {
+        profileForm.get('email').setValue(e.target.value);
+      });
 
       document.getElementById('profile-role').addEventListener('input', (e) => {
         profileForm.get('role').setValue(e.target.value);
@@ -387,13 +341,8 @@
 
       // Display values
       profileForm.valueChanges.subscribe((value) => {
-        document.getElementById('profile-value').textContent = JSON.stringify(
-          value,
-          null,
-          2
-        );
-        document.getElementById('profile-raw-value').textContent =
-          JSON.stringify(profileForm.getRawValue(), null, 2);
+        document.getElementById('profile-value').textContent = JSON.stringify(value, null, 2);
+        document.getElementById('profile-raw-value').textContent = JSON.stringify(profileForm.getRawValue(), null, 2);
       });
 
       profileForm.statusChanges.subscribe(() => {
@@ -444,24 +393,13 @@
 
       // Initial display
       profileForm.valueChanges.subscribe(() => {}); // Trigger initial
-      document.getElementById('profile-value').textContent = JSON.stringify(
-        profileForm.value,
-        null,
-        2
-      );
-      document.getElementById('profile-raw-value').textContent = JSON.stringify(
-        profileForm.getRawValue(),
-        null,
-        2
-      );
+      document.getElementById('profile-value').textContent = JSON.stringify(profileForm.value, null, 2);
+      document.getElementById('profile-raw-value').textContent = JSON.stringify(profileForm.getRawValue(), null, 2);
 
       // ========== MANUAL ERROR CONTROL ==========
       const customErrorForm = new FormGroup({
         username: new FormControl('', [Validators.required]),
-        password: new FormControl('', [
-          Validators.required,
-          Validators.minLength(8),
-        ]),
+        password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       });
 
       document.getElementById('username').addEventListener('input', (e) => {
@@ -473,26 +411,18 @@
       });
 
       customErrorForm.statusChanges.subscribe(() => {
-        document.getElementById('custom-errors-display').textContent =
-          JSON.stringify(customErrorForm.errors, null, 2);
+        document.getElementById('custom-errors-display').textContent = JSON.stringify(customErrorForm.errors, null, 2);
       });
 
-      document
-        .getElementById('simulate-server-error')
-        .addEventListener('click', () => {
-          customErrorForm
-            .get('username')
-            .setErrors({ serverError: 'Username already taken' });
-          document.getElementById('username-error').textContent =
-            'Username already taken (server error)';
-        });
+      document.getElementById('simulate-server-error').addEventListener('click', () => {
+        customErrorForm.get('username').setErrors({ serverError: 'Username already taken' });
+        document.getElementById('username-error').textContent = 'Username already taken (server error)';
+      });
 
-      document
-        .getElementById('clear-server-error')
-        .addEventListener('click', () => {
-          customErrorForm.get('username').setErrors(null);
-          document.getElementById('username-error').textContent = '';
-        });
+      document.getElementById('clear-server-error').addEventListener('click', () => {
+        customErrorForm.get('username').setErrors(null);
+        document.getElementById('username-error').textContent = '';
+      });
 
       document.getElementById('check-errors').addEventListener('click', () => {
         const usernameControl = customErrorForm.get('username');
@@ -503,10 +433,7 @@
           message += 'Username has required error\n';
         }
         if (usernameControl.hasError('serverError')) {
-          message +=
-            'Username has serverError: ' +
-            usernameControl.getError('serverError') +
-            '\n';
+          message += 'Username has serverError: ' + usernameControl.getError('serverError') + '\n';
         }
         if (passwordControl.hasError('minLength')) {
           const error = passwordControl.getError('minLength');
@@ -519,10 +446,7 @@
       // ========== PARENT TRACKING ==========
       const addressGroup = new FormGroup({
         city: new FormControl('', [Validators.required]),
-        zipcode: new FormControl('', [
-          Validators.required,
-          Validators.pattern(/^\d{5}$/),
-        ]),
+        zipcode: new FormControl('', [Validators.required, Validators.pattern(/^\d{5}$/)]),
       });
 
       const nestedForm = new FormGroup({
@@ -538,13 +462,11 @@
       });
 
       addressGroup.statusChanges.subscribe(() => {
-        document.getElementById('address-status').textContent =
-          `Valid: ${addressGroup.valid}`;
+        document.getElementById('address-status').textContent = `Valid: ${addressGroup.valid}`;
       });
 
       nestedForm.statusChanges.subscribe(() => {
-        document.getElementById('nested-form-status').textContent =
-          `Valid: ${nestedForm.valid}`;
+        document.getElementById('nested-form-status').textContent = `Valid: ${nestedForm.valid}`;
       });
 
       document.getElementById('validate-city').addEventListener('click', () => {
@@ -552,12 +474,10 @@
         alert('Updated with parent notification');
       });
 
-      document
-        .getElementById('validate-city-only')
-        .addEventListener('click', () => {
-          addressGroup.get('city').updateValueAndValidity({ onlySelf: true });
-          alert('Updated without parent notification');
-        });
+      document.getElementById('validate-city-only').addEventListener('click', () => {
+        addressGroup.get('city').updateValueAndValidity({ onlySelf: true });
+        alert('Updated without parent notification');
+      });
 
       // ========== DYNAMIC CONTROL MANAGEMENT ==========
       const dynamicForm = new FormGroup({
@@ -570,61 +490,41 @@
 
       let optionalFieldAdded = false;
 
-      document
-        .getElementById('toggle-optional')
-        .addEventListener('click', () => {
-          if (!optionalFieldAdded) {
-            dynamicForm.addControl(
-              'optionalField',
-              new FormControl('', [Validators.required])
-            );
-            document.getElementById('optional-field-container').style.display =
-              'block';
-            document.getElementById('toggle-optional').textContent =
-              'Remove Optional Field';
-            optionalFieldAdded = true;
+      document.getElementById('toggle-optional').addEventListener('click', () => {
+        if (!optionalFieldAdded) {
+          dynamicForm.addControl('optionalField', new FormControl('', [Validators.required]));
+          document.getElementById('optional-field-container').style.display = 'block';
+          document.getElementById('toggle-optional').textContent = 'Remove Optional Field';
+          optionalFieldAdded = true;
 
-            document
-              .getElementById('optional-field')
-              .addEventListener('input', (e) => {
-                dynamicForm.get('optionalField').setValue(e.target.value);
-              });
-          } else {
-            dynamicForm.removeControl('optionalField');
-            document.getElementById('optional-field-container').style.display =
-              'none';
-            document.getElementById('toggle-optional').textContent =
-              'Add Optional Field';
-            optionalFieldAdded = false;
-          }
+          document.getElementById('optional-field').addEventListener('input', (e) => {
+            dynamicForm.get('optionalField').setValue(e.target.value);
+          });
+        } else {
+          dynamicForm.removeControl('optionalField');
+          document.getElementById('optional-field-container').style.display = 'none';
+          document.getElementById('toggle-optional').textContent = 'Add Optional Field';
+          optionalFieldAdded = false;
+        }
 
-          updateDynamicDisplay();
-        });
+        updateDynamicDisplay();
+      });
 
-      document
-        .getElementById('check-contains')
-        .addEventListener('click', () => {
-          const contains = dynamicForm.contains('optionalField');
-          document.getElementById('contains-result').textContent =
-            contains.toString();
-        });
+      document.getElementById('check-contains').addEventListener('click', () => {
+        const contains = dynamicForm.contains('optionalField');
+        document.getElementById('contains-result').textContent = contains.toString();
+      });
 
       function updateDynamicDisplay() {
         const controls = Object.keys(dynamicForm['_controls']);
-        document.getElementById('dynamic-controls').textContent =
-          JSON.stringify(controls, null, 2);
-        document.getElementById('contains-result').textContent = dynamicForm
-          .contains('optionalField')
-          .toString();
+        document.getElementById('dynamic-controls').textContent = JSON.stringify(controls, null, 2);
+        document.getElementById('contains-result').textContent = dynamicForm.contains('optionalField').toString();
       }
 
       updateDynamicDisplay();
 
       // ========== STATUS MANAGEMENT ==========
-      const statusControl = new FormControl('', [
-        Validators.required,
-        Validators.minLength(5),
-      ]);
+      const statusControl = new FormControl('', [Validators.required, Validators.minLength(5)]);
 
       let statusLog = [];
 
@@ -632,49 +532,35 @@
         statusControl.setValue(e.target.value);
       });
 
-      document
-        .getElementById('disable-checkbox')
-        .addEventListener('change', (e) => {
-          if (e.target.checked) {
-            statusControl.disable();
-            document.getElementById('status-input').disabled = true;
-          } else {
-            statusControl.enable();
-            document.getElementById('status-input').disabled = false;
-          }
-        });
+      document.getElementById('disable-checkbox').addEventListener('change', (e) => {
+        if (e.target.checked) {
+          statusControl.disable();
+          document.getElementById('status-input').disabled = true;
+        } else {
+          statusControl.enable();
+          document.getElementById('status-input').disabled = false;
+        }
+      });
 
       statusControl.statusChanges.subscribe((status) => {
         document.getElementById('status-display').textContent = status;
-        document.getElementById('is-valid').textContent =
-          statusControl.valid.toString();
-        document.getElementById('is-invalid').textContent =
-          statusControl.invalid.toString();
-        document.getElementById('is-disabled').textContent =
-          statusControl.disabled.toString();
-        document.getElementById('is-enabled').textContent =
-          statusControl.enabled.toString();
+        document.getElementById('is-valid').textContent = statusControl.valid.toString();
+        document.getElementById('is-invalid').textContent = statusControl.invalid.toString();
+        document.getElementById('is-disabled').textContent = statusControl.disabled.toString();
+        document.getElementById('is-enabled').textContent = statusControl.enabled.toString();
 
-        statusLog.push(
-          `${new Date().toLocaleTimeString()}: ${status} (value: "${statusControl.value}")`
-        );
+        statusLog.push(`${new Date().toLocaleTimeString()}: ${status} (value: "${statusControl.value}")`);
         if (statusLog.length > 10) statusLog.shift();
-        document.getElementById('status-log').textContent =
-          statusLog.join('\n');
+        document.getElementById('status-log').textContent = statusLog.join('\n');
       });
 
       // Trigger initial status
       statusControl.statusChanges.subscribe(() => {});
-      document.getElementById('status-display').textContent =
-        statusControl.status;
-      document.getElementById('is-valid').textContent =
-        statusControl.valid.toString();
-      document.getElementById('is-invalid').textContent =
-        statusControl.invalid.toString();
-      document.getElementById('is-disabled').textContent =
-        statusControl.disabled.toString();
-      document.getElementById('is-enabled').textContent =
-        statusControl.enabled.toString();
+      document.getElementById('status-display').textContent = statusControl.status;
+      document.getElementById('is-valid').textContent = statusControl.valid.toString();
+      document.getElementById('is-invalid').textContent = statusControl.invalid.toString();
+      document.getElementById('is-disabled').textContent = statusControl.disabled.toString();
+      document.getElementById('is-enabled').textContent = statusControl.enabled.toString();
     </script>
   </body>
 </html>

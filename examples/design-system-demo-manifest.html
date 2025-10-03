@@ -53,7 +53,7 @@
     <div class="container">
       <header style="text-align: center; padding: var(--spacing-12) 0">
         <h1>🎨 Design System (Manifest Loader)</h1>
-        <p style="font-size: var(--font-size-xl); color: var(--color-neutral-600);">
+        <p style="font-size: var(--font-size-xl); color: var(--color-neutral-600)">
           Using cache-busted assets with manifest.json
         </p>
       </header>
@@ -87,9 +87,7 @@
           </div>
 
           <div class="control-group">
-            <button id="resetBtn" class="btn btn-outlined" style="width: 100%">
-              Reset to Defaults
-            </button>
+            <button id="resetBtn" class="btn btn-outlined" style="width: 100%"> Reset to Defaults </button>
           </div>
 
           <hr class="divider" />
@@ -125,7 +123,7 @@
           // Then load the theme manager bundle
           return loadScript('js/theme.bundle.min.js', '/dist/bundle/manifest.json');
         })
-        .then(module => {
+        .then((module) => {
           console.log('Module loaded:', module);
           const { themeManager } = module;
 
@@ -169,7 +167,7 @@
 
           console.log('✅ Theme manager loaded from manifest');
         })
-        .catch(error => {
+        .catch((error) => {
           document.getElementById('loadedModule').textContent = 'Failed to load';
           console.error('❌ Failed to load module:', error);
         });

@@ -3,9 +3,9 @@
  * Import all stylesheets
  */
 
-@import './design-system.css';
-@import './ui-components.css';
-@import './grid-system.css';
-@import './typography-utilities.css';
-@import './utility-classes.css';
-@import './animations.css';
+@import "./design-system.css";
+@import "./ui-components.css";
+@import "./grid-system.css";
+@import "./typography-utilities.css";
+@import "./utility-classes.css";
+@import "./animations.css";

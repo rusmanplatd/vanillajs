@@ -8,7 +8,7 @@ import { BehaviorSubject } from '../../packages/rxjs/esm/index.js';
 export class I18n {
   /**
    * Creates an I18n instance
-   * @param {Object} options - Configuration options
+   * @param {object} options - Configuration options
    * @param {string} options.defaultLocale - Default language locale (e.g., 'en')
    * @param {string} options.fallbackLocale - Fallback language if translation missing
    * @param {string} options.translationsPath - Base path for translations (default: '/i18n')
@@ -104,7 +104,7 @@ export class I18n {
    * Load translations from a JSON file
    * @param {string} locale - Locale to load
    * @param {string} namespace - Namespace (e.g., 'components/button', 'pages/home')
-   * @returns {Promise<Object>} Loaded translations
+   * @returns {Promise<object>} Loaded translations
    */
   async loadTranslation(locale, namespace) {
     const cacheKey = `${locale}:${namespace}`;
@@ -138,7 +138,7 @@ export class I18n {
    * Fetch translation file from server with modern fetch API
    * @param {string} locale - Locale to fetch
    * @param {string} namespace - Namespace path
-   * @returns {Promise<Object>} Translation data
+   * @returns {Promise<object>} Translation data
    */
   async _fetchTranslation(locale, namespace) {
     const url = `${this.translationsPath}/${locale}/${namespace}.json`;
@@ -214,10 +214,10 @@ export class I18n {
   /**
    * Get translation by key with interpolation and pluralization
    * @param {string} key - Translation key (e.g., 'components/button.submit')
-   * @param {Object} params - Parameters for interpolation and pluralization
+   * @param {object} params - Parameters for interpolation and pluralization
    * @param {string} params.locale - Override current locale
    * @param {number} params.count - Count for pluralization
-   * @param {Object} params.values - Values for interpolation
+   * @param {object} params.values - Values for interpolation
    * @param {string} params.defaultValue - Default value if translation missing
    * @returns {Promise<string>} Translated string
    */
@@ -263,7 +263,7 @@ export class I18n {
   /**
    * Synchronous translation getter (only works if already loaded)
    * @param {string} key - Translation key
-   * @param {Object} params - Parameters
+   * @param {object} params - Parameters
    * @returns {string} Translated string or key if not found
    */
   tSync(key, params = {}) {
@@ -290,7 +290,7 @@ export class I18n {
   /**
    * Parse translation key into namespace and path
    * @param {string} key - Full key (e.g., 'components/button.submit')
-   * @returns {Object} Parsed key with namespace and path
+   * @returns {object} Parsed key with namespace and path
    */
   _parseKey(key) {
     const lastDotIndex = key.lastIndexOf('.');
@@ -309,7 +309,7 @@ export class I18n {
    * @param {string} locale - Locale
    * @param {string} namespace - Namespace
    * @param {string} path - Dot-notation path
-   * @returns {string|Object} Translation value
+   * @returns {string | object} Translation value
    */
   _getTranslation(locale, namespace, path) {
     const cacheKey = `${locale}:${namespace}`;
@@ -346,7 +346,9 @@ export class I18n {
       this._missingKeys.add(missingKey);
 
       if (this.debug) {
-        console.warn(`[i18n] Missing translation: "${key}" for locale "${locale}"`);
+        console.warn(
+          `[i18n] Missing translation: "${key}" for locale "${locale}"`
+        );
       }
 
       if (this.onMissingTranslation) {
@@ -375,7 +377,7 @@ export class I18n {
    * Supports formats:
    * - Object: { zero: '...', one: '...', two: '...', few: '...', many: '...', other: '...' }
    * - String with pipes: 'no items|one item|{count} items'
-   * @param {string|Object} translation - Translation value
+   * @param {string | object} translation - Translation value
    * @param {number} count - Count for pluralization
    * @param {string} locale - Locale for plural rules
    * @returns {string} Pluralized string
@@ -420,7 +422,7 @@ export class I18n {
    * Interpolate values into translation string with nested object support
    * Supports: {key}, {{key}}, ${key}, {user.name}, {items[0]}
    * @param {string} translation - Translation string
-   * @param {Object} values - Values to interpolate
+   * @param {object} values - Values to interpolate
    * @returns {string} Interpolated string
    */
   _interpolate(translation, values) {
@@ -447,7 +449,7 @@ export class I18n {
 
   /**
    * Get nested value from object using dot notation or bracket notation
-   * @param {Object} obj - Object to traverse
+   * @param {object} obj - Object to traverse
    * @param {string} path - Path to value (e.g., 'user.name', 'items[0]')
    * @returns {*} Value at path or undefined
    */
@@ -506,7 +508,7 @@ export class I18n {
    * Get all translations for a namespace
    * @param {string} namespace - Namespace to get
    * @param {string} locale - Locale
-   * @returns {Object|null} All translations in namespace
+   * @returns {object | null} All translations in namespace
    */
   getNamespace(namespace, locale = null) {
     const targetLocale = locale || this.getCurrentLocale();
@@ -538,8 +540,8 @@ export class I18n {
   /**
    * Batch translate multiple keys at once
    * @param {string[]} keys - Array of translation keys
-   * @param {Object} params - Parameters for all translations
-   * @returns {Promise<Object>} Object with keys and translations
+   * @param {object} params - Parameters for all translations
+   * @returns {Promise<object>} Object with keys and translations
    */
   async batchTranslate(keys, params = {}) {
     const results = {};
@@ -555,7 +557,7 @@ export class I18n {
 
   /**
    * Get all translations for current locale
-   * @returns {Object} All loaded translations
+   * @returns {object} All loaded translations
    */
   getAllTranslations() {
     const locale = this.getCurrentLocale();
@@ -575,7 +577,7 @@ export class I18n {
    * Validate that all required translation keys exist
    * @param {string[]} requiredKeys - Array of required translation keys
    * @param {string} locale - Locale to check (defaults to current)
-   * @returns {Promise<Object>} Validation result with missing keys
+   * @returns {Promise<object>} Validation result with missing keys
    */
   async validateTranslations(requiredKeys, locale = null) {
     const targetLocale = locale || this.getCurrentLocale();
@@ -623,7 +625,7 @@ export class I18n {
 
   /**
    * Get translation statistics
-   * @returns {Object} Statistics about loaded translations
+   * @returns {object} Statistics about loaded translations
    */
   getStats() {
     const stats = {

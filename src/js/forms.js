@@ -195,7 +195,7 @@ export const Validators = {
       let regex;
       if (format === 'US') {
         // US phone: (123) 456-7890 or 123-456-7890 or 1234567890
-        regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+        regex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
       } else if (format === 'INTL') {
         // International: +1234567890
         regex = /^\+?[1-9]\d{1,14}$/;
@@ -425,7 +425,8 @@ export const Validators = {
       } else if (version === 'v6') {
         isValid = ipv6Regex.test(control.value);
       } else if (version === 'both') {
-        isValid = ipv4Regex.test(control.value) || ipv6Regex.test(control.value);
+        isValid =
+          ipv4Regex.test(control.value) || ipv6Regex.test(control.value);
       }
 
       if (!isValid) {
@@ -530,7 +531,7 @@ export const Validators = {
 
   /**
    * Validator that requires the control's value to be a strong password
-   * @param {Object} requirements - Password requirements
+   * @param {object} requirements - Password requirements
    * @returns {Function} Validator function
    */
   password(requirements = {}) {
@@ -549,10 +550,7 @@ export const Validators = {
       }
 
       const errors = [];
-      if (
-        config.minLength &&
-        control.value.length < config.minLength
-      ) {
+      if (config.minLength && control.value.length < config.minLength) {
         errors.push(`at least ${config.minLength} characters`);
       }
       if (config.requireUppercase && !/[A-Z]/.test(control.value)) {

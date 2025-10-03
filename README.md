@@ -1,6 +1,8 @@
 # Vanilla JavaScript Framework
 
-A comprehensive, zero-dependency framework for building modern web applications with vanilla JavaScript. Features a component-based architecture, reactive data binding, dependency injection, internationalization, and complete tooling for professional web development.
+A comprehensive, zero-dependency framework for building modern web applications with vanilla
+JavaScript. Features a component-based architecture, reactive data binding, dependency injection,
+internationalization, and complete tooling for professional web development.
 
 ## Features
 
@@ -531,7 +533,8 @@ npm run docs:watch    # Auto-regenerate docs on changes
 
 ## Architecture
 
-This framework follows a modular, component-based architecture inspired by modern frameworks like Angular and Vue, but built entirely with vanilla JavaScript:
+This framework follows a modular, component-based architecture inspired by modern frameworks like
+Angular and Vue, but built entirely with vanilla JavaScript:
 
 - **Zero Dependencies** (except RxJS for reactive programming)
 - **No Build Step Required** (optional bundling for production)

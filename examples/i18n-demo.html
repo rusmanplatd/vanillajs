@@ -157,11 +157,7 @@
       .stat-card {
         text-align: center;
         padding: var(--spacing-6);
-        background: linear-gradient(
-          135deg,
-          var(--color-primary),
-          var(--color-secondary)
-        );
+        background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
         color: white;
         border-radius: var(--radius-lg);
       }
@@ -182,19 +178,13 @@
     <div class="i18n-demo">
       <!-- Header -->
       <header class="demo-header animate-fade-in">
-        <h1 class="text-6xl font-bold mb-4" data-i18n="pages/home.title">
-          Welcome
-        </h1>
+        <h1 class="text-6xl font-bold mb-4" data-i18n="pages/home.title"> Welcome </h1>
         <p class="text-xl mb-6" data-i18n="pages/home.subtitle">Subtitle</p>
 
         <!-- Language Switcher -->
         <div class="language-switcher-container" id="languageSwitcher"></div>
 
-        <p
-          class="text-base"
-          data-i18n="pages/home.description"
-          style="max-width: 800px; margin: 0 auto"
-        >
+        <p class="text-base" data-i18n="pages/home.description" style="max-width: 800px; margin: 0 auto">
           Description
         </p>
       </header>
@@ -202,69 +192,27 @@
       <!-- Features Section -->
       <section class="demo-section">
         <div class="demo-card">
-          <h2
-            class="text-3xl font-bold mb-4"
-            data-i18n="pages/home.features.title"
-          >
-            Features
-          </h2>
+          <h2 class="text-3xl font-bold mb-4" data-i18n="pages/home.features.title"> Features </h2>
 
           <div class="feature-grid">
             <div class="feature-card">
-              <div class="feature-title" data-i18n="pages/home.features.i18n">
-                I18n
-              </div>
-              <div
-                class="feature-desc"
-                data-i18n="pages/home.features.i18nDesc"
-              >
-                Description
-              </div>
+              <div class="feature-title" data-i18n="pages/home.features.i18n"> I18n </div>
+              <div class="feature-desc" data-i18n="pages/home.features.i18nDesc"> Description </div>
             </div>
 
             <div class="feature-card">
-              <div
-                class="feature-title"
-                data-i18n="pages/home.features.reactive"
-              >
-                Reactive
-              </div>
-              <div
-                class="feature-desc"
-                data-i18n="pages/home.features.reactiveDesc"
-              >
-                Description
-              </div>
+              <div class="feature-title" data-i18n="pages/home.features.reactive"> Reactive </div>
+              <div class="feature-desc" data-i18n="pages/home.features.reactiveDesc"> Description </div>
             </div>
 
             <div class="feature-card">
-              <div
-                class="feature-title"
-                data-i18n="pages/home.features.pluralization"
-              >
-                Pluralization
-              </div>
-              <div
-                class="feature-desc"
-                data-i18n="pages/home.features.pluralizationDesc"
-              >
-                Description
-              </div>
+              <div class="feature-title" data-i18n="pages/home.features.pluralization"> Pluralization </div>
+              <div class="feature-desc" data-i18n="pages/home.features.pluralizationDesc"> Description </div>
             </div>
 
             <div class="feature-card">
-              <div
-                class="feature-title"
-                data-i18n="pages/home.features.interpolation"
-              >
-                Interpolation
-              </div>
-              <div
-                class="feature-desc"
-                data-i18n="pages/home.features.interpolationDesc"
-              >
-                Description
-              </div>
+              <div class="feature-title" data-i18n="pages/home.features.interpolation"> Interpolation </div>
+              <div class="feature-desc" data-i18n="pages/home.features.interpolationDesc"> Description </div>
             </div>
           </div>
         </div>
@@ -292,9 +240,7 @@
             <div class="demo-output" id="interpolationOutput"></div>
 
             <div class="code-example">
-              <div>
-                await i18n.t('pages/home.welcome', { values: { name: 'John' } })
-              </div>
+              <div> await i18n.t('pages/home.welcome', { values: { name: 'John' } }) </div>
             </div>
           </div>
         </div>
@@ -345,36 +291,11 @@
           <h2 class="text-2xl font-bold mb-4">Navigation Components</h2>
 
           <div class="flex gap-4 flex-wrap">
-            <button
-              class="btn btn-primary"
-              data-i18n="components/navigation.home"
-            >
-              Home
-            </button>
-            <button
-              class="btn btn-primary"
-              data-i18n="components/navigation.about"
-            >
-              About
-            </button>
-            <button
-              class="btn btn-primary"
-              data-i18n="components/navigation.products"
-            >
-              Products
-            </button>
-            <button
-              class="btn btn-primary"
-              data-i18n="components/navigation.services"
-            >
-              Services
-            </button>
-            <button
-              class="btn btn-primary"
-              data-i18n="components/navigation.contact"
-            >
-              Contact
-            </button>
+            <button class="btn btn-primary" data-i18n="components/navigation.home"> Home </button>
+            <button class="btn btn-primary" data-i18n="components/navigation.about"> About </button>
+            <button class="btn btn-primary" data-i18n="components/navigation.products"> Products </button>
+            <button class="btn btn-primary" data-i18n="components/navigation.services"> Services </button>
+            <button class="btn btn-primary" data-i18n="components/navigation.contact"> Contact </button>
           </div>
         </div>
       </section>
@@ -385,24 +306,10 @@
           <h2 class="text-2xl font-bold mb-4">Button Components</h2>
 
           <div class="flex gap-4 flex-wrap">
-            <button
-              class="btn btn-primary"
-              data-i18n="components/button.submit"
-            >
-              Submit
-            </button>
-            <button
-              class="btn btn-secondary"
-              data-i18n="components/button.cancel"
-            >
-              Cancel
-            </button>
-            <button class="btn btn-success" data-i18n="components/button.save">
-              Save
-            </button>
-            <button class="btn btn-error" data-i18n="components/button.delete">
-              Delete
-            </button>
+            <button class="btn btn-primary" data-i18n="components/button.submit"> Submit </button>
+            <button class="btn btn-secondary" data-i18n="components/button.cancel"> Cancel </button>
+            <button class="btn btn-success" data-i18n="components/button.save"> Save </button>
+            <button class="btn btn-error" data-i18n="components/button.delete"> Delete </button>
           </div>
         </div>
       </section>

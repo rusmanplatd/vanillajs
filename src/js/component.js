@@ -7,13 +7,13 @@ import { BehaviorSubject, Subject } from '../../packages/rxjs/esm/index.js';
 export class Component {
   /**
    * Creates a component instance
-   * @param {Object} options - Component options
+   * @param {object} options - Component options
    * @param {string} options.selector - CSS selector for component
    * @param {string} options.template - HTML template
-   * @param {Object} options.data - Initial component data
-   * @param {Object} options.methods - Component methods
-   * @param {Object} options.computed - Computed properties
-   * @param {Object} options.services - Injected services
+   * @param {object} options.data - Initial component data
+   * @param {object} options.methods - Component methods
+   * @param {object} options.computed - Computed properties
+   * @param {object} options.services - Injected services
    */
   constructor(options = {}) {
     const {
@@ -73,7 +73,7 @@ export class Component {
 
   /**
    * Get current state
-   * @returns {Object} Current state
+   * @returns {object} Current state
    */
   get state() {
     return this._state;
@@ -81,7 +81,7 @@ export class Component {
 
   /**
    * Set state and trigger change detection
-   * @param {Object|Function} updater - New state or updater function
+   * @param {object | Function} updater - New state or updater function
    */
   setState(updater) {
     if (typeof updater === 'function') {
@@ -540,7 +540,7 @@ export class Component {
    * Listen to custom event
    * @param {string} eventName - Event name
    * @param {Function} handler - Event handler
-   * @returns {Object} Subscription
+   * @returns {object} Subscription
    */
   on(eventName, handler) {
     if (!this._events.has(eventName)) {

@@ -9,12 +9,21 @@ const INJECTION_TOKEN_SYMBOL = Symbol('InjectionToken');
  * InjectionToken - Type-safe injection token
  */
 export class InjectionToken {
+  /**
+   * Creates an injection token
+   *
+   * @param {string} description - Token description
+   * @param {object} [options={}] - Token options
+   */
   constructor(description, options = {}) {
     this.description = description;
     this.factory = options.factory;
     this._symbol = Symbol(description);
   }
 
+  /**
+   *
+   */
   toString() {
     return `InjectionToken(${this.description})`;
   }
@@ -22,7 +31,7 @@ export class InjectionToken {
 
 /**
  * Injectable decorator/marker with enhanced features
- * @param {Object} options - Injectable options
+ * @param {object} options - Injectable options
  * @returns {Function} Class decorator
  */
 export function Injectable(options = {}) {
@@ -41,7 +50,7 @@ export function Injectable(options = {}) {
 export class Injector {
   /**
    * Creates an injector instance
-   * @param {Array<Object>} providers - Array of providers
+   * @param {Array<object>} providers - Array of providers
    * @param {Injector} parent - Parent injector
    */
   constructor(providers = [], parent = null) {
@@ -56,7 +65,7 @@ export class Injector {
 
   /**
    * Register a provider
-   * @param {Object|Function} provider - Provider configuration or class
+   * @param {object | Function} provider - Provider configuration or class
    */
   register(provider) {
     if (typeof provider === 'function') {
@@ -116,14 +125,12 @@ export class Injector {
       return this.parent.get(token);
     }
 
-    throw new Error(
-      `No provider found for ${token.name || token.toString()}`
-    );
+    throw new Error(`No provider found for ${token.name || token.toString()}`);
   }
 
   /**
    * Create instance from provider
-   * @param {Object} provider - Provider configuration
+   * @param {object} provider - Provider configuration
    * @returns {*} Instance
    */
   _createInstance(provider) {
@@ -223,7 +230,7 @@ export function Inject(...deps) {
 
 /**
  * Service decorator (combines Injectable and registers in root)
- * @param {Object} options - Service options
+ * @param {object} options - Service options
  * @returns {Function} Decorator
  */
 export function Service(options = {}) {

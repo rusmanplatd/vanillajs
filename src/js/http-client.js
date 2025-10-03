@@ -157,11 +157,14 @@ export class HttpClient {
     if (responseType === 'json') {
       const text = await response.text();
       return text ? JSON.parse(text) : null;
-    } else if (responseType === 'text') {
+    }
+    if (responseType === 'text') {
       return response.text();
-    } else if (responseType === 'blob') {
+    }
+    if (responseType === 'blob') {
       return response.blob();
-    } else if (responseType === 'arraybuffer') {
+    }
+    if (responseType === 'arraybuffer') {
       return response.arrayBuffer();
     }
     return response.text();
@@ -318,7 +321,9 @@ export class HttpClient {
    */
   _parseXHRHeaders(headersString) {
     const headers = new Headers();
-    if (!headersString) return headers;
+    if (!headersString) {
+      return headers;
+    }
 
     headersString.split('\r\n').forEach((line) => {
       const index = line.indexOf(':');
@@ -358,7 +363,7 @@ export class HttpClient {
     const fullUrl = this._buildUrl(url, params);
 
     // Prepare body
-    let body = options.body;
+    let { body } = options;
     let finalHeaders = headers;
 
     if (body && method !== 'GET' && method !== 'HEAD') {
@@ -711,6 +716,9 @@ export const HttpEventType = {
  * HTTP Sent event - request has been dispatched
  */
 export class HttpSentEvent {
+  /**
+   *
+   */
   constructor() {
     this.type = HttpEventType.Sent;
   }

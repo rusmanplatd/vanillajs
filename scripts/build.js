@@ -7,10 +7,9 @@
  */
 
 import * as esbuild from 'esbuild';
-import { readdir, readFile, writeFile } from 'fs/promises';
+import { readdir, readFile, writeFile, mkdir } from 'fs/promises';
 import { join, dirname, relative, extname, basename } from 'path';
 import { fileURLToPath } from 'url';
-import { mkdir } from 'fs/promises';
 import { minify as terserMinify } from 'terser';
 import { createHash } from 'crypto';
 import { execSync } from 'child_process';
@@ -89,6 +88,10 @@ if (isBuildAll) {
 
 /**
  * Get all JS files from src directory recursively
+ *
+ * @param {string} dir - Directory to search
+ * @param {string[]} [files=[]] - Accumulated files array
+ * @returns {Promise<string[]>} Array of JS file paths
  */
 async function getJsFiles(dir, files = []) {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -108,6 +111,10 @@ async function getJsFiles(dir, files = []) {
 
 /**
  * Get all CSS files from src directory recursively
+ *
+ * @param {string} dir - Directory to search
+ * @param {string[]} [files=[]] - Accumulated files array
+ * @returns {Promise<string[]>} Array of CSS file paths
  */
 async function getCssFiles(dir, files = []) {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -127,6 +134,9 @@ async function getCssFiles(dir, files = []) {
 
 /**
  * Build JavaScript files
+ *
+ * @param {string} outDir - Output directory for built files
+ * @returns {Promise<*>} Build result or watch context
  */
 async function buildJs(outDir) {
   const srcDir = join(rootDir, 'src/js');
@@ -156,15 +166,17 @@ async function buildJs(outDir) {
     console.log('✅ Initial build complete');
     console.log('👀 Watching for changes...\n');
     return context;
-  } else {
-    const result = await esbuild.build(buildOptions);
-    console.log(`✅ JavaScript build complete\n`);
-    return result;
   }
+  const result = await esbuild.build(buildOptions);
+  console.log(`✅ JavaScript build complete\n`);
+  return result;
 }
 
 /**
  * Build CSS files
+ *
+ * @param {string} outDir - Output directory for built files
+ * @returns {Promise<*>} Build result or watch context
  */
 async function buildCss(outDir) {
   const srcDir = join(rootDir, 'src/css');
@@ -188,15 +200,17 @@ async function buildCss(outDir) {
     await context.watch();
     console.log('✅ Initial CSS build complete\n');
     return context;
-  } else {
-    const result = await esbuild.build(buildOptions);
-    console.log(`✅ CSS build complete\n`);
-    return result;
   }
+  const result = await esbuild.build(buildOptions);
+  console.log(`✅ CSS build complete\n`);
+  return result;
 }
 
 /**
  * Minify JavaScript files in place
+ *
+ * @param {string} dir - Directory containing JS files
+ * @returns {Promise<void>}
  */
 async function minifyJsFiles(dir) {
   const allJsFiles = await getJsFiles(join(rootDir, dir, 'js'));
@@ -244,6 +258,9 @@ async function minifyJsFiles(dir) {
 
 /**
  * Minify CSS files in place
+ *
+ * @param {string} dir - Directory containing CSS files
+ * @returns {Promise<void>}
  */
 async function minifyCssFiles(dir) {
   const allCssFiles = await getCssFiles(join(rootDir, dir, 'css'));
@@ -278,6 +295,11 @@ async function minifyCssFiles(dir) {
 
 /**
  * Bundle a single entry point
+ *
+ * @param {object} config - Bundle configuration
+ * @param {string} outDir - Output directory
+ * @param {boolean} [minify=false] - Whether to minify the bundle
+ * @returns {Promise<*>} Build result
  */
 async function bundleEntry(config, outDir, minify = false) {
   const suffix = minify ? '.min' : '';
@@ -322,6 +344,10 @@ async function bundleEntry(config, outDir, minify = false) {
 
 /**
  * Bundle all CSS files into one
+ *
+ * @param {string} outDir - Output directory
+ * @param {boolean} [minify=false] - Whether to minify the bundle
+ * @returns {Promise<*>} Build result
  */
 async function bundleCss(outDir, minify = false) {
   const suffix = minify ? '.min' : '';
@@ -354,6 +380,10 @@ async function bundleCss(outDir, minify = false) {
 
 /**
  * Create a complete all-in-one bundle
+ *
+ * @param {string} outDir - Output directory
+ * @param {boolean} [minify=false] - Whether to minify the bundle
+ * @returns {Promise<*>} Build result
  */
 async function bundleAll(outDir, minify = false) {
   const suffix = minify ? '.min' : '';
@@ -396,6 +426,11 @@ async function bundleAll(outDir, minify = false) {
 
 /**
  * Get all files recursively
+ *
+ * @param {string} dir - Directory to search
+ * @param {string} ext - File extension to match
+ * @param {string[]} [files=[]] - Accumulated files array
+ * @returns {Promise<string[]>} Array of file paths
  */
 async function getAllFiles(dir, ext, files = []) {
   try {
@@ -419,6 +454,10 @@ async function getAllFiles(dir, ext, files = []) {
 
 /**
  * Minify JavaScript file with Terser (for minify mode)
+ *
+ * @param {string} inputPath - Path to input file
+ * @param {string} outputPath - Path to output file
+ * @returns {Promise<object>} Minification stats
  */
 async function minifyJsFile(inputPath, outputPath) {
   const code = await readFile(inputPath, 'utf8');
@@ -479,6 +518,10 @@ async function minifyJsFile(inputPath, outputPath) {
 
 /**
  * Minify CSS file with CSSO
+ *
+ * @param {string} inputPath - Path to input file
+ * @param {string} outputPath - Path to output file
+ * @returns {Promise<object>} Minification stats
  */
 async function minifyCssFile(inputPath, outputPath) {
   const code = await readFile(inputPath, 'utf8');
@@ -505,17 +548,33 @@ async function minifyCssFile(inputPath, outputPath) {
 
 /**
  * Format file size
+ *
+ * @param {number} bytes - File size in bytes
+ * @returns {string} Formatted size string
  */
 function formatSize(bytes) {
-  if (bytes < 1024) return `${bytes}B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)}KB`;
+  if (bytes < 1024) {
+    return `${bytes}B`;
+  }
+  if (bytes < 1024 * 1024) {
+    return `${(bytes / 1024).toFixed(1)}KB`;
+  }
   return `${(bytes / (1024 * 1024)).toFixed(2)}MB`;
 }
 
 /**
  * Generate manifest.json mapping original filenames to cache-busted versions
+ *
+ * @param {string} outDir - Output directory
+ * @param {boolean} [forBundle=false] - Whether this is for bundle mode
+ * @param {boolean} [includeBundle=false] - Whether to include bundle files
+ * @returns {Promise<void>}
  */
-async function generateManifest(outDir, forBundle = false, includeBundle = false) {
+async function generateManifest(
+  outDir,
+  forBundle = false,
+  includeBundle = false
+) {
   const manifest = {};
 
   if (forBundle) {
@@ -605,6 +664,8 @@ async function generateManifest(outDir, forBundle = false, includeBundle = false
 
 /**
  * Run bundle mode build
+ *
+ * @returns {Promise<void>}
  */
 async function runBundle() {
   const outDir = 'dist/bundle';
@@ -674,6 +735,9 @@ async function runBundle() {
 
 /**
  * Run standard build
+ *
+ * @param {boolean} [includeBundle=false] - Whether to include bundle files
+ * @returns {Promise<void>}
  */
 async function runStandardBuild(includeBundle = false) {
   const outDir = 'dist';
@@ -719,6 +783,8 @@ async function runStandardBuild(includeBundle = false) {
 
 /**
  * Main build function
+ *
+ * @returns {Promise<void>}
  */
 async function build() {
   try {

@@ -25,3 +25,6 @@ Thumbs.db
 # Minified files
 *.min.js
 *.min.css
+
+# Example files (may have intentional formatting or syntax variations)
+examples/**/*.js

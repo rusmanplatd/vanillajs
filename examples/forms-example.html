@@ -209,23 +209,12 @@
     </div>
 
     <script type="module">
-      import {
-        FormControl,
-        FormGroup,
-        FormArray,
-        Validators,
-      } from '../src/forms.js';
+      import { FormControl, FormGroup, FormArray, Validators } from '../src/forms.js';
 
       // ========== SIMPLE FORM ==========
       const nameControl = new FormControl('', [Validators.required]);
-      const emailControl = new FormControl('', [
-        Validators.required,
-        Validators.email,
-      ]);
-      const ageControl = new FormControl('', [
-        Validators.min(18),
-        Validators.max(100),
-      ]);
+      const emailControl = new FormControl('', [Validators.required, Validators.email]);
+      const ageControl = new FormControl('', [Validators.min(18), Validators.max(100)]);
 
       const simpleForm = new FormGroup({
         name: nameControl,
@@ -257,11 +246,7 @@
 
       // Subscribe to value changes
       simpleForm.valueChanges.subscribe((value) => {
-        document.getElementById('simple-value').textContent = JSON.stringify(
-          value,
-          null,
-          2
-        );
+        document.getElementById('simple-value').textContent = JSON.stringify(value, null, 2);
       });
 
       // Subscribe to status changes
@@ -357,16 +342,9 @@
 
       // ========== REGISTRATION FORM ==========
       const registrationForm = new FormGroup({
-        username: new FormControl('', [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(20),
-        ]),
+        username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
         email: new FormControl('', [Validators.required, Validators.email]),
-        password: new FormControl('', [
-          Validators.required,
-          Validators.minLength(8),
-        ]),
+        password: new FormControl('', [Validators.required, Validators.minLength(8)]),
         bio: new FormControl('', [Validators.maxLength(200)]),
       });
 
@@ -395,10 +373,8 @@
             let errorMsg = '';
             if (errors.required) errorMsg = 'This field is required';
             else if (errors.email) errorMsg = 'Invalid email format';
-            else if (errors.minLength)
-              errorMsg = `Minimum ${errors.minLength.requiredLength} characters`;
-            else if (errors.maxLength)
-              errorMsg = `Maximum ${errors.maxLength.requiredLength} characters`;
+            else if (errors.minLength) errorMsg = `Minimum ${errors.minLength.requiredLength} characters`;
+            else if (errors.maxLength) errorMsg = `Maximum ${errors.maxLength.requiredLength} characters`;
 
             errorEl.textContent = errorMsg;
             inputEl.classList.add('invalid');
@@ -415,29 +391,22 @@
       });
 
       registrationForm.valueChanges.subscribe((value) => {
-        document.getElementById('reg-value').textContent = JSON.stringify(
-          value,
-          null,
-          2
-        );
+        document.getElementById('reg-value').textContent = JSON.stringify(value, null, 2);
       });
 
       registrationForm.statusChanges.subscribe(() => {
         document.getElementById('reg-status').textContent =
           `Valid: ${registrationForm.valid}, Touched: ${registrationForm.touched}, Dirty: ${registrationForm.dirty}`;
-        document.getElementById('reg-submit').disabled =
-          !registrationForm.valid;
+        document.getElementById('reg-submit').disabled = !registrationForm.valid;
       });
 
-      document
-        .getElementById('registration-form')
-        .addEventListener('submit', (e) => {
-          e.preventDefault();
-          if (registrationForm.valid) {
-            console.log('Registration form submitted:', registrationForm.value);
-            alert('Registration successful! Check console for values.');
-          }
-        });
+      document.getElementById('registration-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (registrationForm.valid) {
+          console.log('Registration form submitted:', registrationForm.value);
+          alert('Registration successful! Check console for values.');
+        }
+      });
 
       document.getElementById('reg-reset').addEventListener('click', () => {
         registrationForm.reset();
@@ -450,10 +419,7 @@
       const phoneArray = new FormArray([]);
 
       function createPhoneControl() {
-        return new FormControl('', [
-          Validators.required,
-          Validators.pattern(/^\d{3}-\d{3}-\d{4}$/),
-        ]);
+        return new FormControl('', [Validators.required, Validators.pattern(/^\d{3}-\d{3}-\d{4}$/)]);
       }
 
       function renderPhoneArray() {
@@ -520,11 +486,7 @@
       }
 
       phoneArray.valueChanges.subscribe((value) => {
-        document.getElementById('phones-value').textContent = JSON.stringify(
-          value,
-          null,
-          2
-        );
+        document.getElementById('phones-value').textContent = JSON.stringify(value, null, 2);
       });
 
       phoneArray.statusChanges.subscribe(() => {

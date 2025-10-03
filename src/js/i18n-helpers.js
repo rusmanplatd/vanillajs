@@ -9,7 +9,7 @@ export class I18nDirective {
   /**
    * Initialize i18n directives on the page
    * @param {HTMLElement} root - Root element to scan
-   * @param {Object} options - Configuration options
+   * @param {object} options - Configuration options
    * @param {boolean} options.autoObserve - Automatically observe DOM changes
    */
   static init(root = document.body, options = {}) {
@@ -27,7 +27,7 @@ export class I18nDirective {
   /**
    * Creates an I18nDirective instance
    * @param {HTMLElement} root - Root element
-   * @param {Object} options - Configuration options
+   * @param {object} options - Configuration options
    */
   constructor(root = document.body, options = {}) {
     this.root = root;
@@ -95,7 +95,9 @@ export class I18nDirective {
    */
   async translateElement(element) {
     const key = element.getAttribute('data-i18n');
-    if (!key) return;
+    if (!key) {
+      return;
+    }
 
     const valuesAttr = element.getAttribute('data-i18n-values');
     const countAttr = element.getAttribute('data-i18n-count');
@@ -184,7 +186,7 @@ export class I18nDirective {
  * Helper to create translated elements dynamically
  * @param {string} tag - HTML tag name
  * @param {string} key - Translation key
- * @param {Object} options - Options
+ * @param {object} options - Options
  * @returns {HTMLElement} Created element
  */
 export async function createTranslatedElement(tag, key, options = {}) {
@@ -227,7 +229,7 @@ export async function createTranslatedElement(tag, key, options = {}) {
 /**
  * Format date with locale
  * @param {Date|string|number} date - Date to format
- * @param {Object} options - Intl.DateTimeFormat options
+ * @param {object} options - Intl.DateTimeFormat options
  * @returns {string} Formatted date
  */
 export function formatDate(date, options = {}) {
@@ -240,7 +242,7 @@ export function formatDate(date, options = {}) {
 /**
  * Format number with locale
  * @param {number} number - Number to format
- * @param {Object} options - Intl.NumberFormat options
+ * @param {object} options - Intl.NumberFormat options
  * @returns {string} Formatted number
  */
 export function formatNumber(number, options = {}) {
@@ -252,7 +254,7 @@ export function formatNumber(number, options = {}) {
  * Format currency with locale
  * @param {number} amount - Amount to format
  * @param {string} currency - Currency code (e.g., 'USD')
- * @param {Object} options - Additional options
+ * @param {object} options - Additional options
  * @returns {string} Formatted currency
  */
 export function formatCurrency(amount, currency = 'USD', options = {}) {
@@ -267,7 +269,7 @@ export function formatCurrency(amount, currency = 'USD', options = {}) {
 /**
  * Format relative time (e.g., "2 hours ago", "in 3 days")
  * @param {Date|string|number} date - Date to format
- * @param {Object} options - Intl.RelativeTimeFormat options
+ * @param {object} options - Intl.RelativeTimeFormat options
  * @returns {string} Formatted relative time
  */
 export function formatRelativeTime(date, options = {}) {
@@ -307,7 +309,7 @@ export function formatRelativeTime(date, options = {}) {
 
 /**
  * Get list of supported locales with native names
- * @returns {Array<Object>} Array of locale objects
+ * @returns {Array<object>} Array of locale objects
  */
 export function getSupportedLocales() {
   const localeNames = {
@@ -329,7 +331,7 @@ export function getSupportedLocales() {
 /**
  * Format list with locale-aware conjunction
  * @param {Array} items - Items to format
- * @param {Object} options - Intl.ListFormat options
+ * @param {object} options - Intl.ListFormat options
  * @returns {string} Formatted list
  */
 export function formatList(items, options = {}) {
@@ -371,8 +373,8 @@ export function applyTextDirection(element = document.documentElement) {
  * Translation hook for reactive frameworks
  * Returns a function that gets the current translation and updates on locale change
  * @param {string} key - Translation key
- * @param {Object} params - Translation parameters
- * @returns {Object} Object with translation value and update function
+ * @param {object} params - Translation parameters
+ * @returns {object} Object with translation value and update function
  */
 export function useTranslation(key, params = {}) {
   let currentValue = key;
@@ -405,7 +407,7 @@ export class LanguageSwitcher {
   /**
    * Create a language switcher
    * @param {HTMLElement} container - Container element
-   * @param {Object} options - Options
+   * @param {object} options - Options
    * @param {string} options.type - 'dropdown' or 'buttons'
    * @param {boolean} options.showFlag - Show country flags
    * @param {string} options.className - CSS class name
@@ -482,7 +484,7 @@ export class LanguageSwitcher {
     } else {
       this.element.addEventListener('click', async (e) => {
         if (e.target.classList.contains('language-button')) {
-          const locale = e.target.dataset.locale;
+          const { locale } = e.target.dataset;
           await i18n.setLocale(locale);
 
           // Update active state

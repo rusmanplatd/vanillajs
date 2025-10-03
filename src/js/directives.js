@@ -7,13 +7,13 @@
  * Process *ngIf directive
  * @param {HTMLElement} element - Element with *ngIf
  * @param {Function} evaluator - Expression evaluator
- * @returns {Object} Directive binding
+ * @returns {object} Directive binding
  */
 export function processNgIf(element, evaluator) {
   const condition = element.getAttribute('*ngIf');
   const placeholder = document.createComment(`ngIf: ${condition}`);
   const parent = element.parentNode;
-  const nextSibling = element.nextSibling;
+  const { nextSibling } = element;
 
   // Store original element
   const originalElement = element.cloneNode(true);
@@ -62,7 +62,7 @@ export function processNgIf(element, evaluator) {
  * Process *ngFor directive with improved performance
  * @param {HTMLElement} element - Element with *ngFor
  * @param {Function} evaluator - Expression evaluator
- * @returns {Object} Directive binding
+ * @returns {object} Directive binding
  */
 export function processNgFor(element, evaluator) {
   const expression = element.getAttribute('*ngFor');
@@ -209,7 +209,7 @@ export function processNgFor(element, evaluator) {
  * Process *ngSwitch directive
  * @param {HTMLElement} element - Element with [ngSwitch]
  * @param {Function} evaluator - Expression evaluator
- * @returns {Object} Directive binding
+ * @returns {object} Directive binding
  */
 export function processNgSwitch(element, evaluator) {
   const switchExpr = element.getAttribute('[ngSwitch]');
@@ -260,7 +260,7 @@ export function processNgSwitch(element, evaluator) {
  * Process *ngClass directive
  * @param {HTMLElement} element - Element with [ngClass]
  * @param {Function} evaluator - Expression evaluator
- * @returns {Object} Directive binding
+ * @returns {object} Directive binding
  */
 export function processNgClass(element, evaluator) {
   const expression = element.getAttribute('[ngClass]');
@@ -319,7 +319,7 @@ export function processNgClass(element, evaluator) {
  * Process *ngStyle directive
  * @param {HTMLElement} element - Element with [ngStyle]
  * @param {Function} evaluator - Expression evaluator
- * @returns {Object} Directive binding
+ * @returns {object} Directive binding
  */
 export function processNgStyle(element, evaluator) {
   const expression = element.getAttribute('[ngStyle]');

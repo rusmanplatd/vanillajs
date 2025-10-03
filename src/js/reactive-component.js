@@ -9,7 +9,7 @@ import { rootInjector } from './injector.js';
 export class ReactiveComponent extends Component {
   /**
    * Creates a reactive component
-   * @param {Object} options - Component options
+   * @param {object} options - Component options
    */
   constructor(options = {}) {
     super(options);
@@ -69,7 +69,7 @@ export class ReactiveComponent extends Component {
     }
 
     // Store scroll position
-    const scrollTop = this.el.scrollTop;
+    const { scrollTop } = this.el;
 
     // Render template
     super._render();
