@@ -1,11 +1,17 @@
-# Vanilla JavaScript HTTP Client
+# Vanilla JavaScript Framework
 
-A fully-featured HTTP client for vanilla JavaScript with Angular HttpClient feature parity, built on
-RxJS Observables and the Fetch API.
+A comprehensive, zero-dependency framework for building modern web applications with vanilla JavaScript. Features a component-based architecture, reactive data binding, dependency injection, internationalization, and complete tooling for professional web development.
 
 ## Features
 
-### Core Features
+### Component System
+
+- ✅ **Base Components** - Lifecycle hooks, DOM rendering, event handling
+- ✅ **Reactive Components** - Automatic data binding and state management
+- ✅ **DOM Directives** - Declarative templates with custom directives
+- ✅ **Manifest Loading** - Dynamic component loading with manifests
+
+### HTTP Client (Angular HttpClient Feature Parity)
 
 - ✅ **Observable-based** - RxJS Observables for reactive programming
 - ✅ **Request/Response Interceptors** - Modify requests and responses
@@ -19,28 +25,96 @@ RxJS Observables and the Fetch API.
 - ✅ **CORS Support** - withCredentials for cross-origin requests
 - ✅ **All HTTP Methods** - GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS
 - ✅ **JSONP Support** - For legacy cross-origin requests
+
+### Forms & Validation
+
+- ✅ **Form Validation Framework** - Custom validators and error handling
+- ✅ **Built-in Validators** - Required, email, pattern, min/max, etc.
+- ✅ **Async Validation** - Server-side validation support
+- ✅ **Error Messages** - Centralized validation message management
+
+### Internationalization (i18n)
+
+- ✅ **Multi-language Support** - Dynamic locale switching
+- ✅ **Translation Engine** - Key-based translation system
+- ✅ **Locale Management** - Load and switch languages at runtime
+- ✅ **Helper Utilities** - i18n directives and formatters
+
+### Dependency Injection
+
+- ✅ **Service Container** - Register and resolve dependencies
+- ✅ **Singleton Management** - Automatic service lifecycle
+- ✅ **Token-based Injection** - Type-safe dependency resolution
+
+### UI & Theming
+
+- ✅ **Theme Manager** - Dark/light mode switching
+- ✅ **Breakpoint Observer** - Responsive design utilities
+- ✅ **Design System** - CSS custom properties and design tokens
+- ✅ **Grid System** - Flexible CSS grid layout
+- ✅ **Animation Utilities** - Pre-built CSS animations
+- ✅ **Typography System** - Consistent text styling
+- ✅ **UI Components** - Reusable styled components
+
+### Development Tools
+
+- ✅ **Build System** - esbuild for fast bundling
+- ✅ **Code Minification** - Terser (JS) and CSSO (CSS)
+- ✅ **Live Reload** - Development server with hot reload
+- ✅ **Multi-format Linting** - ESLint, Stylelint, HTMLHint, Markdownlint
+- ✅ **Code Formatting** - Prettier integration
+- ✅ **JSDoc Generation** - Automatic documentation
 - ✅ **TypeScript-ready** - Full JSDoc annotations
 
-### RxJS Operators
-
-- `retry()` - Automatic retry logic
-- `timeout()` - Request timeouts
-- `catchError()` - Error handling
-- `map()` - Transform responses
-- And all other RxJS operators!
-
-## Installation
+## Quick Start
 
 ```bash
+# Install dependencies
 npm install
+
+# Start development server
+npm start
+
+# Build for production
+npm run build && npm run bundle && npm run minify
 ```
 
-## Usage
+## Usage Examples
 
-### Basic Example
+### Component System
 
 ```javascript
-import { HttpClient } from './src/http-client.js';
+import { Component } from './src/js/component.js';
+import { ReactiveComponent } from './src/js/reactive-component.js';
+
+// Basic component
+class MyComponent extends Component {
+  onInit() {
+    this.element.innerHTML = '<h1>Hello World</h1>';
+  }
+}
+
+// Reactive component with data binding
+class CounterComponent extends ReactiveComponent {
+  constructor(element) {
+    super(element);
+    this.state = { count: 0 };
+  }
+
+  template() {
+    return `<button onclick="this.increment()">Count: ${this.state.count}</button>`;
+  }
+
+  increment() {
+    this.setState({ count: this.state.count + 1 });
+  }
+}
+```
+
+### HTTP Client
+
+```javascript
+import { HttpClient } from './src/js/http-client.js';
 
 const client = new HttpClient({
   baseUrl: 'https://api.example.com',
@@ -204,6 +278,113 @@ client
   .subscribe((names) => console.log(names));
 ```
 
+### Form Validation
+
+```javascript
+import { FormValidator } from './src/js/forms.js';
+
+const validator = new FormValidator(formElement);
+
+validator.addRule('email', {
+  required: true,
+  email: true,
+  message: 'Valid email required',
+});
+
+if (validator.validate()) {
+  console.log('Form is valid!');
+}
+```
+
+### Internationalization
+
+```javascript
+import { I18n } from './src/js/i18n.js';
+
+const i18n = new I18n();
+await i18n.loadLocale('en', '/i18n/en.json');
+await i18n.loadLocale('es', '/i18n/es.json');
+
+i18n.setLocale('es');
+console.log(i18n.t('welcome.message')); // Translated message
+```
+
+### Dependency Injection
+
+```javascript
+import { Injector } from './src/js/injector.js';
+
+const injector = new Injector();
+
+// Register services
+injector.register('apiService', () => new ApiService());
+injector.register('userService', (injector) => {
+  const api = injector.resolve('apiService');
+  return new UserService(api);
+});
+
+// Resolve dependencies
+const userService = injector.resolve('userService');
+```
+
+### Theme Management
+
+```javascript
+import { ThemeManager } from './src/js/theme-manager.js';
+
+const themeManager = new ThemeManager();
+
+// Switch to dark mode
+themeManager.setTheme('dark');
+
+// Toggle theme
+themeManager.toggleTheme();
+```
+
+### Breakpoint Observer
+
+```javascript
+import { BreakpointObserver } from './src/js/breakpoint-observer.js';
+
+const observer = new BreakpointObserver();
+
+observer.observe(['mobile', 'tablet', 'desktop']).subscribe((state) => {
+  console.log('Current breakpoint:', state.activeBreakpoint);
+});
+```
+
+## Project Structure
+
+```
+/var/www/html/vanillajs/
+├── src/                    # Source code
+│   ├── js/                 # JavaScript modules
+│   │   ├── component.js              # Base component system
+│   │   ├── reactive-component.js     # Reactive data binding
+│   │   ├── directives.js             # DOM directives
+│   │   ├── forms.js                  # Form validation
+│   │   ├── http-client.js            # HTTP client
+│   │   ├── i18n.js                   # Internationalization
+│   │   ├── i18n-helpers.js           # i18n utilities
+│   │   ├── injector.js               # Dependency injection
+│   │   ├── breakpoint-observer.js    # Responsive utilities
+│   │   ├── theme-manager.js          # Theme switching
+│   │   └── manifest-loader.js        # Component manifests
+│   └── css/                # Stylesheets
+│       ├── all.css                   # Main CSS entry
+│       ├── design-system.css         # Design tokens
+│       ├── ui-components.css         # Component styles
+│       ├── grid-system.css           # Layout grid
+│       ├── animations.css            # Animations
+│       ├── typography-utilities.css  # Text utilities
+│       └── utility-classes.css       # Helper classes
+├── examples/               # Demo files
+├── scripts/                # Build automation
+├── dist/                   # Build output
+├── docs/                   # JSDoc documentation
+└── i18n/                   # Translation files
+```
+
 ## API Reference
 
 ### HttpClient
@@ -290,65 +471,79 @@ const context = new HttpContext()
 
 ## Examples
 
-### Run Basic Examples
+Check the [examples/](examples/) directory for comprehensive demos:
+
+- **counter.component.js** - Basic component example
+- **todo.component.js** - Todo app with reactive state
+- **forms-example.html** - Form validation demo
+- **i18n-demo.html** - Multi-language support
+- **design-system-demo.html** - UI components showcase
+- **breakpoint-example.html** - Responsive breakpoints
+- **reactive-demo.html** - Reactive data binding
+
+### Run Examples
 
 ```bash
-npm start
-# Opens index.html with basic examples
+npm start  # Opens index.html with live reload
 ```
-
-### Run Advanced Examples
-
-Open `index-advanced.html` in your browser to see:
-
-- HttpParams and HttpHeaders usage
-- Progress tracking
-- Context tokens
-- Retry and timeout logic
-- Response transformations
-- All HTTP methods
-- Error handling patterns
 
 ## Development
 
 ```bash
-# Install dependencies
-npm install
+# Development server
+npm start              # Opens index.html with live reload
+npm run dev           # Starts server without opening browser
 
-# Start dev server
-npm run dev
+# Build & bundle
+npm run build         # Run build script
+npm run build:watch   # Watch mode for builds
+npm run bundle        # Bundle with esbuild
+npm run minify        # Minify code (terser/csso)
+npm run clean         # Remove dist directory
 
-# Run linter
-npm run lint
-npm run lint:fix
+# Code quality
+npm run validate      # Run all linters + format check
+npm run lint          # Check all (JS, CSS, HTML, MD)
+npm run lint:fix      # Auto-fix JS, CSS, and format
+npm run format        # Format code with Prettier
+npm run format:check  # Check formatting without changes
 
-# Format code
-npm run format
-
-# Generate documentation
-npm run docs
-npm run docs:watch
+# Documentation
+npm run docs          # Generate JSDoc documentation
+npm run docs:watch    # Auto-regenerate docs on changes
 ```
 
-## File Structure
+## Code Standards
 
-```
-src/
-├── http-client.js      # Main HTTP client
-├── http-params.js      # Query parameter builder
-├── http-headers.js     # Header management
-├── http-context.js     # Request context
-├── http-event.js       # Event types
-├── example.js          # Basic examples
-└── example-advanced.js # Advanced examples
-```
+- **ES Modules**: Modern `import`/`export` syntax
+- **JSDoc**: Complete documentation for all functions
+- **Prettier**: Single quotes, semicolons, 2-space indentation
+- **ESLint**: Code quality validation
+- **Browser**: ES2021+ features, no transpilation needed
 
 ## Browser Support
 
-- Modern browsers with ES2021+ support
-- Fetch API support
-- XMLHttpRequest for progress tracking
-- Native Promise support
+- Modern browsers with ES2021+ support (Chrome 90+, Firefox 88+, Safari 14.1+, Edge 90+)
+- Native ES modules support
+- Fetch API and XMLHttpRequest
+- CSS Custom Properties (CSS Variables)
+- No polyfills required for target browsers
+
+## Architecture
+
+This framework follows a modular, component-based architecture inspired by modern frameworks like Angular and Vue, but built entirely with vanilla JavaScript:
+
+- **Zero Dependencies** (except RxJS for reactive programming)
+- **No Build Step Required** (optional bundling for production)
+- **Framework Agnostic** (use standalone or integrate with existing projects)
+- **Progressive Enhancement** (works with or without JavaScript)
+
+## Contributing
+
+1. Follow the code standards outlined in [CLAUDE.md](CLAUDE.md)
+2. Run `npm run validate` before committing
+3. Add JSDoc comments for all new functions
+4. Update examples when adding new features
 
 ## License
 
